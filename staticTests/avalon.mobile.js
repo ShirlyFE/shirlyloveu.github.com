@@ -5,7 +5,7 @@
  http://weibo.com/jslouvre/
  
  Released under the MIT license
- avalon.mobile.js(支持触屏事件) 1.391 build in 2015.2.4 
+ avalon.mobile.js(支持触屏事件) 1.391 build in 2015.2.5 
 __________
  support IE6+ and other browsers
  ==================================================*/
@@ -4096,11 +4096,13 @@ new function() {
         //1. 如果该模块已经发出请求，直接返回
         var module = modules[name]
         var urlNoQuery = name && trimQuery(req.toUrl(name))
+
         if (module && module.state >= 3) {
             return name
         }
         var module = modules[urlNoQuery]
         if (module && module.state >= 3) {
+            require(module.deps, module.factory, urlNoQuery)
             return urlNoQuery
         }
         if (name) {
@@ -4183,15 +4185,15 @@ new function() {
         var id = parentUrl || "callback" + setTimeout("1")
         defineConfig = defineConfig || {}
         defineConfig.baseUrl = kernel.baseUrl ? kernel.baseUrl : kernel.loaderUrl
+        var isBuilt = !!defineConfig.built
         if (parentUrl) {
             defineConfig.parentUrl = parentUrl.substr(0, parentUrl.lastIndexOf("/"))
             defineConfig.mapUrl = parentUrl.replace(rjsext, "")
-            if (defineConfig.built) {
-                var req = makeRequest(defineConfig.defineName, defineConfig)
-                id = trimQuery(req.toUrl(defineConfig.defineName))
-            }
         }
-        if (!defineConfig.built) {
+        if (isBuilt) {
+            var req = makeRequest(defineConfig.defineName, defineConfig)
+            id = trimQuery(req.toUrl(defineConfig.defineName))
+        } else {
             array.forEach(function(name) {
                 var req = makeRequest(name, defineConfig)
                 var url = fireRequest(req) //加载资源，并返回该资源的完整地址
@@ -4203,11 +4205,12 @@ new function() {
                 }
             })
         }
+
         var module = modules[id]
         if (!module || module.state !== 4) {
             modules[id] = {
                 id: id,
-                deps: deps,
+                deps: isBuilt ? array.concat() : deps,
                 factory: factory || noop,
                 state: 3
             }
@@ -4235,7 +4238,6 @@ new function() {
         }
         factory = args[2]
         args = [args[1], factory, config]
-
         factory.require = function(url) {
             args.splice(2, 0, url)
             if (modules[url]) {
@@ -4257,7 +4259,7 @@ new function() {
         //较新的浏览器中（IE8+ 、FireFox3.5+ 、Chrome4+ 、Safari4+），为了减小请求时间以优化体验，
         //下载可以是并行的，但是执行顺序还是按照标签出现的顺序。
         //但如果script标签是动态插入的, 就未必按照先请求先执行的原则了,目测只有firefox遵守
-        //唯比较一致的是,IE10+及其他标准浏览器,一旦开始解析脚本, 就会一直堵在那里,直接脚本解析完毕
+        //唯一比较一致的是,IE10+及其他标准浏览器,一旦开始解析脚本, 就会一直堵在那里,直接脚本解析完毕
         //亦即，先进入loading阶段的script标签(模块)必然会先进入loaded阶段
         var url = config.built ? "unknown" : getCurrentScript()
         if (url) {
@@ -4470,13 +4472,6 @@ new function() {
         //http://stackoverflow.com/questions/10687099/how-to-test-if-a-url-string-is-absolute-or-relative
         return  /^(?:[a-z]+:)?\/\//i.test(String(path))
     }
-
-//    function getBaseUrl(parentUrl) {
-//        return  parentUrl ?
-//                parentUrl.substr(0, parentUrl.lastIndexOf("/")) :
-//                kernel.baseUrl ? kernel.baseUrl :
-//                kernel.loaderUrl
-//    }
 
     function getFullUrl(node, src) {
         return"1"[0] ? node[src] : node.getAttribute(src, 4)
@@ -4998,6 +4993,7 @@ new function() {
         self[method + "Hook"] = self["clickHook"]
     })
 
+    self[touchNames[0] + "Hook"] = self["clickHook"]
     //各种摸屏事件的示意图 http://quojs.tapquo.com/  http://touch.code.baidu.com/
 }
 
