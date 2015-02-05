@@ -37,38 +37,37 @@
             }
         </style>
     </head>
-    <body>
-        <div id="codeArea">
-            <pre>
-</pre>
-        </div>
+    <body ms-controller="test">
         <div id="logArea">
-            
+            {{description}}
         </div>
-        <div id="popup" class="center">
+        <div id="popup" class="center" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay">
             我是弹出对话框#popup， 点我 关闭后textarea将接收focus事件，从而触发虚拟键盘
         </div>
-        <textarea name="" id="clickReceiverTextarea" class="center"></textarea>
+        <textarea name="" id="clickReceiverTextarea" class="center" 
+            ms-focus="focusCallback"
+            ms-click="clickCallback"></textarea>
     </body>
     <script>
-        var clickReceiverTextarea = document.querySelector("#clickReceiverTextarea");
-        var popup = document.querySelector("#popup");
-        var logArea = document.querySelector("#logArea");
-        var logs = [];
-        clickReceiverTextarea.addEventListener('focus', function(e) {
-            logs.push('focus fired on ' + Date.now());
-            logs.push('focus fired on element ' + e.target.id);
-        });
-        clickReceiverTextarea.addEventListener('click', function(e) {
-            logs.push('click fired on ' + Date.now());
-            logs.push('click fired on element ' + e.target.id);
-            logArea.innerHTML = logs.join("<br/>");
-            logs = [];
-        });
-        popup.addEventListener('touchend', function(e){
-            logs.push('touchend fired on ' + Date.now());
-            logs.push('touchend fired on element ' + e.target.id);
-            popup.style.display = 'none';
-        });
+        var logs = []
+        var VM = avalon.define('test', function(vm) {
+            vm.focusCallback = function(e) {
+                logs.push('focus fired on ' + Date.now());
+                logs.push('focus fired on element ' + e.target.id);
+            }
+            vm.clickCallback = function(e) {
+                logs.push('click fired on ' + Date.now());
+                logs.push('click fired on element ' + e.target.id);
+                vm.description = logs.join("<br/>");
+                logs = [];
+            }
+            vm.touchendCallback = function(e) {
+                logs.push('touchend fired on ' + Date.now());
+                logs.push('touchend fired on element ' + e.target.id);
+                VM.popupDisplay = 'none';
+            }
+            vm.popupDisplay = "none"
+            vm.description = ""
+        })
     </script>
 </html>
