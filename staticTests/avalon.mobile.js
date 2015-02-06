@@ -4876,6 +4876,7 @@ new function() {
     }
     self["clickHook"] = function(data) {
         function touchstart(event) {
+            alert('touchstart event')
             var element = data.element
             avalon.mix(touchProxy, getCoordinates(event))
             touchProxy.cx = touchProxy.x
