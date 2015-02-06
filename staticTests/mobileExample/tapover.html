@@ -41,7 +41,7 @@
         <div id="logArea">
             {{description}}
         </div>
-        <div id="popup" class="center" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay">
+        <div id="popup" class="center" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay" avoidFocus='true'>
             我是弹出对话框#popup， 点我 关闭后textarea将接收focus事件，从而触发虚拟键盘
         </div>
         <textarea name="" id="clickReceiverTextarea" class="center" 

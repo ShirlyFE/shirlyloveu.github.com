@@ -4757,10 +4757,34 @@ new function() {
                 event.preventDefault();
             }
             setTimeout(clickbuster.pop, 2500)
-            // clickbuster.coordidates = []
         },
         pop: function() {
             clickbuster.coordidates.splice(0, 2)
+        },
+        underFrame: false,
+        addUnderFrame: function(event) {
+            if(!clickbuster.underFrame) { 
+                underFrame = document.createElement('div')
+                underFrame.style.cssText = [
+                    // "background: black;",
+                    // "color: black;",
+                    "opacity: 0",
+                    "display: none;",
+                    "border-radius: 60px;",
+                    "position: absolute;",
+                    "z-index: 99999;",
+                    "width: 60px;",
+                    "height: 60px"
+                ].join("")
+                document.body.appendChild(underFrame)
+                clickbuster.underFrame = underFrame
+            }
+            underFrame.style.top = (event.changedTouches[0].clientY - 30) + "px";
+            underFrame.style.left = (event.changedTouches[0].clientX - 30) + "px";
+            underFrame.style.display = "block";
+            setTimeout(function(){
+                underFrame.style.display = "none";
+            }, 360);
         }
     }
     //合成做成触屏事件所需要的各种原生事件
@@ -5029,6 +5053,9 @@ new function() {
                 var e = getCoordinates(event)
                 clickbuster.preventGhostClick(e.x, e.y)
                 callback.apply(this, [].slice.call(arguments))
+                if (element.hasAttribute('avoidFocus')) {
+                    clickbuster.addUnderFrame(event) // 当上层view下面有input、textarea这种输入框时会触发focus事件弹出键盘，为了避免这种情况需要给其添加垫片，让焦点不被触发
+                }
             } 
             data.msCallback = _callback
             avalon.bind(element, data.param, _callback)
