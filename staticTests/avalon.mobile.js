@@ -4744,7 +4744,6 @@ new function() {
         div = div.ontouchstart = null
         return supported
     })()
-    alert("touch支持与否？"+w3ctouch)
     var touchSupported = !!(w3ctouch || IE11touch || IE9_10touch)
     var clickbuster = {
         coordidates: [],
