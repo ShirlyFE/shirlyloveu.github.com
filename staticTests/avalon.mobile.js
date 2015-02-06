@@ -4728,22 +4728,7 @@ new function() {
 
     var IE11touch = navigator.pointerEnabled
     var IE9_10touch = navigator.msPointerEnabled
-    var w3ctouch = (function() {
-        var supported = isIOS || false
-        //http://stackoverflow.com/questions/5713393/creating-and-firing-touch-events-on-a-touch-enabled-browser
-        try {
-            var div = document.createElement("div")
-            div.ontouchstart = function() {
-                supported = true
-            }
-            var e = document.createEvent("TouchEvent")
-            e.initUIEvent("touchstart", true, true)
-            div.dispatchEvent(e)
-        } catch (err) {
-        }
-        div = div.ontouchstart = null
-        return supported
-    })()
+    var w3ctouch = "ontouchend" in document
     var touchSupported = !!(w3ctouch || IE11touch || IE9_10touch)
     //合成做成触屏事件所需要的各种原生事件
     var touchNames = ["mousedown", "mousemove", "mouseup", ""]
@@ -4788,7 +4773,6 @@ new function() {
         })
     }
 
-    var touchProxy = {}
     //判定滑动方向
     function swipeDirection(x1, x2, y1, y2) {
         return Math.abs(x1 - x2) >=
