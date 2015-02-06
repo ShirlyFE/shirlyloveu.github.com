@@ -4790,6 +4790,7 @@ new function() {
 
     function touchend(event) {
         var element = touchProxy.element
+        alert('touchend callback and element is : '+element)
         if (!element)
             return
         var e = getCoordinates(event)
