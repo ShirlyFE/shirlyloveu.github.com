@@ -5,7 +5,7 @@
  http://weibo.com/jslouvre/
  
  Released under the MIT license
- avalon.mobile.js(支持触屏事件) 1.391 build in 2015.2.5 
+ avalon.mobile.js(支持触屏事件) 1.391 build in 2015.2.6 
 __________
  support IE6+ and other browsers
  ==================================================*/
@@ -3693,10 +3693,10 @@ var rnoalphanumeric = /([^\#-~| |!])/g;
 
 function numberFormat(number, decimals, dec_point, thousands_sep) {
     //form http://phpjs.org/functions/number_format/
-    //number	必需，要格式化的数字
-    //decimals	可选，规定多少个小数位。
-    //dec_point	可选，规定用作小数点的字符串（默认为 . ）。
-    //thousands_sep	可选，规定用作千位分隔符的字符串（默认为 , ），如果设置了该参数，那么所有其他参数都是必需的。
+    //number    必需，要格式化的数字
+    //decimals  可选，规定多少个小数位。
+    //dec_point 可选，规定用作小数点的字符串（默认为 . ）。
+    //thousands_sep 可选，规定用作千位分隔符的字符串（默认为 , ），如果设置了该参数，那么所有其他参数都是必需的。
     number = (number + '')
             .replace(/[^0-9+\-Ee.]/g, '')
     var n = !isFinite(+number) ? 0 : +number,
@@ -3753,7 +3753,7 @@ var filters = avalon.filters = {
     //https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
     //    <a href="javasc&NewLine;ript&colon;alert('XSS')">chrome</a> 
     //    <a href="data:text/html;base64, PGltZyBzcmM9eCBvbmVycm9yPWFsZXJ0KDEpPg==">chrome</a>
-    //    <a href="jav	ascript:alert('XSS');">IE67chrome</a>
+    //    <a href="jav  ascript:alert('XSS');">IE67chrome</a>
     //    <a href="jav&#x09;ascript:alert('XSS');">IE67chrome</a>
     //    <a href="jav&#x0A;ascript:alert('XSS');">IE67chrome</a>
     sanitize: function(str) {
@@ -4101,8 +4101,9 @@ new function() {
             return name
         }
         var module = modules[urlNoQuery]
-        if (module && module.state >= 3) {
-            require(module.deps, module.factory, urlNoQuery)
+        if (module && module.state >= 1) {
+            if (module.state === 3)
+                require(module.deps, module.factory, urlNoQuery)
             return urlNoQuery
         }
         if (name) {
@@ -4116,7 +4117,7 @@ new function() {
                     if (arguments.length && a !== void 0) {
                         module.exports = a
                     }
-                    module.state = 3
+                    module.state = 4
                     checkDeps()
                 })
             }
@@ -4184,7 +4185,7 @@ new function() {
         var uniq = {}
         var id = parentUrl || "callback" + setTimeout("1")
         defineConfig = defineConfig || {}
-        defineConfig.baseUrl = kernel.baseUrl ? kernel.baseUrl : kernel.loaderUrl
+        defineConfig.baseUrl = kernel.baseUrl
         var isBuilt = !!defineConfig.built
         if (parentUrl) {
             defineConfig.parentUrl = parentUrl.substr(0, parentUrl.lastIndexOf("/"))
@@ -4332,7 +4333,8 @@ new function() {
                     head.insertBefore(baseElement, head.firstChild)
                 }
             }
-            kernel.baseUrl = url
+            if (url.length > 3)
+                kernel.baseUrl = url
         },
         shim: function(obj) {
             for (var i in obj) {
@@ -4538,6 +4540,8 @@ new function() {
         var url = id
         //1. 是否命中paths配置项
         var usePath = 0
+        var baseUrl = this.baseUrl
+        var rootUrl = this.parentUrl || baseUrl
         eachIndexArray(id, kernel.paths, function(value, key) {
             url = url.replace(key, value)
             usePath = 1
@@ -4553,10 +4557,9 @@ new function() {
             eachIndexArray(this.mapUrl, kernel.map, function(array) {
                 eachIndexArray(url, array, function(mdValue, mdKey) {
                     url = url.replace(mdKey, mdValue)
-                    ++usePath
+                    rootUrl = baseUrl
                 })
             })
-
         }
         var ext = this.ext
         if (ext && usePath && url.slice(-ext.length) === ext) {
@@ -4564,8 +4567,8 @@ new function() {
         }
         //4. 转换为绝对路径
         if (!isAbsUrl(url)) {
-            var parent = this.built ? this.baseUrl : this.parentUrl || this.baseUrl
-            url = joinPath(parent, url)
+            rootUrl = this.built ? baseUrl : rootUrl
+            url = joinPath(rootUrl, url)
         }
         //5. 还原扩展名，query
         url += ext + this.query
@@ -4674,12 +4677,11 @@ new function() {
 
     var mainNode = DOC.scripts[DOC.scripts.length - 1] //求得当前avalon.js 所在的JS文件的路径
     var loaderUrl = trimQuery(getFullUrl(mainNode, "src"))
-    kernel.loaderUrlNoQuery = loaderUrl
-    kernel.loaderUrl = loaderUrl.slice(0, loaderUrl.lastIndexOf("/") + 1)
+    loaderUrl = kernel.baseUrl = loaderUrl.slice(0, loaderUrl.lastIndexOf("/") + 1)
     var mainScript = mainNode.getAttribute("data-main")
     if (mainScript) {
         mainScript = mainScript.split('/').pop()
-        loadJS(kernel.loaderUrl + mainScript + ".js")
+        loadJS(loaderUrl + mainScript + ".js")
     }
 }
 
@@ -4723,11 +4725,9 @@ new function() {
     var isIOS = /iP(ad|hone|od)/.test(ua)
     var self = bindingHandlers.on
     var touchProxy = {}
-    
 
     var IE11touch = navigator.pointerEnabled
     var IE9_10touch = navigator.msPointerEnabled
-    // 判断浏览器对touch事件的支持情况，为什么要这样做？？
     var w3ctouch = (function() {
         var supported = isIOS || false
         //http://stackoverflow.com/questions/5713393/creating-and-firing-touch-events-on-a-touch-enabled-browser
@@ -4745,49 +4745,6 @@ new function() {
         return supported
     })()
     var touchSupported = !!(w3ctouch || IE11touch || IE9_10touch)
-    var clickbuster = {
-        coordidates: [],
-        preventGhostClick: function(x, y) {
-            clickbuster.coordidates.push(x, y)
-        },
-        onClick: function(event) {
-            var x = clickbuster.coordidates[0],
-                y = clickbuster.coordidates[1]
-            if (Math.abs(event.clientX - x) < 30 && Math.abs(event.clientY - y) < 30) {
-                event.stopPropagation();
-                event.preventDefault();
-            }
-            setTimeout(clickbuster.pop, 2500)
-        },
-        pop: function() {
-            clickbuster.coordidates.splice(0, 2)
-        },
-        underFrame: false,
-        addUnderFrame: function(event) {
-            if(!clickbuster.underFrame) { 
-                underFrame = document.createElement('div')
-                underFrame.style.cssText = [
-                    // "background: black;",
-                    // "color: black;",
-                    "opacity: 0",
-                    "display: none;",
-                    "border-radius: 60px;",
-                    "position: absolute;",
-                    "z-index: 99999;",
-                    "width: 60px;",
-                    "height: 60px"
-                ].join("")
-                document.body.appendChild(underFrame)
-                clickbuster.underFrame = underFrame
-            }
-            underFrame.style.top = (event.changedTouches[0].clientY - 30) + "px";
-            underFrame.style.left = (event.changedTouches[0].clientX - 30) + "px";
-            underFrame.style.display = "block";
-            setTimeout(function(){
-                underFrame.style.display = "none";
-            }, 360);
-        }
-    }
     //合成做成触屏事件所需要的各种原生事件
     var touchNames = ["mousedown", "mousemove", "mouseup", ""]
     if (w3ctouch) {
@@ -4847,10 +4804,6 @@ new function() {
     }
 
     function touchend(event) {
-        debugger
-
-        
-
         var element = touchProxy.element
         if (!element)
             return
@@ -4860,9 +4813,6 @@ new function() {
         var totalY = Math.abs(touchProxy.y - e.y)
 
         var canDoubleClick = false
-
-
-
         if (touchProxy.doubleIndex === 2) {//如果已经点了两次,就可以触发dblclick 回调
             touchProxy.doubleIndex = 0
             canDoubleClick = true
@@ -4930,8 +4880,6 @@ new function() {
         }
     })
     document.addEventListener(touchNames[2], touchend)
-
-    document.addEventListener('click', clickbuster.onClick, true)
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], touchend)
     }
@@ -4974,7 +4922,7 @@ new function() {
             }
             data.specialUnbind = function() {
                 element.removeEventListener(touchNames[0], touchstart)
-                avalon.unbind(data.element, data.param, data.msCallback)
+                avalon.bind(data.element, data.param, data.msCallback)
             }
         }
     }
@@ -5046,24 +4994,7 @@ new function() {
     ["swipe", "swipeleft", "swiperight", "swipeup", "swipedown", "doubletap", "tap", "dblclick", "longtap", "hold"].forEach(function(method) {
         self[method + "Hook"] = self["clickHook"]
     })
-    // self["touchendHook"] = function(data) {
-    self[touchNames[2] + "Hook"] = function(data) {
-        data.specialBind = function(element, callback) {
-            var _callback = function(event) {
-                var e = getCoordinates(event)
-                clickbuster.preventGhostClick(e.x, e.y)
-                callback.apply(this, [].slice.call(arguments))
-                if (element.hasAttribute('avoidFocus')) {
-                    clickbuster.addUnderFrame(event) // 当上层view下面有input、textarea这种输入框时会触发focus事件弹出键盘，为了避免这种情况需要给其添加垫片，让焦点不被触发
-                }
-            } 
-            data.msCallback = _callback
-            avalon.bind(element, data.param, _callback)
-        }
-        data.specialUnbind = function() {
-            avalon.unbind(data.element, data.param, data.msCallback)
-        }
-    }
+
     //各种摸屏事件的示意图 http://quojs.tapquo.com/  http://touch.code.baidu.com/
 }
 
