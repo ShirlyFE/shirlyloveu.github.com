@@ -4723,6 +4723,7 @@ new function() {
     var isIOS = /iP(ad|hone|od)/.test(ua)
     var self = bindingHandlers.on
     var touchProxy = {}
+    
 
     var IE11touch = navigator.pointerEnabled
     var IE9_10touch = navigator.msPointerEnabled
@@ -4743,6 +4744,21 @@ new function() {
         return supported
     })()
     var touchSupported = !!(w3ctouch || IE11touch || IE9_10touch)
+    var clickbuster = {
+        coordidates: [],
+        preventGhostClick: function(x, y) {
+            clickbuster.coordidates.push(x, y)
+        },
+        onClick: function(event) {
+            var x = clickbuster.coordidates[0],
+                y = clickbuster.coordidates[1]
+            if (Math.abs(event.clientX - x) < 30 && Math.abs(event.clientY - y) < 30) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+            clickbuster.coordidates = []
+        }
+    }
     //合成做成触屏事件所需要的各种原生事件
     var touchNames = ["mousedown", "mousemove", "mouseup", ""]
     if (w3ctouch) {
@@ -4802,6 +4818,10 @@ new function() {
     }
 
     function touchend(event) {
+        debugger
+
+        
+
         var element = touchProxy.element
         if (!element)
             return
@@ -4811,6 +4831,9 @@ new function() {
         var totalY = Math.abs(touchProxy.y - e.y)
 
         var canDoubleClick = false
+
+
+
         if (touchProxy.doubleIndex === 2) {//如果已经点了两次,就可以触发dblclick 回调
             touchProxy.doubleIndex = 0
             canDoubleClick = true
@@ -4878,10 +4901,13 @@ new function() {
         }
     })
     document.addEventListener(touchNames[2], touchend)
+
+    document.addEventListener('click', clickbuster.onClick, true)
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], touchend)
     }
     self["clickHook"] = function(data) {
+        debugger
         function touchstart(event) {
             var element = data.element
             avalon.mix(touchProxy, getCoordinates(event))
@@ -4912,7 +4938,8 @@ new function() {
         function needFixClick(type) {
             return type === "click"
         }
-        if (needFixClick(data.param) ? touchSupported : true) {
+        if (true) {
+        // if (needFixClick(data.param) ? touchSupported : true) {
             data.specialBind = function(element, callback) {
                 element.addEventListener(touchNames[0], touchstart)
                 data.msCallback = callback
@@ -4920,7 +4947,7 @@ new function() {
             }
             data.specialUnbind = function() {
                 element.removeEventListener(touchNames[0], touchstart)
-                avalon.bind(data.element, data.param, data.msCallback)
+                avalon.unbind(data.element, data.param, data.msCallback)
             }
         }
     }
@@ -4992,8 +5019,21 @@ new function() {
     ["swipe", "swipeleft", "swiperight", "swipeup", "swipedown", "doubletap", "tap", "dblclick", "longtap", "hold"].forEach(function(method) {
         self[method + "Hook"] = self["clickHook"]
     })
-
-    self[touchNames[0] + "Hook"] = self["clickHook"]
+    self["touchendHook"] = function(data) {
+    // self[touchNames[2] + "Hook"] = function(data) {
+        data.specialBind = function(element, callback) {
+            var _callback = function(event) {
+                var e = getCoordinates(event)
+                clickbuster.preventGhostClick(e.x, e.y)
+                callback.apply(this, [].slice.call(arguments))
+            } 
+            data.msCallback = _callback
+            avalon.bind(element, data.param, _callback)
+        }
+        data.specialUnbind = function() {
+            avalon.unbind(data.element, data.param, data.msCallback)
+        }
+    }
     //各种摸屏事件的示意图 http://quojs.tapquo.com/  http://touch.code.baidu.com/
 }
 

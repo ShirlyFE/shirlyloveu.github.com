@@ -56,7 +56,7 @@ popup.addEventListener('click', function(e){
         <div id="logArea">
             {{description}}
         </div>
-        <div id="popup" ms-css-display='popupDisplay' ms-on-click="clickCallback">
+        <div id="popup" ms-css-display='popupDisplay' ms-click="clickCallback">
             我是弹出对话框#popup
         </div>
         <button id="popupTrigger" ms-on-touchend="touchendCallback">#popupTrigger</button>
@@ -64,7 +64,10 @@ popup.addEventListener('click', function(e){
     <script>
         var logs = []
         var VM = avalon.define('test', function(vm) {
-            vm.clickCallback = function() {
+            vm.touchstartCallback = function(e) {
+                console.log('touchstart')
+            }
+            vm.clickCallback = function(e) {
                 logs.push('click fired on ' + Date.now());
                 logs.push('click fired on element ' + e.target.id);
                 VM.popupDisplay = "none"
@@ -79,5 +82,11 @@ popup.addEventListener('click', function(e){
             vm.popupDisplay = "none"
             vm.description = ""
         })
+        // document.body.addEventListener('tap', function() {
+        //     console.log('原生tap支持')
+        // })
+        // document.body.addEventListener('click', function() {
+        //     console.log('原生click支持')
+        // })
     </script>
 </html>
