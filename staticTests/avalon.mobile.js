@@ -4756,7 +4756,11 @@ new function() {
                 event.stopPropagation();
                 event.preventDefault();
             }
-            clickbuster.coordidates = []
+            setTimeout(clickbuster.pop, 2500)
+            // clickbuster.coordidates = []
+        },
+        pop: function() {
+            clickbuster.coordidates.splice(0, 2)
         }
     }
     //合成做成触屏事件所需要的各种原生事件
@@ -4907,7 +4911,6 @@ new function() {
         document.addEventListener(touchNames[3], touchend)
     }
     self["clickHook"] = function(data) {
-        debugger
         function touchstart(event) {
             var element = data.element
             avalon.mix(touchProxy, getCoordinates(event))
