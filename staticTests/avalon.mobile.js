@@ -4899,7 +4899,10 @@ new function() {
         function needFixClick(type) {
             return type === "click"
         }
+        alert('clickHook')
+        alert('data.param is : '+data.param)
         if (needFixClick(data.param) ? touchSupported : true) {
+            alert('config data specialBind')
             data.specialBind = function(element, callback) {
                 element.addEventListener(touchNames[0], touchstart)
                 data.msCallback = callback
