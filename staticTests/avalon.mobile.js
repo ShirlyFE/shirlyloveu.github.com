@@ -4727,6 +4727,7 @@ new function() {
 
     var IE11touch = navigator.pointerEnabled
     var IE9_10touch = navigator.msPointerEnabled
+    // 判断浏览器对touch事件的支持情况，为什么要这样做？？
     var w3ctouch = (function() {
         var supported = isIOS || false
         //http://stackoverflow.com/questions/5713393/creating-and-firing-touch-events-on-a-touch-enabled-browser
@@ -4736,7 +4737,7 @@ new function() {
                 supported = true
             }
             var e = document.createEvent("TouchEvent")
-            e.initTouchEvent("touchstart", true, true)
+            e.initUIEvent("touchstart", true, true)
             div.dispatchEvent(e)
         } catch (err) {
         }
