@@ -4876,7 +4876,6 @@ new function() {
     }
     self["clickHook"] = function(data) {
         function touchstart(event) {
-            alert('touchstart event')
             var element = data.element
             avalon.mix(touchProxy, getCoordinates(event))
             touchProxy.cx = touchProxy.x
@@ -4890,7 +4889,7 @@ new function() {
             touchProxy.element = element
             //--------------处理双击事件--------------
             if (touchProxy.element !== element) {
-                touchProxy.doubleIndex = 1
+                touchProxy.doubleIndex = 1an
                 touchProxy.doubleStartTime = Date.now()
             } else {
                 if (!touchProxy.doubleIndex) {
@@ -4986,6 +4985,7 @@ new function() {
     ["swipe", "swipeleft", "swiperight", "swipeup", "swipedown", "doubletap", "tap", "dblclick", "longtap", "hold"].forEach(function(method) {
         self[method + "Hook"] = self["clickHook"]
     })
+    
 
     //各种摸屏事件的示意图 http://quojs.tapquo.com/  http://touch.code.baidu.com/
 }
