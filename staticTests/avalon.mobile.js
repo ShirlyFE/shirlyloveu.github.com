@@ -4730,6 +4730,7 @@ new function() {
     var IE9_10touch = navigator.msPointerEnabled
     var w3ctouch = "ontouchend" in document
     var touchSupported = !!(w3ctouch || IE11touch || IE9_10touch)
+    alert("touchSupported is : "+touchSupported)
     //合成做成触屏事件所需要的各种原生事件
     var touchNames = ["mousedown", "mousemove", "mouseup", ""]
     if (w3ctouch) {
