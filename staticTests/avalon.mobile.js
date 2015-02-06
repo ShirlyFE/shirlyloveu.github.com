@@ -4730,7 +4730,6 @@ new function() {
     var IE9_10touch = navigator.msPointerEnabled
     var w3ctouch = "ontouchend" in document
     var touchSupported = !!(w3ctouch || IE11touch || IE9_10touch)
-    alert("touchSupported is : "+touchSupported)
     //合成做成触屏事件所需要的各种原生事件
     var touchNames = ["mousedown", "mousemove", "mouseup", ""]
     if (w3ctouch) {
@@ -4789,6 +4788,7 @@ new function() {
     }
 
     function touchend(event) {
+        alert('touchend event')
         var element = touchProxy.element
         alert('touchend callback and element is : '+element)
         if (!element)
@@ -4867,6 +4867,8 @@ new function() {
             touchProxy.element = null
         }
     })
+    alert("touchNames[2] is : "+touchNames[2])
+
     document.addEventListener(touchNames[2], touchend)
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], touchend)
