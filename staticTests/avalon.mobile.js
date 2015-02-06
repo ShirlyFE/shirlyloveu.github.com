@@ -4788,9 +4788,7 @@ new function() {
     }
 
     function touchend(event) {
-        alert('touchend event')
         var element = touchProxy.element
-        alert('touchend callback and element is : '+element)
         if (!element)
             return
         var e = getCoordinates(event)
@@ -4806,8 +4804,6 @@ new function() {
                 event.preventDefault()
             }
         }
-        alert('touchend totalX : '+totalX)
-        alert('touchend totalY : '+totalY)
         if (totalX > 30 || totalY > 30) {
             //如果用户滑动的距离有点大，就认为是swipe事件
             var direction = swipeDirection(touchProxy.x, e.x, touchProxy.y, e.y)
@@ -4858,7 +4854,6 @@ new function() {
         touchProxy.element = null
     }
     document.addEventListener(touchNames[1], function(event) {
-        alert('touchmove event')
         if (!touchProxy.element)
             return
         var e = getCoordinates(event)
@@ -4868,7 +4863,6 @@ new function() {
             touchProxy.element = null
         }
     })
-    alert("touchNames[2] is : "+touchNames[2])
 
     document.addEventListener(touchNames[2], touchend)
     if (touchNames[3]) {
