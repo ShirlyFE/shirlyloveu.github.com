@@ -4858,6 +4858,7 @@ new function() {
         touchProxy.element = null
     }
     document.addEventListener(touchNames[1], function(event) {
+        alert('touchmove event')
         if (!touchProxy.element)
             return
         var e = getCoordinates(event)
