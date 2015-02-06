@@ -27,6 +27,7 @@
             }
             #clickReceiverTextarea{
                 padding: 0;
+                border: 1px solid red;
             }
             #codeArea,#logArea{
                 padding: 0 10px;
@@ -46,7 +47,7 @@
         </div>
         <div name="" id="clickReceiverTextarea" class="center" 
             ms-focus="focusCallback"
-            ms-click="clickCallback"></div>
+            ms-click="clickCallback">hello , 我处于底层，能看到我么。呵呵</div>
     </body>
     <script>
         var logs = []
@@ -66,6 +67,7 @@
             vm.touchendCallback = function(e) {
                 logs.push('touchend fired on ' + Date.now());
                 logs.push('touchend fired on element ' + e.target.id);
+                vm.description = logs.join("<br/>");
                 VM.popupDisplay = 'none';
             }
             vm.popupDisplay = "block"

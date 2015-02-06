@@ -66,6 +66,7 @@
             vm.touchendCallback = function(e) {
                 logs.push('touchend fired on ' + Date.now());
                 logs.push('touchend fired on element ' + e.target.id);
+                vm.description = logs.join("<br/>");
                 VM.popupDisplay = 'none';
             }
             vm.popupDisplay = "block"
