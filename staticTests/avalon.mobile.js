@@ -4805,6 +4805,8 @@ new function() {
                 event.preventDefault()
             }
         }
+        alert('touchend totalX : '+totalX)
+        alert('touchend totalY : '+totalY)
         if (totalX > 30 || totalY > 30) {
             //如果用户滑动的距离有点大，就认为是swipe事件
             var direction = swipeDirection(touchProxy.x, e.x, touchProxy.y, e.y)
@@ -4899,10 +4901,7 @@ new function() {
         function needFixClick(type) {
             return type === "click"
         }
-        alert('clickHook')
-        alert('data.param is : '+data.param)
         if (needFixClick(data.param) ? touchSupported : true) {
-            alert('config data specialBind')
             data.specialBind = function(element, callback) {
                 element.addEventListener(touchNames[0], touchstart)
                 data.msCallback = callback
