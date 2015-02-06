@@ -4743,6 +4743,7 @@ new function() {
         div = div.ontouchstart = null
         return supported
     })()
+    alert("touch支持与否？"+w3ctouch)
     var touchSupported = !!(w3ctouch || IE11touch || IE9_10touch)
     var clickbuster = {
         coordidates: [],
@@ -4965,8 +4966,7 @@ new function() {
         function needFixClick(type) {
             return type === "click"
         }
-        if (true) {
-        // if (needFixClick(data.param) ? touchSupported : true) {
+        if (needFixClick(data.param) ? touchSupported : true) {
             data.specialBind = function(element, callback) {
                 element.addEventListener(touchNames[0], touchstart)
                 data.msCallback = callback
@@ -5046,8 +5046,8 @@ new function() {
     ["swipe", "swipeleft", "swiperight", "swipeup", "swipedown", "doubletap", "tap", "dblclick", "longtap", "hold"].forEach(function(method) {
         self[method + "Hook"] = self["clickHook"]
     })
-    self["touchendHook"] = function(data) {
-    // self[touchNames[2] + "Hook"] = function(data) {
+    // self["touchendHook"] = function(data) {
+    self[touchNames[2] + "Hook"] = function(data) {
         data.specialBind = function(element, callback) {
             var _callback = function(event) {
                 var e = getCoordinates(event)
