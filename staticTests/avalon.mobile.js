@@ -4788,9 +4788,11 @@ new function() {
     }
 
     function touchend(event) {
+        conosle.log('touchend call')
         var element = touchProxy.element
         if (!element)
             return
+        console.log('touchend call continue')
         var e = getCoordinates(event)
         var diff = Date.now() - touchProxy.startTime //经过时间
         var totalX = Math.abs(touchProxy.x - e.x)
@@ -4853,7 +4855,9 @@ new function() {
         avalon(element).removeClass(fastclick.activeClass)
         touchProxy.element = null
     }
+    // 事件冒泡，不捕获
     document.addEventListener(touchNames[1], function(event) {
+        console.log('document touch event ' + event.type)
         if (!touchProxy.element)
             return
         var e = getCoordinates(event)
@@ -4869,6 +4873,7 @@ new function() {
         document.addEventListener(touchNames[3], touchend)
     }
     self["clickHook"] = function(data) {
+        console.log('clickHook')
         function touchstart(event) {
             var element = data.element
             avalon.mix(touchProxy, getCoordinates(event))
