@@ -4794,11 +4794,12 @@ new function() {
             return
         console.log('touchend call continue')
         var e = getCoordinates(event)
-        var diff = Date.now() - touchProxy.startTime //经过时间
+        var diff = Date.now() - (touchProxy.startTime || 0) //经过时间
         var totalX = Math.abs(touchProxy.x - e.x)
         var totalY = Math.abs(touchProxy.y - e.y)
 
         var canDoubleClick = false
+        console.log('document touchend doubleIndex '+touchProxy.doubleIndex)
         if (touchProxy.doubleIndex === 2) {//如果已经点了两次,就可以触发dblclick 回调
             touchProxy.doubleIndex = 0
             canDoubleClick = true
@@ -4882,13 +4883,15 @@ new function() {
             touchProxy.cy = touchProxy.y
             touchProxy.mx = 0 //计算总结移动了多少距离，指在移动距离重分
             touchProxy.my = 0
-            touchProxy.startTime = Date.now()
+            
             touchProxy.event = data.param
             touchProxy.tapping = /click|tap|hold$/.test(touchProxy.event)
 
             //--------------处理双击事件--------------
+            console.log("touchProxy.doubleIndex " + touchProxy.doubleIndex)
             if (touchProxy.element !== element) {
                 touchProxy.doubleIndex = 1
+                touchProxy.startTime = Date.now()
             } else {
                 if (!touchProxy.doubleIndex) {
                     touchProxy.doubleIndex = 1
