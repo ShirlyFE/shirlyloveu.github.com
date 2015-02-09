@@ -4785,7 +4785,6 @@ new function() {
         }
     }
 
-
     if (touchSupported) {
         //我们经由ms-click, ms-on-tap绑定事件, 其实没有直接绑在元素,全部放到一个数组中
         //当通过touchstart, touchend等事件混合计算得当前场景应该需要执行click, tap,那么
