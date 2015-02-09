@@ -4886,12 +4886,9 @@ new function() {
             touchProxy.event = data.param
             touchProxy.tapping = /click|tap|hold$/.test(touchProxy.event)
 
-            touchProxy.element = element
             //--------------处理双击事件--------------
-            // ??????
             if (touchProxy.element !== element) {
                 touchProxy.doubleIndex = 1
-                touchProxy.doubleStartTime = Date.now()
             } else {
                 if (!touchProxy.doubleIndex) {
                     touchProxy.doubleIndex = 1
@@ -4899,6 +4896,7 @@ new function() {
                     touchProxy.doubleIndex = 2
                 }
             }
+            touchProxy.element = element
             if (touchProxy.tapping && avalon.fastclick.canClick(element)) {
                 avalon(element).addClass(fastclick.activeClass)
             }
