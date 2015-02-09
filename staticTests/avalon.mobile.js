@@ -4798,13 +4798,8 @@ new function() {
         var totalX = Math.abs(touchProxy.x - e.x)
         var totalY = Math.abs(touchProxy.y - e.y)
         console.log('diff is : '+diff)
-        var canDoubleClick = false
-        if (touchProxy.doubleIndex === 2) {//如果已经点了两次,就可以触发dblclick 回调
-            touchProxy.doubleIndex = 0
-            canDoubleClick = true
-            if (avalon.config.stopZoom) {
-                event.preventDefault()
-            }
+        if (touchProxy.doubleIndex === 2 && avalon.config.stopZoom) {//如果已经点了两次,就可以触发dblclick 回调
+            event.preventDefault()
         }
         if (totalX > 30 || totalY > 30) {
             //如果用户滑动的距离有点大，就认为是swipe事件
