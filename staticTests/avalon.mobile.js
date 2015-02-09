@@ -4799,7 +4799,6 @@ new function() {
         var totalY = Math.abs(touchProxy.y - e.y)
         console.log('diff is : '+diff)
         var canDoubleClick = false
-        console.log('document touchend doubleIndex '+touchProxy.doubleIndex)
         if (touchProxy.doubleIndex === 2) {//如果已经点了两次,就可以触发dblclick 回调
             touchProxy.doubleIndex = 0
             canDoubleClick = true
@@ -4841,7 +4840,9 @@ new function() {
                     W3CFire(element, "tap")//触发tap事件
                 }
                 if (diff < 250) {
+                    console.log('touchProxy.doubleIndex : '+touchProxy.doubleIndex)
                     if (touchProxy.doubleIndex == 2) {
+                        debugger
                         avalon.fastclick.fireEvent(element, "dblclick", event)//触发dblclick事件
                         W3CFire(element, "doubletap")//触发doubletap事件
                         touchProxy.doubleIndex = 0
