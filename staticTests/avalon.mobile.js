@@ -4895,6 +4895,7 @@ new function() {
                 if (diff > fastclick.clickDuration) {
                     W3CFire(element, "hold")
                     W3CFire(element, "longtap")
+                    touchProxy.doubleIndex = 0
                 }
             }
         }
