@@ -4794,10 +4794,10 @@ new function() {
             return
         console.log('touchend call continue')
         var e = getCoordinates(event)
-        var diff = Date.now() - (touchProxy.startTime || 0) //经过时间
+        var diff = Date.now() - touchProxy.startTime //经过时间
         var totalX = Math.abs(touchProxy.x - e.x)
         var totalY = Math.abs(touchProxy.y - e.y)
-
+        console.log('diff is : '+diff)
         var canDoubleClick = false
         console.log('document touchend doubleIndex '+touchProxy.doubleIndex)
         if (touchProxy.doubleIndex === 2) {//如果已经点了两次,就可以触发dblclick 回调
@@ -4840,13 +4840,18 @@ new function() {
                     avalon.fastclick.fireEvent(forElement, "click", event)
                     W3CFire(element, "tap")//触发tap事件
                 }
-                if (canDoubleClick) {
-                    if (diff < 250) {
+                if (diff < 250) {
+                    if (touchProxy.doubleIndex == 2) {
                         avalon.fastclick.fireEvent(element, "dblclick", event)//触发dblclick事件
                         W3CFire(element, "doubletap")//触发doubletap事件
+                        touchProxy.doubleIndex = 0
+                    } else {
+                        setTimeout(function() {
+                            touchProxy.doubleIndex = 0
+                        }, 250)
                     }
-                    touchProxy.doubleIndex = 0
                 }
+                    
                 if (diff > fastclick.clickDuration) {
                     W3CFire(element, "hold")
                     W3CFire(element, "longtap")
@@ -4883,21 +4888,17 @@ new function() {
             touchProxy.cy = touchProxy.y
             touchProxy.mx = 0 //计算总结移动了多少距离，指在移动距离重分
             touchProxy.my = 0
-            
+            // touchProxy.startTime = Date.now()
             touchProxy.event = data.param
             touchProxy.tapping = /click|tap|hold$/.test(touchProxy.event)
 
             //--------------处理双击事件--------------
             console.log("touchProxy.doubleIndex " + touchProxy.doubleIndex)
-            if (touchProxy.element !== element) {
+            if (!touchProxy.doubleIndex) {
                 touchProxy.doubleIndex = 1
                 touchProxy.startTime = Date.now()
             } else {
-                if (!touchProxy.doubleIndex) {
-                    touchProxy.doubleIndex = 1
-                } else {
-                    touchProxy.doubleIndex = 2
-                }
+                touchProxy.doubleIndex = 2
             }
             touchProxy.element = element
             if (touchProxy.tapping && avalon.fastclick.canClick(element)) {
