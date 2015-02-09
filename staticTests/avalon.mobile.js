@@ -4739,6 +4739,51 @@ new function() {
     } else if (IE9_10touch) {
         touchNames = ["MSPointerDown", "MSPointerMove", "MSPointerUp", "MSPointerCancel"]
     }
+    var clickbuster = {
+        underFrame: null,
+        coordinates: [],
+        addUnderFrame: function(event) {
+            var underFrame = null
+            if(!clickbuster.underFrame) { 
+                underFrame = document.createElement('div');
+                underFrame.style.cssText = [
+                    "opacity: 0",
+                    "display: none;",
+                    "border-radius: 60px;",
+                    "position: absolute;",
+                    "z-index: 99999;",
+                    "width: 60px;",
+                    "height: 60px"
+                ].join("");
+                document.body.appendChild(underFrame)
+            }
+            clickbuster.underFrame = underFrame
+            underFrame.style.top = (event.changedTouches[0].clientY - 30) + "px"
+            underFrame.style.left = (event.changedTouches[0].clientX - 30) + "px"
+            underFrame.style.display = "block"
+            setTimeout(function(){
+                underFrame.style.display = "none"
+            }, 360)
+        },
+        preventGhostClick: function(x, y) {
+            clickbuster.coordinates.push(x, y);
+            window.setTimeout(clickbuster.pop, 2500)
+        },
+        pop: function() {
+            clickbuster.coordinates.splice(0, 2)
+        },
+        onClick: function(event) {
+            console.log('clickbuster.onClick callback')
+            for (var i = 0; i < clickbuster.coordinates.length; i += 2) {
+                var x = clickbuster.coordinates[i]
+                var y = clickbuster.coordinates[i + 1]
+                if (Math.abs(event.clientX - x) < 25 && Math.abs(event.clientY - y) < 25) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+            }
+        }
+    }
 
 
     if (touchSupported) {
@@ -4790,7 +4835,7 @@ new function() {
     function touchend(event) { // 在touchend方法中阻止了mobile的300ms延迟click回调
         console.log('touchend call')
         var element = touchProxy.element
-        if (!element)
+        if (!element) 
             return
         console.log('touchend call continue')
         var e = getCoordinates(event)
@@ -4857,6 +4902,7 @@ new function() {
         avalon(element).removeClass(fastclick.activeClass)
         touchProxy.element = null
     }
+    document.addEventListener('click', clickbuster.onClick, true)
     // 事件冒泡，不捕获
     document.addEventListener(touchNames[1], function(event) {
         console.log('document touch event ' + event.type)
@@ -4984,7 +5030,26 @@ new function() {
     ["swipe", "swipeleft", "swiperight", "swipeup", "swipedown", "doubletap", "tap", "dblclick", "longtap", "hold"].forEach(function(method) {
         self[method + "Hook"] = self["clickHook"]
     })
-
+    if (touchSupported) {
+        self[touchNames[2] + "Hook"] = function(data) {
+            data.specialBind = function(element, callback) {
+                var _callback = callback
+                if (element.hasAttribute('avoidFocus')) {
+                    _callback = function(event) {
+                        var e = getCoordinates(event)
+                        clickbuster.preventGhostClick(e.x, e.y)
+                        clickbuster.addUnderFrame(event)
+                        callback.apply(this, [].slice.call(arguments))
+                    } 
+                } 
+                data.msCallback = _callback
+                avalon.bind(element, data.param, _callback)
+            }
+            data.specialUnbind = function() {
+                avalon.unbind(data.element, data.param, data.msCallback)
+            }
+        }
+    }
     //各种摸屏事件的示意图 http://quojs.tapquo.com/  http://touch.code.baidu.com/
 }
 
