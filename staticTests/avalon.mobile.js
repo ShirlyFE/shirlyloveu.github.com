@@ -4788,7 +4788,7 @@ new function() {
     }
 
     function touchend(event) {
-        conosle.log('touchend call')
+        console.log('touchend call')
         var element = touchProxy.element
         if (!element)
             return
@@ -4875,6 +4875,7 @@ new function() {
     self["clickHook"] = function(data) {
         console.log('clickHook')
         function touchstart(event) {
+            console.log('touchstart event type '+event.type)
             var element = data.element
             avalon.mix(touchProxy, getCoordinates(event))
             touchProxy.cx = touchProxy.x
@@ -4887,6 +4888,7 @@ new function() {
 
             touchProxy.element = element
             //--------------处理双击事件--------------
+            // ??????
             if (touchProxy.element !== element) {
                 touchProxy.doubleIndex = 1
                 touchProxy.doubleStartTime = Date.now()

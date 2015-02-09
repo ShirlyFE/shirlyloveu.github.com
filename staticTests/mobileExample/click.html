@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script src="../avalon.mobile.js"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <style>
+            .box{
+                width:200px;
+                height: 200px;
+                background: #ea9e00;
+                float:left;
+                color:#000;
+                margin:20px;
+                margin-bottom:20px;
+
+                -webkit-touch-callout: none;
+                user-select: none;
+                -moz-user-select:none;
+                -webkit-user-select: none;
+            }
+
+        </style>
+        <script>
+
+            avalon.ready(function() {
+
+                avalon.define("touch", function(vm) {
+                    vm.clickCall = function(event) {
+                        vm.clickTime = +new Date
+                    }
+                    vm.touchendCall = function() {
+                        vm.touchendTime = +new Date
+                    }
+                    vm.clickTime = 0
+                    vm.touchendTime = 0
+                })
+                avalon.scan()
+            })
+
+
+        </script>
+
+    </head>
+    <body ms-controller="touch">
+        <div>
+            click event time : {{clickTime}}
+            <br/>
+            touchend event time : {{touchendTime}}
+
+        </div>
+        <div ms-click='clickCall' ms-click="touchendCall" class='box' style="background: #39b3d7">
+            绑定click事件，看看touchend回调和click回调之间经过了多长时间
+        </div>
+        <br clear="both"/>
+        <div>
+            【手指动作】thumb up:赞 pinch:捏/拧/掐 pluck:采摘/拔 rip:拆开/撕掉 scratch:抓/挠/刮/划 snap:打响指 flip:掷（硬币）click:点击 press:按/压 point to:指向 squeeze out:挤出/拧出 show the middle finger竖起中指 flick dust:弹掉灰尘 wipe:擦拭 strum:弹拨 grip:抓住 clench:握紧
+        </div>
+        <div style="height:400px"></div>
+    </body>
+</html>
