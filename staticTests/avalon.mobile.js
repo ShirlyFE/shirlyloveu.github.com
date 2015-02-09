@@ -4753,7 +4753,7 @@ new function() {
                     var fns = el[listName] || (el[listName] = [])
                     if (!el["msdispatch"]) {
                         el["msdispatch"] = function(event) {
-                            if (event.fireByAvalon) {
+                            if (event.fireByAvalon) { // 通过此处避免点击穿透问题，因为如果是点击穿透的话，event.fireByAvalon是undefined
                                 for (var i = 0, fn; fn = fns[i++]; ) {
                                     fn.call(el, event)
                                 }
@@ -4787,7 +4787,7 @@ new function() {
         }
     }
 
-    function touchend(event) {
+    function touchend(event) { // 在touchend方法中阻止了mobile的300ms延迟click回调
         console.log('touchend call')
         var element = touchProxy.element
         if (!element)
