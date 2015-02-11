@@ -5,8 +5,8 @@
  http://weibo.com/jslouvre/
  
  Released under the MIT license
- avalon.mobile.js(支持触屏事件) 1.391 build in 2015.2.9 
-__________
+ avalon.mobile.js(支持触屏事件) 1.391 build in 2015.2.10 
+_________
  support IE6+ and other browsers
  ==================================================*/
 (function(global, factory) {
@@ -4663,12 +4663,16 @@ new function() {
         return g
     }
 
-    var mainNode = DOC.scripts[DOC.scripts.length - 1] //求得当前avalon.js 所在的JS文件的路径
-    var loaderUrl = trimQuery(mainNode.src)
-    loaderUrl = kernel.baseUrl = loaderUrl.slice(0, loaderUrl.lastIndexOf("/") + 1)
-    var mainScript = mainNode.getAttribute("data-main")
-    if (mainScript) {
-        loadJS(joinPath(loaderUrl, mainScript + ".js"))
+    var mainNode = DOC.scripts[DOC.scripts.length - 1]
+    var dataMain = mainNode.getAttribute("data-main")
+    if (dataMain) {
+        plugins.baseUrl(dataMain)
+        var href = kernel.baseUrl
+        kernel.baseUrl = href.slice(0, href.lastIndexOf("/") + 1)
+        loadJS(href.replace(rjsext, "") + ".js")
+    } else {
+        var loaderUrl = trimQuery(getFullUrl(mainNode, "src"))
+        kernel.baseUrl = loaderUrl.slice(0, loaderUrl.lastIndexOf("/") + 1)
     }
 }
 
@@ -4710,7 +4714,7 @@ new function() {
     var ua = navigator.userAgent
     var isAndroid = ua.indexOf("Android") > 0
     var isIOS = /iP(ad|hone|od)/.test(ua)
-    var self = bindingHandlers.on
+    var me = bindingHandlers.on
     var touchProxy = {}
 
     var IE11touch = navigator.pointerEnabled
@@ -4798,7 +4802,7 @@ new function() {
                     var fns = el[listName] || (el[listName] = [])
                     if (!el["msdispatch"]) {
                         el["msdispatch"] = function(event) {
-                            if (event.fireByAvalon) { // 通过此处避免点击穿透问题，因为如果是点击穿透的话，event.fireByAvalon是undefined
+                            if (event.fireByAvalon) { 
                                 for (var i = 0, fn; fn = fns[i++]; ) {
                                     fn.call(el, event)
                                 }
@@ -4916,7 +4920,7 @@ new function() {
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], touchend)
     }
-    self["clickHook"] = function(data) {
+    me["clickHook"] = function(data) {
         function touchstart(event) {
             var element = data.element
             avalon.mix(touchProxy, getCoordinates(event))
@@ -5021,10 +5025,10 @@ new function() {
 
 
     ["swipe", "swipeleft", "swiperight", "swipeup", "swipedown", "doubletap", "tap", "dblclick", "longtap", "hold"].forEach(function(method) {
-        self[method + "Hook"] = self["clickHook"]
+        me[method + "Hook"] = me["clickHook"]
     })
     if (touchSupported) {
-        self[touchNames[2] + "Hook"] = function(data) {
+        me[touchNames[2] + "Hook"] = function(data) {
             data.specialBind = function(element, callback) {
                 var _callback = callback
                 if (element.hasAttribute('avoidFocus')) {
