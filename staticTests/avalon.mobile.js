@@ -4897,6 +4897,7 @@ new function() {
                     W3CFire(element, "longtap")
                     touchProxy.doubleIndex = 0
                 }
+                event.preventDefault()
             }
         }
         avalon(element).removeClass(fastclick.activeClass)
