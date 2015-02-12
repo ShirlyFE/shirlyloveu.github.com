@@ -1335,7 +1335,14 @@ window.$ === undefined && (window.$ = Zepto)
       handler.del   = delegator
       var callback  = delegator || fn
       handler.proxy = function(e){
-        logs.push(e.type + 'event')
+        logs.push(e.type + ' event')
+        if (e.type == 'touchstart') {
+          startTime = Date.now()
+        }
+        if (e.type == 'click') {
+          endTime = Date.now()
+          logs.push('touchstart and click duration is : ' + (endTime - startTime))
+        }
         e = compatible(e)
         if (e.isImmediatePropagationStopped()) return
         e.data = data
