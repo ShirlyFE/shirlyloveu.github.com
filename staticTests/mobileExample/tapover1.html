@@ -60,33 +60,28 @@ popup.addEventListener('click', function(e){
             我是弹出对话框#popup
         </div>
         <button id="popupTrigger" ms-on-touchend="touchendCallback">#popupTrigger</button>
+
+        <button ms-click='generatorDes'>track events</button>
+        <button ms-click='cancelLogs'>cancel logs</button>
     </body>
     <script>
         var logs = []
         var VM = avalon.define('test', function(vm) {
-            vm.touchstartCallback = function(e) {
-                console.log('touchstart')
-            }
             vm.clickCallback = function(e) {
-                logs.push('click fired on ' + Date.now());
-                logs.push('click fired on element ' + e.target.id);
                 VM.popupDisplay = "none"
-                VM.description = logs.join('<br/>');
-                logs = []
             }
             vm.touchendCallback = function(e) {
-                logs.push('touchend fired on ' + Date.now());
-                logs.push('touchend fired on element ' + e.target.id);
                 VM.popupDisplay = "block"
             }
             vm.popupDisplay = "none"
             vm.description = ""
+            vm.generatorDes = function() {
+                VM.description = logs.join('<br/>')
+            }
+            vm.cancelLogs = function() {
+                logs = []
+            }
         })
-        // document.body.addEventListener('tap', function() {
-        //     console.log('原生tap支持')
-        // })
-        // document.body.addEventListener('click', function() {
-        //     console.log('原生click支持')
-        // })
+
     </script>
 </html>

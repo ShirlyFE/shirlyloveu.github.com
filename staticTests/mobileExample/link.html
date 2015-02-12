@@ -50,23 +50,34 @@
         <div id="popup" ms-css-display='popupDisplay' ms-click="clickCallback">
             我是弹出对话框#popup
         </div>
-        <a href="./tapover.html" id="popupTrigger">tapover.html</a>
+        <div id="popupTrigger">
+            <a href="./tapover.html">tapover.html</a>
+            <a href="./tapover.html">tapover1.html</a>
+            <a href="./tapover.html">tapover2.html</a>
+            <a href="./tapover.html">touchEvents.html</a>
+            <a href="./tapover.html">click.html</a>
+        </div>
+        
+        <button ms-click='generatorDes'>track events</button>
+        <button ms-click='cancelLogs'>cancel logs</button>
+
     </body>
     <script>
-        var logs = []
         var VM = avalon.define('test', function(vm) {
             vm.touchstartCallback = function(e) {
                 console.log('touchstart')
             }
             vm.clickCallback = function(e) {
-                logs.push('click fired on ' + Date.now());
-                logs.push('click fired on element ' + e.target.id);
                 VM.popupDisplay = "none"
-                VM.description = logs.join('<br/>');
-                logs = []
             }
             vm.popupDisplay = "block"
             vm.description = ""
+            vm.generatorDes = function() {
+                VM.description = logs.join('<br/>')
+            }
+            vm.cancelLogs = function() {
+                logs = []
+            }
         })
     </script>
 </html>

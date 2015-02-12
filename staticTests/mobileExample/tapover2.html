@@ -46,8 +46,10 @@
             我是弹出对话框#popup， 点我 关闭后textarea将接收focus事件，从而触发虚拟键盘
         </div>
         <div name="" id="clickReceiverTextarea" class="center" 
-            ms-focus="focusCallback"
-            ms-click="clickCallback">hello , 我处于底层，能看到我么。呵呵</div>
+            ms-focus="focusCallback">hello , 我处于底层，能看到我么。呵呵</div>
+
+        <button ms-click='generatorDes'>track events</button>
+        <button ms-click='cancelLogs'>cancel logs</button>
     </body>
     <script>
         var logs = []
@@ -55,23 +57,18 @@
             vm.focusCallback = function(e) {
                 logs.push('focus fired on ' + Date.now());
                 logs.push('focus fired on element ' + e.target.id);
-                vm.description = logs.join("<br/>");
-                logs = [];
-            }
-            vm.clickCallback = function(e) {
-                logs.push('click fired on ' + Date.now());
-                logs.push('click fired on element ' + e.target.id);
-                vm.description = logs.join("<br/>");
-                logs = [];
             }
             vm.touchendCallback = function(e) {
-                logs.push('touchend fired on ' + Date.now());
-                logs.push('touchend fired on element ' + e.target.id);
-                vm.description = logs.join("<br/>");
                 VM.popupDisplay = 'none';
             }
             vm.popupDisplay = "block"
             vm.description = ""
+            vm.generatorDes = function() {
+                VM.description = logs.join('<br/>')
+            }
+            vm.cancelLogs = function() {
+                logs = []
+            }
         })
     </script>
 </html>
