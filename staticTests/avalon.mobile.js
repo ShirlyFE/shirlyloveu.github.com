@@ -1,4 +1,3 @@
-var logs = [];
 /*==================================================
  Copyright (c) 2013-2015 司徒正美 and other contributors
  http://www.cnblogs.com/rubylouvre/
@@ -4780,11 +4779,6 @@ new function() {
             clickbuster.coordinates.splice(0, 2)
         },
         onClick: function(event) {
-            // if (event.target !== touchProxy.element && event.target.tagName.toLowerCase() == 'a') {
-            //     event.stopPropagation();
-            //     event.preventDefault();
-            // }
-            logs.push('document click event')
             for (var i = 0; i < clickbuster.coordinates.length; i += 2) {
                 var x = clickbuster.coordinates[i]
                 var y = clickbuster.coordinates[i + 1]
@@ -4808,7 +4802,6 @@ new function() {
                     var fns = el[listName] || (el[listName] = [])
                     if (!el["msdispatch"]) {
                         el["msdispatch"] = function(event) {
-                            logs.push('click, tap event')
                             if (event.fireByAvalon) { 
                                 for (var i = 0, fn; fn = fns[i++]; ) {
                                     fn.call(el, event)
@@ -4844,7 +4837,6 @@ new function() {
     }
 
     function touchend(event) { 
-        logs.push('document touchend event')
         var element = touchProxy.element
         if (!element) 
             return
@@ -4914,7 +4906,6 @@ new function() {
     // http://hzxiaosheng.github.io/work/2014/09/13/click-event-300ms-delay-and-ghost-click-in-mobile-browser/
     document.addEventListener('click', clickbuster.onClick, true)
     document.addEventListener(touchNames[1], function(event) {
-        // logs.push('document ' + touchNames[1] + ' event')
         if (!touchProxy.element)
             return
         var e = getCoordinates(event)
@@ -4931,7 +4922,6 @@ new function() {
     }
     me["clickHook"] = function(data) {
         function touchstart(event) {
-            logs.push('element touchstart event')
             var element = data.element
             avalon.mix(touchProxy, getCoordinates(event))
             touchProxy.cx = touchProxy.x
@@ -4960,13 +4950,7 @@ new function() {
         if (needFixClick(data.param) ? touchSupported : true) {
             data.specialBind = function(element, callback) {
                 element.addEventListener(touchNames[0], touchstart)
-                var _callback = callback
-                callback = function(event) {
-                    logs.push('element '+event.type + ' event')
-                    _callback(event)
-                }
                 data.msCallback = callback
-
                 avalon.bind(element, data.param, callback)
             }
             data.specialUnbind = function() {
@@ -5049,7 +5033,6 @@ new function() {
                 var _callback = callback
                 if (element.hasAttribute('avoidFocus')) {
                     _callback = function(event) {
-                        logs.push('element touchend event')
                         var e = getCoordinates(event)
                         clickbuster.preventGhostClick(e.x, e.y)
                         clickbuster.addUnderFrame(event)
