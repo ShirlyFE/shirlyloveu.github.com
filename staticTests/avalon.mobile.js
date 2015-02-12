@@ -4910,7 +4910,7 @@ new function() {
     // http://hzxiaosheng.github.io/work/2014/09/13/click-event-300ms-delay-and-ghost-click-in-mobile-browser/
     document.addEventListener('click', clickbuster.onClick, true)
     document.addEventListener(touchNames[1], function(event) {
-        logs.push('document ' + touchNames[1] + ' event')
+        // logs.push('document ' + touchNames[1] + ' event')
         if (!touchProxy.element)
             return
         var e = getCoordinates(event)

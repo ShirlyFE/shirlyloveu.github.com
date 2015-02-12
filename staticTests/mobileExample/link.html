@@ -51,11 +51,11 @@
             我是弹出对话框#popup
         </div>
         <div id="popupTrigger">
-            <a href="./tapover.html">tapover.html</a>
-            <a href="./tapover.html">tapover1.html</a>
-            <a href="./tapover.html">tapover2.html</a>
-            <a href="./tapover.html">touchEvents.html</a>
-            <a href="./tapover.html">click.html</a>
+            <a href="./tapover.html" ms-click="preventClick">tapover.html</a>
+            <a href="./tapover1.html" ms-click="preventClick">tapover1.html</a>
+            <a href="./tapover2.html" ms-click="preventClick">tapover2.html</a>
+            <a href="./touchEvents.html" ms-click="preventClick">touchEvents.html</a>
+            <a href="./click.html" ms-click="preventClick">click.html</a>
         </div>
         
         <button ms-click='generatorDes'>track events</button>
@@ -69,6 +69,10 @@
             }
             vm.clickCallback = function(e) {
                 VM.popupDisplay = "none"
+            }
+            vm.preventClick = function(event) {
+                event.preventDefault()
+                logs.push('a click')
             }
             vm.popupDisplay = "block"
             vm.description = ""
