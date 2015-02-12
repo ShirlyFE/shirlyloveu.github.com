@@ -4959,7 +4959,7 @@ new function() {
                 var _callback = callback
                 callback = function(event) {
                     logs.push('element '+event.type + ' event')
-                    callback(event)
+                    _callback(event)
                 }
                 data.msCallback = callback
 
