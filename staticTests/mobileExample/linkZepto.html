@@ -44,6 +44,7 @@
         </style>
     </head>
     <body>
+        <div id="logs"></div>
         <div id="popup">
             我是弹出对话框#popup
         </div>
@@ -61,6 +62,8 @@
             $(this).css('display', 'none')
         })
         $('a').click(function(event) {
+            event.preventDefault()
+            $("#logs").html(logs.join(' > ')
             alert('a click')
         })
     </script>

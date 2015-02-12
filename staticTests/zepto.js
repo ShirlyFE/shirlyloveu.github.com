@@ -1,3 +1,4 @@
+var logs = [];
 //     Zepto.js
 //     (c) 2010-2015 Thomas Fuchs
 //     Zepto.js may be freely distributed under the MIT license.
@@ -1334,6 +1335,7 @@ window.$ === undefined && (window.$ = Zepto)
       handler.del   = delegator
       var callback  = delegator || fn
       handler.proxy = function(e){
+        logs.push(e.type + 'event')
         e = compatible(e)
         if (e.isImmediatePropagationStopped()) return
         e.data = data
@@ -1634,6 +1636,7 @@ window.$ === undefined && (window.$ = Zepto)
   }
 
   function cancelAll() {
+    logs.push('cancelAll event')
     if (touchTimeout) clearTimeout(touchTimeout)
     if (tapTimeout) clearTimeout(tapTimeout)
     if (swipeTimeout) clearTimeout(swipeTimeout)
@@ -1671,6 +1674,7 @@ window.$ === undefined && (window.$ = Zepto)
         }
       })
       .on('touchstart MSPointerDown pointerdown', function(e){
+        logs.push('document touchstart event')
         if((_isPointerType = isPointerEventType(e, 'down')) &&
           !isPrimaryTouch(e)) return
         firstTouch = _isPointerType ? e : e.touches[0]
@@ -1705,6 +1709,7 @@ window.$ === undefined && (window.$ = Zepto)
         deltaY += Math.abs(touch.y1 - touch.y2)
       })
       .on('touchend MSPointerUp pointerup', function(e){
+        logs.push('document touchend event')
         if((_isPointerType = isPointerEventType(e, 'up')) &&
           !isPrimaryTouch(e)) return
         cancelLongTap()
