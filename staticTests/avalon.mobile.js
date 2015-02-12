@@ -4780,6 +4780,10 @@ new function() {
             clickbuster.coordinates.splice(0, 2)
         },
         onClick: function(event) {
+            if (event.target !== touchProxy.element && event.target.tagName.toLowerCase() == 'a') {
+                event.stopPropagation();
+                event.preventDefault();
+            }
             logs.push('document click event')
             for (var i = 0; i < clickbuster.coordinates.length; i += 2) {
                 var x = clickbuster.coordinates[i]
