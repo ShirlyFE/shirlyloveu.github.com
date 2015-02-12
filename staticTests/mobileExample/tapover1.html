@@ -76,7 +76,7 @@ popup.addEventListener('click', function(e){
             vm.popupDisplay = "none"
             vm.description = ""
             vm.generatorDes = function() {
-                VM.description = logs.join('<br/>')
+                VM.description = logs.join('\n')
             }
             vm.cancelLogs = function() {
                 logs = []
