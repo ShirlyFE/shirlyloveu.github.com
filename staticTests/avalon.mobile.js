@@ -4908,7 +4908,7 @@ new function() {
     }
     // 避免被点击的元素下有input、textarea时会触发其focus从而调出键盘
     // http://hzxiaosheng.github.io/work/2014/09/13/click-event-300ms-delay-and-ghost-click-in-mobile-browser/
-    document.addEventListener('click', clickbuster.onClick, true)
+    document.addEventListener('click', clickbuster.onClick)
     document.addEventListener(touchNames[1], function(event) {
         // logs.push('document ' + touchNames[1] + ' event')
         if (!touchProxy.element)
