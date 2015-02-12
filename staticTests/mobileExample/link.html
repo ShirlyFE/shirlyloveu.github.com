@@ -80,7 +80,7 @@
             vm.preventClick = function(event) {
                 event.preventDefault()
                 logs.push('a click')
-                VM.description = logs.join('\n')
+                VM.description = logs.join(' > ')
             }
             vm.popupDisplay = "block"
             vm.description = ""
