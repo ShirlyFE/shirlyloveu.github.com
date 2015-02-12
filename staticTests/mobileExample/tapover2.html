@@ -46,7 +46,7 @@
             我是弹出对话框#popup， 点我 关闭后textarea将接收focus事件，从而触发虚拟键盘
         </div>
         <div name="" id="clickReceiverTextarea" class="center" 
-            ms-focus="focusCallback">hello , 我处于底层，能看到我么。呵呵</div>
+            ms-click="focusCallback">hello , 我处于底层，能看到我么。呵呵</div>
 
         <button ms-click='generatorDes'>track events</button>
         <button ms-click='cancelLogs'>cancel logs</button>
@@ -55,8 +55,7 @@
         var logs = []
         var VM = avalon.define('test', function(vm) {
             vm.focusCallback = function(e) {
-                logs.push('focus fired on ' + Date.now());
-                logs.push('focus fired on element ' + e.target.id);
+                alert('被触发了么')
             }
             vm.touchendCallback = function(e) {
                 VM.popupDisplay = 'none';
