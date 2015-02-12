@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="minimal-ui,width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+        <script src="../avalon.mobile.js"></script>
+        <title>点击穿透示例</title>
+        <style>
+            body,html{
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #popup{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 200px;
+                height: 200px;
+                margin-left: -100px;
+                margin-top: -100px;
+                z-index: 99;
+                text-align: center;
+                background: blue;
+                opacity: 0.3;
+            }
+            #popupTrigger{
+                position: absolute;
+                top:50%;
+                left:50%;
+                margin-left: -70px;
+                margin-top: -15px;
+                width:140px;
+                height: 30px;
+                padding: 5px 10px;
+            }
+            #codeArea,#logArea{
+                padding: 0 10px;
+            }
+            pre{
+                word-wrap:break-word;
+                word-break:break-all;
+            }
+        </style>
+    </head>
+    <body ms-controller="test">
+        <div id="logArea">
+            {{description}}
+        </div>
+        <div id="popup" ms-css-display='popupDisplay' ms-click="clickCallback">
+            我是弹出对话框#popup
+        </div>
+        <a href="./tapover.html">tapover.html</a>
+    </body>
+    <script>
+        var logs = []
+        var VM = avalon.define('test', function(vm) {
+            vm.touchstartCallback = function(e) {
+                console.log('touchstart')
+            }
+            vm.clickCallback = function(e) {
+                logs.push('click fired on ' + Date.now());
+                logs.push('click fired on element ' + e.target.id);
+                VM.popupDisplay = "none"
+                VM.description = logs.join('<br/>');
+                logs = []
+            }
+            vm.popupDisplay = "block"
+            vm.description = ""
+        })
+    </script>
+</html>
