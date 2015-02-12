@@ -4809,7 +4809,9 @@ new function() {
                                 for (var i = 0, fn; fn = fns[i++]; ) {
                                     fn.call(el, event)
                                 }
+                            } else {
                                 event.preventDefault()
+                                
                             }
                         }
                         el.addEventListener(type, el["msdispatch"])
