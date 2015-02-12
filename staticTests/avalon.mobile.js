@@ -4810,8 +4810,8 @@ new function() {
                                     fn.call(el, event)
                                 }
                             } else {
+                                alert('dd')
                                 event.preventDefault()
-                                
                             }
                         }
                         el.addEventListener(type, el["msdispatch"])
