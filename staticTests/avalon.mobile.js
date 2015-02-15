@@ -4764,14 +4764,16 @@ new function() {
         if (event.fireByAvalon) { //由touch库触发则执行监听函数，如果是事件自身触发则阻止事件传播并阻止默认行为
             return true
         } 
-        if (event.stopImmediatePropagation) {
-            event.stopImmediatePropagation()
-        } else {
-            event.propagationStopped = true
+        if (touchProxy.element) { // 对于未绑定事件的a、submit button不可阻止其默认行为
+            if (event.stopImmediatePropagation) {
+                event.stopImmediatePropagation()
+            } else {
+                event.propagationStopped = true
+            }
+            event.stopPropagation()
+            event.preventDefault()
+            return true
         }
-        event.stopPropagation()
-        event.preventDefault()
-        return true
     }
     function touchend(event) { 
         var element = touchProxy.element
