@@ -4873,7 +4873,9 @@ new function() {
         function needFixClick(type) {
             return type === "click"
         }
-        if (needFixClick(data.param) ? touchSupported : true) {
+        if (true) {
+
+        // if (needFixClick(data.param) ? touchSupported : true) {
             data.specialBind = function(element, callback) {
                 // 不将touchstart绑定在document上是为了避免用户绑定的touch事件冒泡到document上而被执行无用的操作
                 element.addEventListener(touchNames[0], touchstart)
