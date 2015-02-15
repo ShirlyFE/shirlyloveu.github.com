@@ -4766,7 +4766,7 @@ new function() {
         } 
         alert("event.type "+ event.type)
         alert("touchProxy.element : " + touchProxy.element)
-        if (touchProxy.element && event.type == 'mousedown') {
+        if (touchProxy.element) {
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
             } else {
@@ -4774,7 +4774,9 @@ new function() {
             }
             event.stopPropagation()
             event.preventDefault()
-            touchProxy.element = null
+            if (event.type == 'click') { // mousedown会触发input的focus从而调出键盘，click会触发a链接的跳转
+                touchProxy.element = null
+            }
             return true    
         }
         
