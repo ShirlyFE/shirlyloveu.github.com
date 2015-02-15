@@ -4809,7 +4809,7 @@ new function() {
                     fastclick.focus(element)
                 }
                 W3CFire(element, 'tap')
-                avalon.fastclick.fireEvent(forElement, "click", event)
+                avalon.fastclick.fireEvent(element, "click", event)
                 if (diff > fastclick.clickDuration) {
                     W3CFire(element, "hold")
                     W3CFire(element, "longtap")
