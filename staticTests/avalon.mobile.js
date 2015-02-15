@@ -4766,7 +4766,7 @@ new function() {
         } 
         alert("event.type "+ event.type)
         alert("touchProxy.element : " + touchProxy.element)
-        if (touchProxy.element) {
+        if (touchProxy.element && event.type == 'click') {
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
             } else {
@@ -4774,6 +4774,7 @@ new function() {
             }
             event.stopPropagation()
             event.preventDefault()
+            touchProxy.element = null
             return true    
         }
         
@@ -4796,6 +4797,7 @@ new function() {
             W3CFire(element, "swipe", details)
             W3CFire(element, "swipe" + direction, details)
             touchProxy = {}
+            touchProxy.element = element
         } else {
             //如果移动的距离太少，则认为是tap,click,hold,dblclick
             if (fastclick.canClick(element)) {
@@ -4819,10 +4821,12 @@ new function() {
                     W3CFire(element, "hold")
                     W3CFire(element, "longtap")
                     touchProxy = {}
+                    touchProxy.element = element
                 } else if (touchProxy.isDoubleTap) {
                     W3CFire(element, "doubletap")
                     avalon.fastclick.fireEvent(element, "dblclick", event)
                     touchProxy = {}
+                    touchProxy.element = element
                 } else {
                     touchProxy.fake = false
                     touchTimeout = setTimeout(function() {
@@ -4830,6 +4834,7 @@ new function() {
                         touchTimeout = null
                         if (touchProxy.element) {
                             touchProxy = {}
+                            touchProxy.element = element
                         }
                     }, 250)
                 }
