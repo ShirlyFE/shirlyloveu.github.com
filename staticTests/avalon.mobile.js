@@ -4745,7 +4745,7 @@ new function() {
     // } else if (IE9_10touch) {
     //     touchNames = ["MSPointerDown", "MSPointerMove", "MSPointerUp", "MSPointerCancel"]
     // }
-    var = touchNames = ["touchstart", "touchmove", "touchend", "touchcancel"]
+    var touchNames = ["touchstart", "touchmove", "touchend", "touchcancel"]
     var touchTimeout
     //判定滑动方向
     function swipeDirection(x1, x2, y1, y2) {
