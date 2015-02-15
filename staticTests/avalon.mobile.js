@@ -4883,6 +4883,7 @@ new function() {
                 avalon(element).addClass(fastclick.activeClass)
             }
         }
+
         function needFixClick(type) {
             return type === "click"
         }
@@ -4890,7 +4891,7 @@ new function() {
 
         // if (needFixClick(data.param) ? touchSupported : true) {
             data.specialBind = function(element, callback) {
-                // 不将touchstart绑定在document上是为了避免用户绑定的touch事件冒泡到document上而被执行无用的操作
+                // 不将touchstart绑定在document上是为了获取绑定事件的element
                 element.addEventListener(touchNames[0], touchstart)
                 data.msCallback = callback
                 avalon.bind(element, data.param, callback)
@@ -4901,7 +4902,12 @@ new function() {
             }
         }
     }
-
+    me[touchNames[0] + "Hook"] = function(data) {
+        touchProxy.element = data.element
+    }
+    me[touchNames[2] + "Hook"] = function(data) {
+        touchProxy.element = data.element
+    }
     //fastclick只要是处理移动端点击存在300ms延迟的问题
     //这是苹果乱搞异致的，他们想在小屏幕设备上通过快速点击两次，将放大了的网页缩放至原始比例。
     var fastclick = avalon.fastclick = {
