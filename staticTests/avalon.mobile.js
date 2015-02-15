@@ -4764,7 +4764,7 @@ new function() {
         if (event.fireByAvalon) { //由touch库触发则执行监听函数，如果是事件自身触发则阻止事件传播并阻止默认行为
             return true
         } 
-        if (touchProxy.element) { // 对于未绑定事件的a、submit button不可阻止其默认行为
+        if (touchProxy.fake) {
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
             } else {
@@ -4821,6 +4821,7 @@ new function() {
                     avalon.fastclick.fireEvent(element, "dblclick", event)
                     touchProxy = {}
                 } else {
+                    touchProxy.fake = false
                     touchTimeout = setTimeout(function() {
                         clearTimeout(touchTimeout)
                         touchTimeout = null
@@ -4866,6 +4867,7 @@ new function() {
             if (delta > 0 && delta <= 250) {
                 touchProxy.isDoubleTap = true
             }
+            touchProxy.fake = true
             touchProxy.last = now
 
             touchProxy.element = element
