@@ -4766,7 +4766,7 @@ new function() {
         } 
         alert("event.type "+ event.type)
         alert("touchProxy.element : " + touchProxy.element)
-        if (touchProxy.element && event.type == 'click') {
+        if (touchProxy.element && event.type == 'mousedown') {
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
             } else {
