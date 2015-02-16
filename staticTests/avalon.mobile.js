@@ -4711,6 +4711,7 @@ avalon.ready(function() {
     avalon.scan(DOC.body)
 })
 new function() {
+    // http://www.cnblogs.com/yexiaochai/p/3462657.html
     var ua = navigator.userAgent
     var isAndroid = ua.indexOf("Android") > 0
     var isIOS = /iP(ad|hone|od)/.test(ua)
