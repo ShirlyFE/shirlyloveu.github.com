@@ -4800,7 +4800,7 @@ new function() {
             touchProxy.element = element
         } else {
             //如果移动的距离太少，则认为是tap,click,hold,dblclick
-            if (fastclick.canClick(element)) {
+            if (fastclick.canClick(element) && touchProxy.mx < fastclick.dragDistance && touchProxy.my < fastclick.dragDistance) {
                 // 失去焦点的处理
                 if (document.activeElement && document.activeElement !== element) {
                     document.activeElement.blur()
@@ -4848,12 +4848,10 @@ new function() {
     document.addEventListener(touchNames[1], function(event) {
         if (!touchProxy.element)
             return
-        var e = getCoordinates(event),
-            deltaX = 0,
-            deltaY = 0;
-        deltaX = Math.abs(touchProxy.x - e.x)
-        deltaY = Math.abs(touchProxy.y - e.y)
-        if (touchProxy.tapping && (deltaX > fastclick.dragDistance || deltaY > fastclick.dragDistance)) {
+        var e = getCoordinates(event)
+        touchProxy.mx += Math.abs(touchProxy.x - e.x)
+        touchProxy.my += Math.abs(touchProxy.y - e.y)
+        if (touchProxy.tapping && (touchProxy.mx > fastclick.dragDistance || touchProxy.my > fastclick.dragDistance)) {
             touchProxy.element = null
         }
     })
@@ -4871,6 +4869,8 @@ new function() {
 
             avalon.mix(touchProxy, getCoordinates(event))
             touchProxy.event = data.param
+            touchProxy.mx = 0
+            touchProxy.my = 0
             touchProxy.tapping = /click|tap|hold$/.test(touchProxy.event)
             if (delta > 0 && delta <= 250) {
                 touchProxy.isDoubleTap = true
