@@ -4921,8 +4921,7 @@ new function() {
             data.specialUnbind = function() {
                 avalon.unbind(data.element, data.param, data.msCallback)
             }
-        }
-
+        // }
     }
     me[touchNames[2] + "Hook"] = function(data) {
         // if (needFixClick(data.param) ? touchSupported : true) {
@@ -4934,7 +4933,7 @@ new function() {
             data.specialUnbind = function() {
                 avalon.unbind(data.element, data.param, data.msCallback)
             }
-        }
+        // }
     }
     //fastclick只要是处理移动端点击存在300ms延迟的问题
     //这是苹果乱搞异致的，他们想在小屏幕设备上通过快速点击两次，将放大了的网页缩放至原始比例。
