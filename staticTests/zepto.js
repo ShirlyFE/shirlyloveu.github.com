@@ -1698,6 +1698,7 @@ window.$ === undefined && (window.$ = Zepto)
         touchTimeout && clearTimeout(touchTimeout)
         touch.x1 = firstTouch.pageX
         touch.y1 = firstTouch.pageY
+        console.log('delta is : '+delta)
         if (delta > 0 && delta <= 250) touch.isDoubleTap = true
         touch.last = now
         longTapTimeout = setTimeout(longTap, longTapDelay)
@@ -1745,9 +1746,10 @@ window.$ === undefined && (window.$ = Zepto)
               var event = $.Event('tap')
               event.cancelTouch = cancelAll
               touch.el.trigger(event)
-
+              console.log('trigger tap : ' + Date.now())
               // trigger double tap immediately
               if (touch.isDoubleTap) {
+                console.log('trigger doubleTap : '+Date.now())
                 if (touch.el) touch.el.trigger('doubleTap')
                 touch = {}
               }
