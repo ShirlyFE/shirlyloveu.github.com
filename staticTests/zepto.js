@@ -1692,6 +1692,8 @@ window.$ === undefined && (window.$ = Zepto)
           touch.y2 = undefined
         }
         now = Date.now()
+        console.log('touch.last is : '+touch.last)
+        console.log('now is : '+now)
         delta = now - (touch.last || now)
         touch.el = $('tagName' in firstTouch.target ?
           firstTouch.target : firstTouch.target.parentNode)

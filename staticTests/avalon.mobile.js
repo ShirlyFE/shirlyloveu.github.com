@@ -4870,7 +4870,8 @@ new function() {
             var element = data.element,
                 now = Date.now(),
                 delta = now - (touchProxy.last || now)
-
+            console.log('now : '+ now)
+            console.log('touchProxy.last : '+touchProxy.last)
             avalon.mix(touchProxy, getCoordinates(event))
             touchProxy.event = data.param
             touchProxy.mx = 0
