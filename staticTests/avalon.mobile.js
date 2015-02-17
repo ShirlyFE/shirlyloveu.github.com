@@ -4914,7 +4914,11 @@ new function() {
     me[touchNames[0] + "Hook"] = function(data) {
         // if (needFixClick(data.param) ? touchSupported : true) {
             data.specialBind = function(element, callback) {
-                touchProxy.element = data.element
+                var _callback = callback
+                callback = function(event) {
+                    touchProxy.element = data.element
+                    _callback.call(this, event)
+                }
                 data.msCallback = callback
                 avalon.bind(element, data.param, callback)
             }
@@ -4926,7 +4930,11 @@ new function() {
     me[touchNames[2] + "Hook"] = function(data) {
         // if (needFixClick(data.param) ? touchSupported : true) {
             data.specialBind = function(element, callback) {
-                touchProxy.element = data.element
+                var _callback = callback
+                callback = function(event) {
+                    touchProxy.element = data.element
+                    _callback.call(this, event)
+                }
                 data.msCallback = callback
                 avalon.bind(element, data.param, callback)
             }
