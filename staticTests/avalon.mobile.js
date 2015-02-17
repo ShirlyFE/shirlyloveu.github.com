@@ -4818,14 +4818,17 @@ new function() {
                 }
                 W3CFire(element, 'tap')
                 avalon.fastclick.fireEvent(element, "click", event)
+                console.log('tap trigger: '+Date.now())
                 if (diff > fastclick.clickDuration) {
                     W3CFire(element, "hold")
                     W3CFire(element, "longtap")
+                    console.log('longtap trigger : '+Date.now())
                     touchProxy = {}
                     touchProxy.element = element
                 } else if (touchProxy.isDoubleTap) {
                     W3CFire(element, "doubletap")
                     avalon.fastclick.fireEvent(element, "dblclick", event)
+                    console.log('doubleTap trigger : '+Date.now())
                     touchProxy = {}
                     touchProxy.element = element
                 } else {
@@ -4873,6 +4876,7 @@ new function() {
             touchProxy.mx = 0
             touchProxy.my = 0
             touchProxy.tapping = /click|tap|hold$/.test(touchProxy.event)
+            console.log('delta is : '+delta)
             if (delta > 0 && delta <= 250) {
                 touchProxy.isDoubleTap = true
             }

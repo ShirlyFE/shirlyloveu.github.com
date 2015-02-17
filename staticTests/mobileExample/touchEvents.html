@@ -30,12 +30,14 @@
 
                 avalon.define("touch", function(vm) {
                     vm.tap = function(e) {
+                        console.log('tap called : '+Date.now())
                         this.innerHTML = "轻触" + Date.now() + e.type
                     }
                     vm.click = function(e) {
                         this.innerHTML = "点击" + Date.now() + e.type
                     }
                     vm.doubletap = function(e) {
+                        console.log('doubletap called : '+Date.now())
                         this.innerHTML = "双触 " + Date.now() + e.type
                     }
                     vm.dblclick = function(e) {
@@ -45,6 +47,7 @@
                         this.innerHTML = "长按" + Date.now() + e.type
                     }
                     vm.longtap = function(e) {
+
                         this.innerHTML = "长摁" + Date.now() + e.type
                     }
                     vm.swipeleft = function(e) {
