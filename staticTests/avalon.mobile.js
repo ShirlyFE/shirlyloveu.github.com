@@ -4765,7 +4765,7 @@ new function() {
         if (event.fireByAvalon) { //由touch库触发则执行监听函数，如果是事件自身触发则阻止事件传播并阻止默认行为
             return true
         } 
-        if (touchProxy.element) {
+        if (touchProxy.element) { // 如果不加判断则会阻止所有的默认行为，对于a链接和submit button不该阻止，所以这里需要做区分
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
             } else {
@@ -4907,15 +4907,34 @@ new function() {
             }
             data.specialUnbind = function() {
                 element.removeEventListener(touchNames[0], touchstart)
-                avalon.bind(data.element, data.param, data.msCallback)
+                avalon.unbind(data.element, data.param, data.msCallback)
             }
         }
     }
     me[touchNames[0] + "Hook"] = function(data) {
-        touchProxy.element = data.element
+        // if (needFixClick(data.param) ? touchSupported : true) {
+            data.specialBind = function(element, callback) {
+                touchProxy.element = data.element
+                data.msCallback = callback
+                avalon.bind(element, data.param, callback)
+            }
+            data.specialUnbind = function() {
+                avalon.unbind(data.element, data.param, data.msCallback)
+            }
+        }
+
     }
     me[touchNames[2] + "Hook"] = function(data) {
-        touchProxy.element = data.element
+        // if (needFixClick(data.param) ? touchSupported : true) {
+            data.specialBind = function(element, callback) {
+                touchProxy.element = data.element
+                data.msCallback = callback
+                avalon.bind(element, data.param, callback)
+            }
+            data.specialUnbind = function() {
+                avalon.unbind(data.element, data.param, data.msCallback)
+            }
+        }
     }
     //fastclick只要是处理移动端点击存在300ms延迟的问题
     //这是苹果乱搞异致的，他们想在小屏幕设备上通过快速点击两次，将放大了的网页缩放至原始比例。
