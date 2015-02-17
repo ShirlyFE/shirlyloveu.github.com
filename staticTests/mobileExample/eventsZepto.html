@@ -67,37 +67,37 @@
             $('#lightTap').on('tap', function(e) {
                 this.innerHTML = "轻触" + Date.now() + e.type
             })
-            $('#singleTap').on('click', function() {
+            $('#singleTap').on('click', function(e) {
                 this.innerHTML = "点击" + Date.now() + e.type
             })
-            $('#singleTap').on('dblclick', function() {
+            $('#singleTap').on('dblclick', function(e) {
                 this.innerHTML = "双击 " + Date.now() + e.type
             })
-            $('#doubleClick').on('dblclick', function() {
+            $('#doubleClick').on('dblclick', function(e) {
                 this.innerHTML = "双击 " + Date.now() + e.type
             })
-            $('#doubleTap').on('tap', function() {
+            $('#doubleTap').on('tap', function(e) {
                 this.innerHTML = "轻触" + Date.now() + e.type
             })
-            $('#doubleTap').on('doubletap', function() {
+            $('#doubleTap').on('doubletap', function(e) {
                 this.innerHTML = "双触 " + Date.now() + e.type
             })
-            $('#hold').on('hold', function() {
+            $('#hold').on('hold', function(e) {
                 this.innerHTML = "长按" + Date.now() + e.type
             })
-            $('#longTap').on('longtap', function() {
+            $('#longTap').on('longtap', function(e) {
                 this.innerHTML = "长摁" + Date.now() + e.type
             })
-            $('#swipeleft').on('swipeleft', function() {
+            $('#swipeleft').on('swipeleft', function(e) {
                 this.innerHTML = "向左划← " + Date.now() + e.type
             })
-            $('#swiperight').on('swiperight', function() {
+            $('#swiperight').on('swiperight', function(e) {
                 this.innerHTML = "向右划→ " + Date.now() + e.type
             })
-            $('#swipeup').on('swipeup', function() {
+            $('#swipeup').on('swipeup', function(e) {
                 this.innerHTML = "向上划↑ " + Date.now() + e.type
             })
-            $('#swipedown').on('swipedown', function() {
+            $('#swipedown').on('swipedown', function(e) {
                 this.innerHTML = "向下划↓ " + Date.now() + e.type
             })
         </script>
