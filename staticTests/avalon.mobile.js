@@ -4898,7 +4898,10 @@ new function() {
         // if (needFixClick(data.param) ? touchSupported : true) {
             data.specialBind = function(element, callback) {
                 // 不将touchstart绑定在document上是为了获取绑定事件的element
-                element.addEventListener(touchNames[0], touchstart)
+                if (!element.bindStart) { // 如果元素上绑定了多个事件不做处理的话会绑定多个touchstart监听器，显然不需要
+                    element.bindStart = true
+                    element.addEventListener(touchNames[0], touchstart)
+                }
                 data.msCallback = callback
                 avalon.bind(element, data.param, callback)
             }
