@@ -4947,19 +4947,19 @@ new function() {
     }
     document.addEventListener('mousedown', onMouse, true)
     document.addEventListener('click', onMouse, true)
-    document.addEventListener(touchNames[0], function(event) {
-        var element = touchProxy.element
-        if (!element) return
-        if (touchProxy.last) {
-            longTapTimeout = setTimeout(function() {
-                longTapTimeout = null
-                W3CFire(element, "hold")
-                W3CFire(element, "longtap")
-                touchProxy = {}
-                touchProxy.element = element
-            }, fastclick.clickDuration)
-        }
-    })
+    // document.addEventListener(touchNames[0], function(event) {
+    //     var element = touchProxy.element
+    //     if (!element) return
+    //     if (touchProxy.last) {
+    //         longTapTimeout = setTimeout(function() {
+    //             longTapTimeout = null
+    //             W3CFire(element, "hold")
+    //             W3CFire(element, "longtap")
+    //             touchProxy = {}
+    //             touchProxy.element = element
+    //         }, fastclick.clickDuration)
+    //     }
+    // })
     document.addEventListener(touchNames[1], function(event) {
         var element = touchProxy.element
         if (!element) return
@@ -4994,7 +4994,13 @@ new function() {
             }
             touchProxy.last = now
             touchProxy.element = element
-            
+            longTapTimeout = setTimeout(function() {
+                longTapTimeout = null
+                W3CFire(element, "hold")
+                W3CFire(element, "longtap")
+                touchProxy = {}
+                touchProxy.element = element
+            }, fastclick.clickDuration)
             if (touchProxy.tapping && avalon.fastclick.canClick(element)) {
                 avalon(element).addClass(fastclick.activeClass)
             }
