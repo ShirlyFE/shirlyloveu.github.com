@@ -1775,7 +1775,7 @@ window.$ === undefined && (window.$ = Zepto)
       // when the browser window loses focus,
       // for example when a modal dialog is shown,
       // cancel all ongoing events
-      .on('touchcancel MSPointerCancel pointercancel', cancelAll)
+      // .on('touchcancel MSPointerCancel pointercancel', cancelAll)
 
     // scrolling the window indicates intention of the user
     // to scroll, not tap or swipe, so cancel all ongoing events
