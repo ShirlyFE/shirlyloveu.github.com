@@ -4890,9 +4890,13 @@ new function() {
         }
         console.log('touchend')
         cancelLongTap()
+        console.log('touchProxy is : ')
+        console.log(touchProxy)
         var e = getCoordinates(event)
         var totalX = Math.abs(touchProxy.x - e.x)
         var totalY = Math.abs(touchProxy.y - e.y)
+        console.log('totalX is : '+totalX)
+        console.log('totalY is : '+totalY)
         if (totalX > 30 || totalY > 30) {
             //如果用户滑动的距离有点大，就认为是swipe事件
             var direction = swipeDirection(touchProxy.x, e.x, touchProxy.y, e.y)
