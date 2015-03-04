@@ -61,44 +61,44 @@
         </div>
         <div style="height:400px"></div>
         <script>
-            $('#lightTap').on('tap', function(e) {
-                this.innerHTML = "轻触" + Date.now() + e.type
-            })
-            $('#singleTap').on('click', function(e) {
-                this.innerHTML = "点击" + Date.now() + e.type
-            })
-            $('#singleTap').on('dblclick', function(e) {
-                this.innerHTML = "双击 " + Date.now() + e.type
-            })
-            $('#doubleClick').on('dblclick', function(e) {
-                this.innerHTML = "双击 " + Date.now() + e.type
-            })
-            $('#doubleTap').on('tap', function(e) {
-                console.log('tap is : '+Date.now())
-                this.innerHTML = "轻触" + Date.now() + e.type
-            })
-            $('#doubleTap').on('doubleTap', function(e) {
-                console.log('doubleTap is : '+Date.now())
-                this.innerHTML = "双触 " + Date.now() + e.type
-            })
+            // $('#lightTap').on('tap', function(e) {
+            //     this.innerHTML = "轻触" + Date.now() + e.type
+            // })
+            // $('#singleTap').on('click', function(e) {
+            //     this.innerHTML = "点击" + Date.now() + e.type
+            // })
+            // $('#singleTap').on('dblclick', function(e) {
+            //     this.innerHTML = "双击 " + Date.now() + e.type
+            // })
+            // $('#doubleClick').on('dblclick', function(e) {
+            //     this.innerHTML = "双击 " + Date.now() + e.type
+            // })
+            // $('#doubleTap').on('tap', function(e) {
+            //     console.log('tap is : '+Date.now())
+            //     this.innerHTML = "轻触" + Date.now() + e.type
+            // })
+            // $('#doubleTap').on('doubleTap', function(e) {
+            //     console.log('doubleTap is : '+Date.now())
+            //     this.innerHTML = "双触 " + Date.now() + e.type
+            // })
             $('#longTap').on('longTap', function(e) {
-                this.innerHTML = "长摁" + Date.now() + e.type
+                this.innerHTML += "长摁" + Date.now() + e.type
             })
             $('#longTap').on('tap', function(e) {
                 this.innerHTML = "轻触" + Date.now() + e.type
             })
-            $('#swipeleft').on('swipeLeft', function(e) {
-                this.innerHTML = "向左划← " + Date.now() + e.type
-            })
-            $('#swiperight').on('swipeRight', function(e) {
-                this.innerHTML = "向右划→ " + Date.now() + e.type
-            })
-            $('#swipeup').on('swipeUp', function(e) {
-                this.innerHTML = "向上划↑ " + Date.now() + e.type
-            })
-            $('#swipedown').on('swipeDown', function(e) {
-                this.innerHTML = "向下划↓ " + Date.now() + e.type
-            })
+            // $('#swipeleft').on('swipeLeft', function(e) {
+            //     this.innerHTML = "向左划← " + Date.now() + e.type
+            // })
+            // $('#swiperight').on('swipeRight', function(e) {
+            //     this.innerHTML = "向右划→ " + Date.now() + e.type
+            // })
+            // $('#swipeup').on('swipeUp', function(e) {
+            //     this.innerHTML = "向上划↑ " + Date.now() + e.type
+            // })
+            // $('#swipedown').on('swipeDown', function(e) {
+            //     this.innerHTML = "向下划↓ " + Date.now() + e.type
+            // })
         </script>
     </body>
 </html>
