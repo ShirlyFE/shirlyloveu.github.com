@@ -26,7 +26,7 @@
         </style>
     </head>
     <body>
-        <div class='box' id="lightTap">
+<!--         <div class='box' id="lightTap">
             轻触
         </div>
         <div class='box'  style="background: yellowgreen" id="singleTap">
@@ -38,12 +38,12 @@
         </div>
         <div id="doubleTap" class='box' style="background: orchid">
             双触
-        </div>
+        </div> -->
 
         <div id="longTap" class='box' style="background: purple">
             长摁
         </div> 
-        <div id="swipeleft" class='box' style="background: #39b3d7">
+<!--         <div id="swipeleft" class='box' style="background: #39b3d7">
             向左划
         </div>
         <div id="swiperight" class='box' style="background: yellow">
@@ -54,7 +54,7 @@
         </div>
         <div id="swipedown" class='box' style="background: #ed9c28">
             向下划
-        </div>
+        </div> -->
         <br clear="both"/>
         <div>
             【手指动作】thumb up:赞 pinch:捏/拧/掐 pluck:采摘/拔 rip:拆开/撕掉 scratch:抓/挠/刮/划 snap:打响指 flip:掷（硬币）click:点击 press:按/压 point to:指向 squeeze out:挤出/拧出 show the middle finger竖起中指 flick dust:弹掉灰尘 wipe:擦拭 strum:弹拨 grip:抓住 clench:握紧
@@ -83,6 +83,9 @@
             })
             $('#longTap').on('longTap', function(e) {
                 this.innerHTML = "长摁" + Date.now() + e.type
+            })
+            $('#longTap').on('tap', function(e) {
+                this.innerHTML = "轻触" + Date.now() + e.type
             })
             $('#swipeleft').on('swipeLeft', function(e) {
                 this.innerHTML = "向左划← " + Date.now() + e.type
