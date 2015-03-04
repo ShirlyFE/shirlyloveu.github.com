@@ -4846,7 +4846,7 @@ new function() {
     } else if (IE9_10touch) {
         touchNames = ["MSPointerDown", "MSPointerMove", "MSPointerUp", "MSPointerCancel"]
     }
-    var touchTimeout
+    var touchTimeout, longTapTimeout
     //判定滑动方向
     function swipeDirection(x1, x2, y1, y2) {
         return Math.abs(x1 - x2) >=
@@ -4878,13 +4878,19 @@ new function() {
             return true    
         }
     }
+    function cancelLongTap() {
+        console.log('cancelLongTap called')
+        if (longTapTimeout) clearTimeout(longTapTimeout)
+        longTapTimeout = null
+    }
     function touchend(event) { 
         var element = touchProxy.element
         if (!element) {
             return
         }
+        console.log('touchend')
+        cancelLongTap()
         var e = getCoordinates(event)
-        var diff = Date.now() - touchProxy.last //经过时间
         var totalX = Math.abs(touchProxy.x - e.x)
         var totalY = Math.abs(touchProxy.y - e.y)
         if (totalX > 30 || totalY > 30) {
@@ -4916,12 +4922,7 @@ new function() {
                 }
                 W3CFire(element, 'tap')
                 avalon.fastclick.fireEvent(element, "click", event)
-                if (diff > fastclick.clickDuration) {
-                    W3CFire(element, "hold")
-                    W3CFire(element, "longtap")
-                    touchProxy = {}
-                    touchProxy.element = element
-                } else if (touchProxy.isDoubleTap) {
+                if (touchProxy.isDoubleTap) {
                     W3CFire(element, "doubletap")
                     avalon.fastclick.fireEvent(element, "dblclick", event)
                     touchProxy = {}
@@ -4945,6 +4946,7 @@ new function() {
     document.addEventListener(touchNames[1], function(event) {
         if (!touchProxy.element)
             return
+        cancelLongTap()
         var e = getCoordinates(event)
         touchProxy.mx += Math.abs(touchProxy.x - e.x)
         touchProxy.my += Math.abs(touchProxy.y - e.y)
@@ -4973,6 +4975,13 @@ new function() {
             }
             touchProxy.last = now
             touchProxy.element = element
+            longTapTimeout = setTimeout(function() {
+                longTapTimeout = null
+                W3CFire(element, "hold")
+                W3CFire(element, "longtap")
+                touchProxy = {}
+                touchProxy.element = element
+            }, fastclick.clickDuration)
             if (touchProxy.tapping && avalon.fastclick.canClick(element)) {
                 avalon(element).addClass(fastclick.activeClass)
             }
