@@ -4940,7 +4940,7 @@ new function() {
                 }
             }
         }
-        
+
         avalon(element).removeClass(fastclick.activeClass)
     }
     document.addEventListener('mousedown', onMouse, true)
@@ -4993,7 +4993,7 @@ new function() {
                 W3CFire(element, "hold")
                 W3CFire(element, "longtap")
                 touchProxy = {}
-                avalon(element).addClass(fastclick.activeClass)
+                avalon(element).removeClass(fastclick.activeClass)
             }, fastclick.clickDuration)
             if (touchProxy.tapping && avalon.fastclick.canClick(element)) {
                 avalon(element).addClass(fastclick.activeClass)
