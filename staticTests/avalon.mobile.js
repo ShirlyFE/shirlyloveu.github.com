@@ -4838,14 +4838,14 @@ new function() {
     })()
     var touchSupported = !!(w3ctouch || IE11touch || IE9_10touch)
     //合成做成触屏事件所需要的各种原生事件
-    var touchNames = ["mousedown", "mousemove", "mouseup", ""]
-    if (w3ctouch) {
+    // var touchNames = ["mousedown", "mousemove", "mouseup", ""]
+    // if (w3ctouch) {
         touchNames = ["touchstart", "touchmove", "touchend", "touchcancel"]
-    } else if (IE11touch) {
-        touchNames = ["pointerdown", "pointermove", "pointerup", "pointercancel"]
-    } else if (IE9_10touch) {
-        touchNames = ["MSPointerDown", "MSPointerMove", "MSPointerUp", "MSPointerCancel"]
-    }
+    // } else if (IE11touch) {
+    //     touchNames = ["pointerdown", "pointermove", "pointerup", "pointercancel"]
+    // } else if (IE9_10touch) {
+    //     touchNames = ["MSPointerDown", "MSPointerMove", "MSPointerUp", "MSPointerCancel"]
+    // }
     var touchTimeout, longTapTimeout
     //判定滑动方向
     function swipeDirection(x1, x2, y1, y2) {
@@ -4905,6 +4905,7 @@ new function() {
             touchProxy.element = element
         } else {
             //如果移动的距离太少，则认为是tap,click,hold,dblclick
+
             if (fastclick.canClick(element) && touchProxy.mx < fastclick.dragDistance && touchProxy.my < fastclick.dragDistance) {
                 // 失去焦点的处理
                 if (document.activeElement && document.activeElement !== element) {
@@ -4939,6 +4940,7 @@ new function() {
                 }
             }
         }
+        
         avalon(element).removeClass(fastclick.activeClass)
     }
     document.addEventListener('mousedown', onMouse, true)
@@ -4991,7 +4993,7 @@ new function() {
                 W3CFire(element, "hold")
                 W3CFire(element, "longtap")
                 touchProxy = {}
-                touchProxy.element = element
+                avalon(element).addClass(fastclick.activeClass)
             }, fastclick.clickDuration)
             if (touchProxy.tapping && avalon.fastclick.canClick(element)) {
                 avalon(element).addClass(fastclick.activeClass)
