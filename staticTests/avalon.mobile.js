@@ -4861,6 +4861,7 @@ new function() {
         }
     }
     function onMouse(event) {
+        console.log(event.type + 'event')
         if (event.fireByAvalon) { //由touch库触发则执行监听函数，如果是事件自身触发则阻止事件传播并阻止默认行为
             return true
         } 
@@ -4879,24 +4880,19 @@ new function() {
         }
     }
     function cancelLongTap() {
-        console.log('cancelLongTap called')
         if (longTapTimeout) clearTimeout(longTapTimeout)
         longTapTimeout = null
     }
     function touchend(event) { 
+        console.log('touchend event')
         var element = touchProxy.element
         if (!element) {
             return
         }
-        console.log('touchend')
         cancelLongTap()
-        console.log('touchProxy is : ')
-        console.log(touchProxy)
         var e = getCoordinates(event)
         var totalX = Math.abs(touchProxy.x - e.x)
         var totalY = Math.abs(touchProxy.y - e.y)
-        console.log('totalX is : '+totalX)
-        console.log('totalY is : '+totalY)
         if (totalX > 30 || totalY > 30) {
             //如果用户滑动的距离有点大，就认为是swipe事件
             var direction = swipeDirection(touchProxy.x, e.x, touchProxy.y, e.y)
@@ -4948,6 +4944,7 @@ new function() {
     document.addEventListener('mousedown', onMouse, true)
     document.addEventListener('click', onMouse, true)
     document.addEventListener(touchNames[1], function(event) {
+        console.log(touchNames[1] + 'event')
         var element = touchProxy.element
         if (!element) return
         cancelLongTap()
@@ -4962,6 +4959,7 @@ new function() {
     document.addEventListener(touchNames[2], touchend)
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], function() {
+            console.log('touchcancel event')
             if (longTapTimeout) clearTimeout(longTapTimeout)
             if (touchTimeout) clearTimeout(touchTimeout)
             longTapTimeout = touchTimeout = null
@@ -4971,6 +4969,7 @@ new function() {
     me["clickHook"] = function(data) {
 
         function touchstart(event) {
+            console.log('touchstart event')
             var element = data.element,
                 now = Date.now(),
                 delta = now - (touchProxy.last || now)
@@ -4984,6 +4983,9 @@ new function() {
             }
             touchProxy.last = now
             touchProxy.element = element
+            /*
+                当触发hold和longtap事件时会触发touchcancel事件，从而阻止touchend事件的触发，继而保证在同时绑定tap和hold(longtap)事件时只触发其中一个事件
+            */
             longTapTimeout = setTimeout(function() {
                 longTapTimeout = null
                 W3CFire(element, "hold")
