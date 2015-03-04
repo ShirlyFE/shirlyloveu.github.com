@@ -4838,14 +4838,14 @@ new function() {
     })()
     var touchSupported = !!(w3ctouch || IE11touch || IE9_10touch)
     //合成做成触屏事件所需要的各种原生事件
-    // var touchNames = ["mousedown", "mousemove", "mouseup", ""]
-    // if (w3ctouch) {
+    var touchNames = ["mousedown", "mousemove", "mouseup", ""]
+    if (w3ctouch) {
         touchNames = ["touchstart", "touchmove", "touchend", "touchcancel"]
-    // } else if (IE11touch) {
-    //     touchNames = ["pointerdown", "pointermove", "pointerup", "pointercancel"]
-    // } else if (IE9_10touch) {
-    //     touchNames = ["MSPointerDown", "MSPointerMove", "MSPointerUp", "MSPointerCancel"]
-    // }
+    } else if (IE11touch) {
+        touchNames = ["pointerdown", "pointermove", "pointerup", "pointercancel"]
+    } else if (IE9_10touch) {
+        touchNames = ["MSPointerDown", "MSPointerMove", "MSPointerUp", "MSPointerCancel"]
+    }
     var touchTimeout, longTapTimeout
     //判定滑动方向
     function swipeDirection(x1, x2, y1, y2) {
