@@ -4948,8 +4948,8 @@ new function() {
     document.addEventListener('mousedown', onMouse, true)
     document.addEventListener('click', onMouse, true)
     document.addEventListener(touchNames[0], function(event) {
-        if (!touchProxy.element)
-            return
+        var element = touchProxy.element
+        if (!element) return
         if (touchProxy.last) {
             longTapTimeout = setTimeout(function() {
                 longTapTimeout = null
@@ -4960,11 +4960,9 @@ new function() {
             }, fastclick.clickDuration)
         }
     })
-
-
     document.addEventListener(touchNames[1], function(event) {
-        if (!touchProxy.element)
-            return
+        var element = touchProxy.element
+        if (!element) return
         cancelLongTap()
         var e = getCoordinates(event)
         touchProxy.mx += Math.abs(touchProxy.x - e.x)
