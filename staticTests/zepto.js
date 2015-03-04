@@ -1335,13 +1335,11 @@ window.$ === undefined && (window.$ = Zepto)
       handler.del   = delegator
       var callback  = delegator || fn
       handler.proxy = function(e){
-        logs.push(e.type + ' event')
         if (e.type == 'touchstart') {
           startTime = Date.now()
         }
         if (e.type == 'click') {
           endTime = Date.now()
-          logs.push('touchstart and click duration is : ' + (endTime - startTime))
         }
         e = compatible(e)
         if (e.isImmediatePropagationStopped()) return
@@ -1630,6 +1628,8 @@ window.$ === undefined && (window.$ = Zepto)
   }
 
   function longTap() {
+    console.log('longTap called')
+    console.log('touch.last is : '+touch.last)
     longTapTimeout = null
     if (touch.last) {
       touch.el.trigger('longTap')
@@ -1638,12 +1638,13 @@ window.$ === undefined && (window.$ = Zepto)
   }
 
   function cancelLongTap() {
+    console.log('cancelLongTap called')
     if (longTapTimeout) clearTimeout(longTapTimeout)
     longTapTimeout = null
   }
 
   function cancelAll() {
-    logs.push('cancelAll event')
+    console.log('calcelAll called')
     if (touchTimeout) clearTimeout(touchTimeout)
     if (tapTimeout) clearTimeout(tapTimeout)
     if (swipeTimeout) clearTimeout(swipeTimeout)
@@ -1681,7 +1682,6 @@ window.$ === undefined && (window.$ = Zepto)
         }
       })
       .on('touchstart MSPointerDown pointerdown', function(e){
-        logs.push('document touchstart event')
         if((_isPointerType = isPointerEventType(e, 'down')) &&
           !isPrimaryTouch(e)) return
         firstTouch = _isPointerType ? e : e.touches[0]
@@ -1719,11 +1719,12 @@ window.$ === undefined && (window.$ = Zepto)
         deltaY += Math.abs(touch.y1 - touch.y2)
       })
       .on('touchend MSPointerUp pointerup', function(e){
-        logs.push('document touchend event')
         if((_isPointerType = isPointerEventType(e, 'up')) &&
           !isPrimaryTouch(e)) return
-        cancelLongTap()
 
+        cancelLongTap()
+        console.log('touch is : ')
+        console.log(touch)
         // swipe
         if ((touch.x2 && Math.abs(touch.x1 - touch.x2) > 30) ||
             (touch.y2 && Math.abs(touch.y1 - touch.y2) > 30))
