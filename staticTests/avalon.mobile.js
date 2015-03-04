@@ -4947,19 +4947,6 @@ new function() {
     }
     document.addEventListener('mousedown', onMouse, true)
     document.addEventListener('click', onMouse, true)
-    // document.addEventListener(touchNames[0], function(event) {
-    //     var element = touchProxy.element
-    //     if (!element) return
-    //     if (touchProxy.last) {
-    //         longTapTimeout = setTimeout(function() {
-    //             longTapTimeout = null
-    //             W3CFire(element, "hold")
-    //             W3CFire(element, "longtap")
-    //             touchProxy = {}
-    //             touchProxy.element = element
-    //         }, fastclick.clickDuration)
-    //     }
-    // })
     document.addEventListener(touchNames[1], function(event) {
         var element = touchProxy.element
         if (!element) return
@@ -4975,7 +4962,10 @@ new function() {
     document.addEventListener(touchNames[2], touchend)
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], function() {
-            console.log('touchCancel')
+            if (longTapTimeout) clearTimeout(longTapTimeout)
+            if (touchTimeout) clearTimeout(touchTimeout)
+            longTapTimeout = touchTimeout = null
+            touchProxy = {}
         })
     }
     me["clickHook"] = function(data) {
