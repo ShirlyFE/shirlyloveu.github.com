@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        打开控制台将桌面图片拖进此页面将看到图片对应的base64编码
+        <script type="text/javascript">
+            document.ondrop = function (e) {
+                e.preventDefault();  // prevent browser from trying to run/display the file
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                  console.log(e.target.result);  // base64 encoded file data!
+                };
+                reader.readAsDataURL(e.dataTransfer.files[0]);
+            }
+        </script>
+    </body>
+</html>
