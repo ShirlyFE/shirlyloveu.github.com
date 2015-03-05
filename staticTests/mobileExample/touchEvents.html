@@ -35,11 +35,11 @@
                     // vm.click = function(e) {
                     //     this.innerHTML = "点击" + Date.now() + e.type
                     // }
-                    vm.doubletap = function(e) {
-                        console.log('doubletap called : '+Date.now())
-                        var that = this
-                        this.innerHTML = "双触，清除log "
-                    }
+                    // vm.doubletap = function(e) {
+                    //     console.log('doubletap called : '+Date.now())
+                    //     var that = this
+                    //     this.innerHTML = "双触，清除log "
+                    // }
                     // vm.dblclick = function(e) {
                     //     this.innerHTML = "双击 " + Date.now() + e.type
                     // }
@@ -54,9 +54,9 @@
                     // vm.swipeleft = function(e) {
                     //     this.innerHTML = "向左划← " + Date.now() + e.type
                     // }
-                    // vm.swiperight = function(e) {
-                    //     this.innerHTML = "向右划→ " + Date.now() + e.type
-                    // }
+                    vm.swiperight = function(e) {
+                        this.innerHTML = "向右划→ 清除log"
+                    }
                     // vm.swipeup = function(e) {
                     //     this.innerHTML = "向上划↑ " + Date.now() + e.type
                     // }
@@ -90,11 +90,11 @@
             双触
         </div> -->
         <h3>长按 hold</h3>
-        <div ms-on-hold='hold' ms-on-tap='tap' ms-on-doubletap='doubletap' class='box' style="background: purple">
+        <div ms-on-hold='hold' ms-on-tap='tap' ms-on-doubletap='swiperight' class='box' style="background: purple">
             
         </div>
         <h3>长摁 longtap</h3>
-        <div ms-on-longtap='longtap' ms-on-tap='tap' ms-on-doubletap='doubletap' class='box' style="background: purple">
+        <div ms-on-longtap='longtap' ms-on-tap='tap' ms-on-doubletap='swiperight' class='box' style="background: purple">
             
         </div> 
         <!-- <div ms-on-swipeleft='swipeleft' class='box' style="background: #39b3d7">
