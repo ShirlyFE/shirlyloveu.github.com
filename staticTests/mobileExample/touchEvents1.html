@@ -11,7 +11,7 @@
             .box{
                 width:200px;
                 height: 200px;
-                background: #ea9e00;
+                background: purple;
                 color:#000;
                 margin:20px;
                 margin-bottom:20px;
@@ -61,11 +61,11 @@
     <body ms-controller="touch">
         <button ms-on-tap='clearLog'>清除log</button>
         <h3>长按 hold</h3>
-        <div ms-on-hold='hold' ms-on-tap='tap' ms-on-swiperight='swiperight' class='box' id='hold' style="background: purple">
+        <div ms-on-hold='hold' ms-on-tap='tap' ms-on-swiperight='swiperight' class='box' id='hold'>
             
         </div>
         <h3>长摁 longtap</h3>
-        <div ms-on-longtap='longtap' id='longtap' ms-on-tap='tap' ms-on-swiperight='swiperight' class='box' style="background: purple">
+        <div ms-on-longtap='longtap' id='longtap' ms-on-tap='tap' ms-on-swiperight='swiperight' class='box'>
             
         </div> 
         <div>
