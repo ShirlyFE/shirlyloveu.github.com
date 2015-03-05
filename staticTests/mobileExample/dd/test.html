@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style type="text/css">
+        body{margin: 0;padding: 0}
+        div{width: 500px;height: 500px;background-color: #ccc}
+        div.ms-click-active{background-color: red}
+    </style>
+</head>
+<body ms-controller='test'>
+    <div ms-on-tap='$tap'></div>
+    <script src='avalon.mobile.js'></script>
+    <script>
+        avalon.define('test',function(vm){
+            vm.$tap = function(e){
+                this.innerHTML = e.timeStamp;
+            };
+        });
+    </script>
+</body>
+</html>
