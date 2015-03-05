@@ -85,7 +85,11 @@
                 this.innerHTML += "长摁" + Date.now() + e.type
             })
             $('#longTap').on('tap', function(e) {
-                this.innerHTML = "轻触" + Date.now() + e.type
+                this.innerHTML += "轻触" + Date.now() + e.type
+            })
+
+            $('#longTap').on('doubleTap', function(e) {
+                this.innerHTML += "双触" + Date.now() + e.type
             })
             // $('#swipeleft').on('swipeLeft', function(e) {
             //     this.innerHTML = "向左划← " + Date.now() + e.type

@@ -4893,6 +4893,7 @@ new function() {
         var e = getCoordinates(event)
         var totalX = Math.abs(touchProxy.x - e.x)
         var totalY = Math.abs(touchProxy.y - e.y)
+        console.log(touchProxy)
         if (totalX > 30 || totalY > 30) {
             //如果用户滑动的距离有点大，就认为是swipe事件
             var direction = swipeDirection(touchProxy.x, e.x, touchProxy.y, e.y)
@@ -4953,8 +4954,12 @@ new function() {
         var e = getCoordinates(event)
         touchProxy.mx += Math.abs(touchProxy.x - e.x)
         touchProxy.my += Math.abs(touchProxy.y - e.y)
+        console.log('touchProxy : ')
+        console.log(touchProxy)
         if (touchProxy.tapping && (touchProxy.mx > fastclick.dragDistance || touchProxy.my > fastclick.dragDistance)) {
-            touchProxy.element = null
+            if (!~touchProxy.events.indexOf('swipeleft') && !~touchProxy.events.indexOf('swiperight')) {
+                touchProxy.element = null    
+            }
         }
     })
 
@@ -4969,17 +4974,22 @@ new function() {
         })
     }
     me["clickHook"] = function(data) {
-
+        console.log('data is : ')
+        console.log(data)
         function touchstart(event) {
+            console.log('event.type is : '+event.type)
             console.log('touchstart event')
             var element = data.element,
                 now = Date.now(),
                 delta = now - (touchProxy.last || now)
             avalon.mix(touchProxy, getCoordinates(event))
-            touchProxy.event = data.param
+            console.log(element.events)
+            touchProxy.events = element.events
             touchProxy.mx = 0
             touchProxy.my = 0
-            touchProxy.tapping = /click|tap|hold$/.test(touchProxy.event)
+            touchProxy.tapping = touchProxy.events.some(function(item, index) {
+                return /click|tap|hold|longtap$/.test(item)
+            })
             if (delta > 0 && delta <= 250) {
                 touchProxy.isDoubleTap = true
             }
@@ -5009,7 +5019,10 @@ new function() {
                 // 不将touchstart绑定在document上是为了获取绑定事件的element
                 if (!element.bindStart) { // 如果元素上绑定了多个事件不做处理的话会绑定多个touchstart监听器，显然不需要
                     element.bindStart = true
+                    element.events = [data.param]
                     element.addEventListener(touchNames[0], touchstart)
+                } else {
+                    avalon.Array.ensure(element.events, data.param)
                 }
                 data.msCallback = callback
                 avalon.bind(element, data.param, callback)
