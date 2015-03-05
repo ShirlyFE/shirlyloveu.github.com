@@ -3,7 +3,7 @@
     <body>
         打开控制台将桌面图片拖进此页面将看到图片对应的base64编码
         <script type="text/javascript">
-            document.ondrop = function (e) {
+            document.body.ondrop = function (e) {
                 e.preventDefault();  // prevent browser from trying to run/display the file
                 var reader = new FileReader();
                 reader.onload = function(e) {
