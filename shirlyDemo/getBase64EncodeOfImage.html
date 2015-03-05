@@ -4,15 +4,21 @@
         <div draggable='true'>
             打开控制台将桌面图片拖进此页面将看到图片对应的base64编码
         </div>
+
         <script type="text/javascript">
+            var image = document.createElement('img')
+
             document.ondragover = function(e) {
-                e.preventDefault();
+                e.preventDefault()
             }
             document.ondrop = function (e) {
-                e.preventDefault();  // prevent browser from trying to run/display the file
+                e.preventDefault()  // prevent browser from trying to run/display the file
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                  console.log(e.target.result);  // base64 encoded file data!
+                    var result = e.target.result
+                    console.log(result) // base64 encoded file data!
+                    image.src = result
+                    document.body.appendChild(image)
                 };
                 reader.readAsDataURL(e.dataTransfer.files[0]);
             }
