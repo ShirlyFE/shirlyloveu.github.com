@@ -4959,6 +4959,7 @@ new function() {
         if (touchProxy.tapping && (touchProxy.mx > fastclick.dragDistance || touchProxy.my > fastclick.dragDistance)) {
             if (!~touchProxy.events.indexOf('swipeleft') && !~touchProxy.events.indexOf('swiperight')) {
                 touchProxy.element = null    
+                avalon(element).removeClass(fastclick.activeClass)
             }
         }
     })
