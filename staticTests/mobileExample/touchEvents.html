@@ -33,36 +33,36 @@
                         console.log('tap called : '+Date.now())
                         this.innerHTML = "轻触" + Date.now() + e.type
                     }
-                    vm.click = function(e) {
-                        this.innerHTML = "点击" + Date.now() + e.type
-                    }
-                    vm.doubletap = function(e) {
-                        console.log('doubletap called : '+Date.now())
-                        this.innerHTML = "双触 " + Date.now() + e.type
-                    }
-                    vm.dblclick = function(e) {
-                        this.innerHTML = "双击 " + Date.now() + e.type
-                    }
+                    // vm.click = function(e) {
+                    //     this.innerHTML = "点击" + Date.now() + e.type
+                    // }
+                    // vm.doubletap = function(e) {
+                    //     console.log('doubletap called : '+Date.now())
+                    //     this.innerHTML = "双触 " + Date.now() + e.type
+                    // }
+                    // vm.dblclick = function(e) {
+                    //     this.innerHTML = "双击 " + Date.now() + e.type
+                    // }
                     vm.hold = function(e) {
                         console.log('hold called : '+Date.now())
-                        this.innerHTML = "长按" + Date.now() + e.type
+                        this.innerHTML += "长按" + Date.now() + e.type
                     }
                     vm.longtap = function(e) {
                         console.log('longtap called : '+Date.now())
-                        this.innerHTML = "长摁" + Date.now() + e.type
+                        this.innerHTML += "长摁" + Date.now() + e.type
                     }
-                    vm.swipeleft = function(e) {
-                        this.innerHTML = "向左划← " + Date.now() + e.type
-                    }
-                    vm.swiperight = function(e) {
-                        this.innerHTML = "向右划→ " + Date.now() + e.type
-                    }
-                    vm.swipeup = function(e) {
-                        this.innerHTML = "向上划↑ " + Date.now() + e.type
-                    }
-                    vm.swipedown = function(e) {
-                        this.innerHTML = "向下划↓ " + Date.now() + e.type
-                    }
+                    // vm.swipeleft = function(e) {
+                    //     this.innerHTML = "向左划← " + Date.now() + e.type
+                    // }
+                    // vm.swiperight = function(e) {
+                    //     this.innerHTML = "向右划→ " + Date.now() + e.type
+                    // }
+                    // vm.swipeup = function(e) {
+                    //     this.innerHTML = "向上划↑ " + Date.now() + e.type
+                    // }
+                    // vm.swipedown = function(e) {
+                    //     this.innerHTML = "向下划↓ " + Date.now() + e.type
+                    // }
 
 
                     vm.array = avalon.range(0, 400)
