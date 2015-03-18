@@ -4946,23 +4946,23 @@ new function() {
     }
     document.addEventListener('mousedown', onMouse, true)
     document.addEventListener('click', onMouse, true)
-    document.addEventListener(touchNames[1], function(event) {
-        console.log(touchNames[1] + 'event')
-        var element = touchProxy.element
-        if (!element) return
-        cancelLongTap()
-        var e = getCoordinates(event)
-        touchProxy.mx += Math.abs(touchProxy.x - e.x)
-        touchProxy.my += Math.abs(touchProxy.y - e.y)
-        console.log('touchProxy : ')
-        console.log(touchProxy)
-        if (touchProxy.tapping && (touchProxy.mx > fastclick.dragDistance || touchProxy.my > fastclick.dragDistance)) {
-            if (!~touchProxy.events.indexOf('swipeleft') && !~touchProxy.events.indexOf('swiperight')) {
-                touchProxy.element = null    
-                avalon(element).removeClass(fastclick.activeClass)
-            }
-        }
-    })
+    // document.addEventListener(touchNames[1], function(event) {
+    //     console.log(touchNames[1] + 'event')
+    //     var element = touchProxy.element
+    //     if (!element) return
+    //     cancelLongTap()
+    //     var e = getCoordinates(event)
+    //     touchProxy.mx += Math.abs(touchProxy.x - e.x)
+    //     touchProxy.my += Math.abs(touchProxy.y - e.y)
+    //     console.log('touchProxy : ')
+    //     console.log(touchProxy)
+    //     if (touchProxy.tapping && (touchProxy.mx > fastclick.dragDistance || touchProxy.my > fastclick.dragDistance)) {
+    //         if (!~touchProxy.events.indexOf('swipeleft') && !~touchProxy.events.indexOf('swiperight')) {
+    //             touchProxy.element = null    
+    //             avalon(element).removeClass(fastclick.activeClass)
+    //         }
+    //     }
+    // })
 
     document.addEventListener(touchNames[2], touchend)
     if (touchNames[3]) {
