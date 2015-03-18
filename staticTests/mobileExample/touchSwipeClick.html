@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>测试swipe和click事件是否都会触发</title>
+    <script src="../avalon.mobile.js"></script>
+</head>
+<body ms-controller="touch">
+    <div id="screen" style="background-color: #cccccc;width: 80%;height: 300px;" ms-on-swipeleft="swipeleft" ms-on-click='click'>
+
+        <div style="background-color: red; width: 200px;height: 300px;" ms-on-click="clickChild"></div>
+
+    </div>
+    <script>
+        avalon.config({
+            loader: false
+        });
+        avalon.define("touch", function (vm) {
+            vm.swipeleft = function (e) {
+                alert("swipeleft callback！");
+            }
+            vm.click = function() {
+                alert('click callback!')
+            }
+            vm.clickChild = function (e) {
+                alert("child click callback!");
+            }
+        });
+
+    </script>
+</body>
+</html>
