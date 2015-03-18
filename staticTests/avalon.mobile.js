@@ -4838,7 +4838,7 @@ new function() {
     })()
     var touchSupported = !!(w3ctouch || IE11touch || IE9_10touch)
     //合成做成触屏事件所需要的各种原生事件
-    var touchNames = ["mousedown", "mousemove", "mouseup", ""]
+    // var touchNames = ["mousedown", "mousemove", "mouseup", ""]
     // if (w3ctouch) {
     //     touchNames = ["touchstart", "touchmove", "touchend", "touchcancel"]
     // } else if (IE11touch) {
@@ -4847,7 +4847,7 @@ new function() {
     //     touchNames = ["MSPointerDown", "MSPointerMove", "MSPointerUp", "MSPointerCancel"]
     // }
 
-    touchNames = ["touchstart", "touchmove", "touchend", "touchcancel"]
+    var touchNames = ["touchstart", "touchmove", "touchend", "touchcancel"]
 
     var touchTimeout, longTapTimeout
     //判定滑动方向
