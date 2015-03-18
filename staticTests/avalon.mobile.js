@@ -5015,7 +5015,7 @@ new function() {
             return type === "click"
         }
 
-        if (needFixClick(data.param) ? touchSupported : true) {
+        // if (needFixClick(data.param) ? touchSupported : true) {
             data.specialBind = function(element, callback) {
                 // 不将touchstart绑定在document上是为了获取绑定事件的element
                 if (!element.bindStart) { // 如果元素上绑定了多个事件不做处理的话会绑定多个touchstart监听器，显然不需要
@@ -5032,7 +5032,7 @@ new function() {
                 element.removeEventListener(touchNames[0], touchstart)
                 avalon.unbind(data.element, data.param, data.msCallback)
             }
-        }
+        // }
     }
     if (touchSupported) {
         me[touchNames[0] + "Hook"] = function(data) {
