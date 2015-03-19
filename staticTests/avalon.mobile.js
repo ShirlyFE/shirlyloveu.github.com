@@ -4859,10 +4859,10 @@ new function() {
             } else {
                 event.propagationStopped = true
             }
+            conosle.log('mousedown 事件中阻止默认行为并且阻止事件传播')
             event.stopPropagation() //阻止事件传播，防止点击穿透到textarea或者input而调出移动键盘设备
             event.preventDefault()
             touchProxy.element = null
-            return true    
         }
     }
     function cancelLongTap() {
@@ -4932,7 +4932,9 @@ new function() {
     }
     // 如果删除了fireByAvalon的判断，那么应该也就没有必要添加fireBuAvalon属性了
     document.addEventListener('mousedown', onMouse, true)
-    // document.addEventListener('click', onMouse, true)
+    document.addEventListener('click', function() {
+        console.log('document click event called')
+    }, true)
     document.addEventListener(touchNames[1], function(event) {
         var element = touchProxy.element
         if (!element) return
