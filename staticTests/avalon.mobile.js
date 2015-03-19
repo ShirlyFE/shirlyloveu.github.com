@@ -4851,7 +4851,7 @@ new function() {
             y: e.clientY
         }
     }
-    function onMouse(event) { // 由于在document上的touchend中添加了event.preventDefault()因此模拟的touch事件不会触发此mousedown事件，但是如果用户绑定了touchend、touchstart事件就需要在此阻止其默认行为并阻止事件传播
+    function onMouse(event) { // 由于在document上的touchend中添加了event.preventDefault()因此模拟的touch事件不会触发此mousedown事件，但会触发click事件，那么问题来了，为什么touchend的preventDefault可以阻止mousedown事件触发？如果用户绑定了touchend、touchstart事件就需要在此阻止其默认行为并阻止事件传播
         console.log('event.type : '+event.type)
         if (touchProxy.element) { // 如果不加判断则会阻止所有的默认行为，对于a链接和submit button不该阻止，所以这里需要做区分
             if (event.stopImmediatePropagation) {
@@ -4860,9 +4860,10 @@ new function() {
                 event.propagationStopped = true
             }
             conosle.log('mousedown 事件中阻止默认行为并且阻止事件传播')
-            event.stopPropagation() //阻止事件传播，防止点击穿透到textarea或者input而调出移动键盘设备
-            event.preventDefault()
-            touchProxy.element = null
+            event.stopPropagation() //阻止mousedown的事件传播，防止点击穿透到textarea或者input而调出移动键盘设备；再一个是阻止点击穿透到a元素而触发a链接的click行为
+            if (event.type === 'click') {
+                touchProxy.element = null
+            }
         }
     }
     function cancelLongTap() {
@@ -4932,6 +4933,8 @@ new function() {
     }
     // 如果删除了fireByAvalon的判断，那么应该也就没有必要添加fireBuAvalon属性了
     document.addEventListener('mousedown', onMouse, true)
+    document.addEventListener('mousedown', click, true)
+
     document.addEventListener('click', function() {
         console.log('document click event called')
     }, true)
