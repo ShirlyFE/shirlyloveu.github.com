@@ -4859,7 +4859,7 @@ new function() {
             } else {
                 event.propagationStopped = true
             }
-            conosle.log('mousedown 事件中阻止默认行为并且阻止事件传播')
+            console.log('mousedown 事件中阻止默认行为并且阻止事件传播')
             event.stopPropagation() //阻止mousedown的事件传播，防止点击穿透到textarea或者input而调出移动键盘设备；再一个是阻止点击穿透到a元素而触发a链接的click行为
             if (event.type === 'click') {
                 touchProxy.element = null
