@@ -58,22 +58,31 @@
         <div id="screen" style="background-color: #cccccc;width: 80%;height: 300px;" ms-on-swipeleft="swipeleft" ms-on-click='click'>
 
             <div style="background-color: red; width: 200px;height: 300px;" id='child' ms-on-click="clickChild"></div>
-
+            <input type='button' value='clearLog' id='clearlog'/>
         </div>
+        <div id='log'></div>
         <br clear="both"/>
         <div>
             【手指动作】thumb up:赞 pinch:捏/拧/掐 pluck:采摘/拔 rip:拆开/撕掉 scratch:抓/挠/刮/划 snap:打响指 flip:掷（硬币）click:点击 press:按/压 point to:指向 squeeze out:挤出/拧出 show the middle finger竖起中指 flick dust:弹掉灰尘 wipe:擦拭 strum:弹拨 grip:抓住 clench:握紧
         </div>
         <div style="height:400px"></div>
         <script>
-            $('#screen').on('swipeleft', function() {
-                this.innerHTML = 'swipeleft : '+this.id
+            var log = $('#log')
+            var logStr = ''
+            $('#clearlog').on('click', function() {
+                logStr = ''
+            })
+            $('#screen').on('swipeLeft', function() {
+                logStr += 'swipeleft : '+this.id
+                log.innerHTML = logStr
             })
             $('#screen').on('click', function() {
-                this.innerHTML = '点击: ' + this.id
+                logStr += '点击: ' + this.id
+                log.innerHTML = logStr
             })
             $('#child').on('click', function() {
-                this.innerHTML = "点击: " + this.id
+                logStr += "点击: " + this.id
+                log.innerHTML = logStr
             })
             // $('#lightTap').on('tap', function(e) {
             //     this.innerHTML = "轻触" + Date.now() + e.type
