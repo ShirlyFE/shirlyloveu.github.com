@@ -4908,7 +4908,6 @@ new function() {
                 } else {
                     fastclick.focus(element)
                 }
-                event.preventDefault() // 阻止事件的默认行为，这样默认的click事件就不会触发
                 W3CFire(element, 'tap')
                 avalon.fastclick.fireEvent(element, "click", event)
                 if (touchProxy.isDoubleTap) {
@@ -5034,7 +5033,7 @@ new function() {
                 data.specialBind = function(element, callback) {
                     var _callback = callback
                     callback = function(event) {
-                        // event.preventDefault() //阻止默认行为并不能阻止事件传播,比如touchend事件会继续传播到document元素上，但是后续的mousedown等事件不会再触发
+                        // event.preventDefault() //阻止默认行为并不能阻止事件传播,比如touchend事件会继续传播到document元素上，后续本身的mousedown、click等事件也会触发
                         // event.stopPropagation() // 阻止事件传播却不可以阻止事件默认行为，比如touchend事件不会传播到doccument上，但是却会继续出发mousedown click等事件，所以一般preventDefault和stopPropagation方法会如影随形
                         touchProxy.element = data.element
                         _callback.call(this, event)
