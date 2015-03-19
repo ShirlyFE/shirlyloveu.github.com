@@ -4865,7 +4865,7 @@ new function() {
                 event.propagationStopped = true
             }
             event.stopPropagation() //阻止mousedown的事件传播，防止点击穿透到textarea或者input而调出移动键盘设备；再一个是阻止点击穿透到a元素而触发a链接的click行为
-
+            event.preventDefault()
             if (event.type === 'click') {
                 touchProxy.element = null
             }
