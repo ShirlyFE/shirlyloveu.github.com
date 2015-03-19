@@ -69,18 +69,18 @@
         <script>
             var log = $('#log')[0]
             var logStr = ''
-            $('#clearlog').on('click', function() {
+            $('#clearlog').on('tap', function() {
                 logStr = ''
             })
             $('#screen').on('swipeLeft', function() {
                 logStr += 'swipeleft : '+this.id
                 log.innerHTML = logStr
             })
-            $('#screen').on('click', function() {
+            $('#screen').on('tap', function() {
                 logStr += '点击: ' + this.id
                 log.innerHTML = logStr
             })
-            $('#child').on('click', function() {
+            $('#child').on('tap', function() {
                 logStr += "点击: " + this.id
                 log.innerHTML = logStr
             })
