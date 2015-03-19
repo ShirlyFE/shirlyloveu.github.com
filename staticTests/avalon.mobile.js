@@ -5034,7 +5034,8 @@ new function() {
                 data.specialBind = function(element, callback) {
                     var _callback = callback
                     callback = function(event) {
-                        event.preventDefault()
+                        // event.preventDefault()
+                        event.stopPropagation()
                         touchProxy.element = data.element
                         _callback.call(this, event)
                     }
