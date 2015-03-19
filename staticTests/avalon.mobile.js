@@ -4851,22 +4851,17 @@ new function() {
             y: e.clientY
         }
     }
-    function onMouse(event) {
+    function onMouse(event) { // 由于在document上的touchend中添加了event.preventDefault()因此模拟的touch事件不会触发此mousedown事件，但是如果用户绑定了touchend、touchstart事件就需要在此阻止其默认行为并阻止事件传播
         console.log('event.type : '+event.type)
-        // if (event.fireByAvalon) { //由touch库触发则执行监听函数，如果是事件自身触发则阻止事件传播并阻止默认行为
-        //     return true
-        // } 
         if (touchProxy.element) { // 如果不加判断则会阻止所有的默认行为，对于a链接和submit button不该阻止，所以这里需要做区分
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
             } else {
                 event.propagationStopped = true
             }
-            event.stopPropagation() //阻止事件传播，防止点击穿透调出移动textarea或者input的键盘设备
+            event.stopPropagation() //阻止事件传播，防止点击穿透到textarea或者input而调出移动键盘设备
             event.preventDefault()
-            // if (event.type == 'click') { // mousedown会触发input的focus从而调出键盘，click会触发a链接的跳转
-                touchProxy.element = null
-            // }
+            touchProxy.element = null
             return true    
         }
     }
@@ -4893,7 +4888,7 @@ new function() {
             W3CFire(element, "swipe", details)
             W3CFire(element, "swipe" + direction, details)
             touchProxy = {}
-            touchProxy.element = element
+            // touchProxy.element = element
         } else {
             //如果移动的距离太少，则认为是tap,click,hold,dblclick
             // 如果hold(longtap)事件触发了，则touchProxy.mx为undefined，则不会进入条件，从而避免tap事件的触发
@@ -4920,14 +4915,14 @@ new function() {
                     W3CFire(element, "doubletap")
                     avalon.fastclick.fireEvent(element, "dblclick", event)
                     touchProxy = {}
-                    touchProxy.element = element
+                    // touchProxy.element = element
                 } else {
                     touchTimeout = setTimeout(function() {
                         clearTimeout(touchTimeout)
                         touchTimeout = null
                         if (touchProxy.element) {
                             touchProxy = {}
-                            touchProxy.element = element
+                            // touchProxy.element = element
                         }
                     }, 250)
                 }
@@ -5023,7 +5018,7 @@ new function() {
                 data.specialBind = function(element, callback) {
                     var _callback = callback
                     callback = function(event) {
-                        touchProxy.element = data.element
+                        touchProxy.element = data.element //不在此调用event.preventDefault()是为了避免在元素上绑定tap等其他模拟touch事件时document上的touchend事件无法触发
                         _callback.call(this, event)
                     }
                     data.msCallback = callback

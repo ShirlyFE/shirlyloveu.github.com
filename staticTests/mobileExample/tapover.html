@@ -41,7 +41,7 @@
         <div id="logArea">
             {{description}}
         </div>
-        <div id="popup" class="center" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay" avoidFocus='true'>
+        <div id="popup" class="center" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay" ms-on-tap='tapCall' avoidFocus='true'>
             我是弹出对话框#popup， 点我 关闭后textarea将接收focus事件，从而触发虚拟键盘
         </div>
         <textarea name="" id="clickReceiverTextarea" class="center" 
@@ -58,7 +58,11 @@
                 logs.push('focus fired on element ' + e.target.id);
             }
             vm.touchendCallback = function(e) {
+                console.log('touchend callback called')
                 VM.popupDisplay = 'none';
+            }
+            vm.tapCall = function() {
+                console.log('tap callback called')
             }
             vm.popupDisplay = "block"
             vm.description = ""
