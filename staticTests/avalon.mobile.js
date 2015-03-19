@@ -4960,6 +4960,9 @@ new function() {
             touchProxy = {}
         })
     }
+    function needFixClick(type) {
+        return type === "click"
+    }
     me["clickHook"] = function(data) {
         function touchstart(event) {
             var element = data.element,
@@ -4990,10 +4993,6 @@ new function() {
             if (touchProxy.tapping && avalon.fastclick.canClick(element)) {
                 avalon(element).addClass(fastclick.activeClass)
             }
-        }
-
-        function needFixClick(type) {
-            return type === "click"
         }
 
         if (needFixClick(data.param) ? touchSupported : true) {
