@@ -5018,6 +5018,7 @@ new function() {
                 data.specialBind = function(element, callback) {
                     var _callback = callback
                     callback = function(event) {
+                        event.preventDefault()
                         touchProxy.element = data.element //不在此调用event.preventDefault()是为了避免在元素上绑定tap等其他模拟touch事件时document上的touchend事件无法触发
                         _callback.call(this, event)
                     }
