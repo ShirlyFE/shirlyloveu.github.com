@@ -4864,9 +4864,9 @@ new function() {
             }
             event.stopPropagation() //阻止事件传播，防止点击穿透调出移动textarea或者input的键盘设备
             // event.preventDefault()
-            if (event.type == 'click') { // mousedown会触发input的focus从而调出键盘，click会触发a链接的跳转
+            // if (event.type == 'click') { // mousedown会触发input的focus从而调出键盘，click会触发a链接的跳转
                 touchProxy.element = null
-            }
+            // }
             return true    
         }
     }
@@ -4875,6 +4875,7 @@ new function() {
         longTapTimeout = null
     }
     function touchend(event) { 
+        console.log('touchend method : ' + event.type)
         var element = touchProxy.element
         if (!element) {
             return
