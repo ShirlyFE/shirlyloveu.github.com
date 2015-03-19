@@ -4852,6 +4852,7 @@ new function() {
         }
     }
     function onMouse(event) {
+        console.log('event.type : '+event.type)
         if (event.fireByAvalon) { //由touch库触发则执行监听函数，如果是事件自身触发则阻止事件传播并阻止默认行为
             return true
         } 
