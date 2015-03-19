@@ -4933,7 +4933,7 @@ new function() {
     }
     // 如果删除了fireByAvalon的判断，那么应该也就没有必要添加fireBuAvalon属性了
     document.addEventListener('mousedown', onMouse, true)
-    document.addEventListener('mousedown', click, true)
+    document.addEventListener('click', onMouse, true)
 
     document.addEventListener('click', function() {
         console.log('document click event called')
