@@ -4853,9 +4853,9 @@ new function() {
     }
     function onMouse(event) {
         console.log('event.type : '+event.type)
-        if (event.fireByAvalon) { //由touch库触发则执行监听函数，如果是事件自身触发则阻止事件传播并阻止默认行为
-            return true
-        } 
+        // if (event.fireByAvalon) { //由touch库触发则执行监听函数，如果是事件自身触发则阻止事件传播并阻止默认行为
+        //     return true
+        // } 
         if (touchProxy.element) { // 如果不加判断则会阻止所有的默认行为，对于a链接和submit button不该阻止，所以这里需要做区分
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
@@ -4863,7 +4863,7 @@ new function() {
                 event.propagationStopped = true
             }
             event.stopPropagation() //阻止事件传播，防止点击穿透调出移动textarea或者input的键盘设备
-            // event.preventDefault()
+            event.preventDefault()
             // if (event.type == 'click') { // mousedown会触发input的focus从而调出键盘，click会触发a链接的跳转
                 touchProxy.element = null
             // }
