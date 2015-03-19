@@ -4896,7 +4896,7 @@ new function() {
             W3CFire(element, "swipe", details)
             W3CFire(element, "swipe" + direction, details)
             touchProxy = {}
-            // touchProxy.element = element
+            touchProxy.element = element
         } else {
             //如果移动的距离太少，则认为是tap,click,hold,dblclick
             // 如果hold(longtap)事件触发了，则touchProxy.mx为undefined，则不会进入条件，从而避免tap事件的触发
@@ -4923,14 +4923,14 @@ new function() {
                     W3CFire(element, "doubletap")
                     avalon.fastclick.fireEvent(element, "dblclick", event)
                     touchProxy = {}
-                    // touchProxy.element = element
+                    touchProxy.element = element
                 } else {
                     touchTimeout = setTimeout(function() {
                         clearTimeout(touchTimeout)
                         touchTimeout = null
                         if (touchProxy.element) {
                             touchProxy = {}
-                            // touchProxy.element = element
+                            touchProxy.element = element
                         }
                     }, 250)
                 }
