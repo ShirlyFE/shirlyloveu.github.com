@@ -4875,14 +4875,60 @@ new function() {
         if (longTapTimeout) clearTimeout(longTapTimeout)
         longTapTimeout = null
     }
+    function touchstart(event) {
+        var firstTouch = event.touches[0],
+            element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
+            now = Date.now(),
+            delta = now - (touchProxy.last || now)
+        avalon.mix(touchProxy, getCoordinates(event))
+        // touchProxy.events = element.events
+        touchProxy.mx = 0
+        touchProxy.my = 0
+        // touchProxy.tapping = touchProxy.events.some(function(item, index) {
+        //     return /click|tap|hold|longtap$/.test(item)
+        // })
+        if (delta > 0 && delta <= 250) {
+            touchProxy.isDoubleTap = true
+        }
+        touchProxy.last = now
+        touchProxy.element = element
+        /*
+            当触发hold和longtap事件时会触发touchcancel事件，从而阻止touchend事件的触发，继而保证在同时绑定tap和hold(longtap)事件时只触发其中一个事件
+        */
+        longTapTimeout = setTimeout(function() {
+            longTapTimeout = null
+            W3CFire(element, "hold")
+            W3CFire(element, "longtap")
+            touchProxy = {}
+            // avalon(element).removeClass(fastclick.activeClass)
+        }, fastclick.clickDuration)
+        // if (touchProxy.tapping && avalon.fastclick.canClick(element)) {
+        //     avalon(element).addClass(fastclick.activeClass)
+        // }
+    }
+    function touchmove(event) {
+        // var element = touchProxy.element
+        // if (!element) return
+        cancelLongTap()
+        var e = getCoordinates(event)
+        touchProxy.mx += Math.abs(touchProxy.x - e.x)
+        touchProxy.my += Math.abs(touchProxy.y - e.y)
+        // if (touchProxy.tapping && (touchProxy.mx > fastclick.dragDistance || touchProxy.my > fastclick.dragDistance)) {
+            // 因为对于element的touchNames[0]事件只绑定了一次导致touchProxy.event仅仅是第一次绑定事件时的data.param，当同时绑定tap,hold,swipeleft时，这里的touchProxy.tapping为true而设置touchProxy.element = null,那么swipeleft或者swiperight事件就不会触发，因此我们在touchProxy.events中保存所有的events types并作进一步的判断从而保证每个事件都可以触发，并且触发了一个不会触发其他的事件
+            // if (!~touchProxy.events.indexOf('swipeleft') && !~touchProxy.events.indexOf('swiperight')) {
+            //     touchProxy.element = null   
+            //     avalon(element).removeClass(fastclick.activeClass) 
+            // }
+        // }
+    }
     function touchend(event) { 
         console.log('touchend method : ' + event.type)
         // logs.push('touchend method : ' + event.type)
 
         var element = touchProxy.element
-        if (!element) {
-            return
-        }
+        // if (!element) {
+        //     return
+        // }
         cancelLongTap()
         var e = getCoordinates(event)
         var totalX = Math.abs(touchProxy.x - e.x)
@@ -4941,22 +4987,8 @@ new function() {
     // 如果删除了fireByAvalon的判断，那么应该也就没有必要添加fireBuAvalon属性了
     document.addEventListener('mousedown', onMouse, true)
     document.addEventListener('click', onMouse, true)
-    document.addEventListener(touchNames[1], function(event) {
-        var element = touchProxy.element
-        if (!element) return
-        cancelLongTap()
-        var e = getCoordinates(event)
-        touchProxy.mx += Math.abs(touchProxy.x - e.x)
-        touchProxy.my += Math.abs(touchProxy.y - e.y)
-        if (touchProxy.tapping && (touchProxy.mx > fastclick.dragDistance || touchProxy.my > fastclick.dragDistance)) {
-            // 因为对于element的touchNames[0]事件只绑定了一次导致touchProxy.event仅仅是第一次绑定事件时的data.param，当同时绑定tap,hold,swipeleft时，这里的touchProxy.tapping为true而设置touchProxy.element = null,那么swipeleft或者swiperight事件就不会触发，因此我们在touchProxy.events中保存所有的events types并作进一步的判断从而保证每个事件都可以触发，并且触发了一个不会触发其他的事件
-            if (!~touchProxy.events.indexOf('swipeleft') && !~touchProxy.events.indexOf('swiperight')) {
-                touchProxy.element = null   
-                avalon(element).removeClass(fastclick.activeClass) 
-            }
-        }
-    })
-
+    document.addEventListener(touchNames[0], touchstart)
+    document.addEventListener(touchNames[1], touchmove)
     document.addEventListener(touchNames[2], touchend)
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], function() {
@@ -4966,96 +4998,65 @@ new function() {
             touchProxy = {}
         })
     }
-    function needFixClick(type) {
-        return type === "click"
-    }
-    me["clickHook"] = function(data) {
-        function touchstart(event) {
-            var element = data.element,
-                now = Date.now(),
-                delta = now - (touchProxy.last || now)
-            avalon.mix(touchProxy, getCoordinates(event))
-            touchProxy.events = element.events
-            touchProxy.mx = 0
-            touchProxy.my = 0
-            touchProxy.tapping = touchProxy.events.some(function(item, index) {
-                return /click|tap|hold|longtap$/.test(item)
-            })
-            if (delta > 0 && delta <= 250) {
-                touchProxy.isDoubleTap = true
-            }
-            touchProxy.last = now
-            touchProxy.element = element
-            /*
-                当触发hold和longtap事件时会触发touchcancel事件，从而阻止touchend事件的触发，继而保证在同时绑定tap和hold(longtap)事件时只触发其中一个事件
-            */
-            longTapTimeout = setTimeout(function() {
-                longTapTimeout = null
-                W3CFire(element, "hold")
-                W3CFire(element, "longtap")
-                touchProxy = {}
-                avalon(element).removeClass(fastclick.activeClass)
-            }, fastclick.clickDuration)
-            if (touchProxy.tapping && avalon.fastclick.canClick(element)) {
-                avalon(element).addClass(fastclick.activeClass)
-            }
-        }
-
-        if (needFixClick(data.param) ? touchSupported : true) {
-            data.specialBind = function(element, callback) {
-                // 不将touchstart绑定在document上是为了获取绑定事件的element
-                if (!element.bindStart) { // 如果元素上绑定了多个事件不做处理的话会绑定多个touchstart监听器，显然不需要
-                    element.bindStart = true
-                    element.events = [data.param]
-                    element.addEventListener(touchNames[0], touchstart)
-                } else {
-                    avalon.Array.ensure(element.events, data.param)
-                }
-                data.msCallback = callback
-                avalon.bind(element, data.param, callback)
-            }
-            data.specialUnbind = function() {
-                element.removeEventListener(touchNames[0], touchstart)
-                avalon.unbind(data.element, data.param, data.msCallback)
-            }
-        }
-    }
-    if (touchSupported) {
-        me[touchNames[0] + "Hook"] = function(data) {
-            if (needFixClick(data.param) ? touchSupported : true) {
-                data.specialBind = function(element, callback) {
-                    var _callback = callback
-                    callback = function(event) {
-                        touchProxy.element = data.element //不在此调用event.preventDefault()是为了避免在元素上绑定tap等其他模拟touch事件时document上的touchend事件无法触发
-                        _callback.call(this, event)
-                    }
-                    data.msCallback = callback
-                    avalon.bind(element, data.param, callback)
-                }
-                data.specialUnbind = function() {
-                    avalon.unbind(data.element, data.param, data.msCallback)
-                }
-            }
-        }
-        me[touchNames[2] + "Hook"] = function(data) {
-            if (needFixClick(data.param) ? touchSupported : true) {
-                data.specialBind = function(element, callback) {
-                    var _callback = callback
-                    callback = function(event) {
-                        // event.preventDefault() //阻止默认行为并不能阻止事件传播,比如touchend事件会继续传播到document元素上，后续本身的mousedown、click等事件也会触发
-                        // event.stopPropagation() // 阻止事件传播却不可以阻止事件默认行为，比如touchend事件不会传播到doccument上，但是却会继续出发mousedown click等事件，所以一般preventDefault和stopPropagation方法会如影随形
-                        touchProxy.element = data.element
-                        _callback.call(this, event)
-                    }
-                    data.msCallback = callback
-                    avalon.bind(element, data.param, callback)
-                }
-                data.specialUnbind = function() {
-                    avalon.unbind(data.element, data.param, data.msCallback)
-                }
-            }
-        }
-    }
+    // function needFixClick(type) {
+    //     return type === "click"
+    // }
+    // me["clickHook"] = function(data) {
+    //     if (needFixClick(data.param) ? touchSupported : true) {
+    //         data.specialBind = function(element, callback) {
+    //             // 不将touchstart绑定在document上是为了获取绑定事件的element
+    //             if (!element.bindStart) { // 如果元素上绑定了多个事件不做处理的话会绑定多个touchstart监听器，显然不需要
+    //                 element.bindStart = true
+    //                 element.events = [data.param]
+    //                 element.addEventListener(touchNames[0], touchstart)
+    //             } else {
+    //                 avalon.Array.ensure(element.events, data.param)
+    //             }
+    //             data.msCallback = callback
+    //             avalon.bind(element, data.param, callback)
+    //         }
+    //         data.specialUnbind = function() {
+    //             element.removeEventListener(touchNames[0], touchstart)
+    //             avalon.unbind(data.element, data.param, data.msCallback)
+    //         }
+    //     }
+    // }
+    // if (touchSupported) {
+    //     me[touchNames[0] + "Hook"] = function(data) {
+    //         if (needFixClick(data.param) ? touchSupported : true) {
+    //             data.specialBind = function(element, callback) {
+    //                 var _callback = callback
+    //                 callback = function(event) {
+    //                     touchProxy.element = data.element //不在此调用event.preventDefault()是为了避免在元素上绑定tap等其他模拟touch事件时document上的touchend事件无法触发
+    //                     _callback.call(this, event)
+    //                 }
+    //                 data.msCallback = callback
+    //                 avalon.bind(element, data.param, callback)
+    //             }
+    //             data.specialUnbind = function() {
+    //                 avalon.unbind(data.element, data.param, data.msCallback)
+    //             }
+    //         }
+    //     }
+    //     me[touchNames[2] + "Hook"] = function(data) {
+    //         if (needFixClick(data.param) ? touchSupported : true) {
+    //             data.specialBind = function(element, callback) {
+    //                 var _callback = callback
+    //                 callback = function(event) {
+    //                     // event.preventDefault() //阻止默认行为并不能阻止事件传播,比如touchend事件会继续传播到document元素上，后续本身的mousedown、click等事件也会触发
+    //                     // event.stopPropagation() // 阻止事件传播却不可以阻止事件默认行为，比如touchend事件不会传播到doccument上，但是却会继续出发mousedown click等事件，所以一般preventDefault和stopPropagation方法会如影随形
+    //                     touchProxy.element = data.element
+    //                     _callback.call(this, event)
+    //                 }
+    //                 data.msCallback = callback
+    //                 avalon.bind(element, data.param, callback)
+    //             }
+    //             data.specialUnbind = function() {
+    //                 avalon.unbind(data.element, data.param, data.msCallback)
+    //             }
+    //         }
+    //     }
+    // }
     
     //fastclick只要是处理移动端点击存在300ms延迟的问题
     //这是苹果乱搞异致的，他们想在小屏幕设备上通过快速点击两次，将放大了的网页缩放至原始比例。
