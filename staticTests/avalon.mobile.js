@@ -4918,8 +4918,8 @@ new function() {
 
         if (_isPointerType && !isPrimaryTouch(event)) return
 
-        if (!element) {
-            alert('touchend element 不存在')
+        if (!element) { // longtap|hold触发后touchProxy为{}
+            alert('touchend element为null')
             return
         }
         cancelLongTap()

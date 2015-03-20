@@ -20,12 +20,12 @@
                 margin-left: -80px;
                 margin-top: -40px;
             }
-            #popup{
+            .popup{
                 z-index: 99;
                 text-align: center;
                 background: rgb(232, 232, 238);
             }
-            #clickReceiverTextarea{
+            .clickReceiverTextarea{
                 padding: 0;
                 border: 1px solid red;
             }
@@ -45,10 +45,10 @@
         <div id="logArea">
             {{description}}
         </div>
-        <div id="popup" class="center" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay">
+        <div class="popup" class="center" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay">
             我是弹出对话框#popup， 点我 关闭后textarea将接收focus事件，从而触发虚拟键盘
         </div>
-        <div name="" id="clickReceiverTextarea" class="center" 
+        <div name="" class="clickReceiverTextarea" class="center" 
             ms-click="focusCallback">hello , 我处于底层，能看到我么。呵呵</div>
 
         <button ms-click='generatorDes'>track events</button>

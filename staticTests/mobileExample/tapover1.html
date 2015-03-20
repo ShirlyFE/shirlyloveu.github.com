@@ -11,7 +11,7 @@
                 margin: 0;
                 padding: 0;
             }
-            #popup{
+            .popup{
                 position: absolute;
                 top: 50%;
                 left: 50%;
@@ -24,7 +24,7 @@
                 background: blue;
                 opacity: 0.3;
             }
-            #popupTrigger{
+            .popupTrigger{
                 position: absolute;
                 top:50%;
                 left:50%;
@@ -59,10 +59,10 @@ popup.addEventListener('click', function(e){
         <div id="logArea">
             {{description}}
         </div>
-        <div id="popup" ms-css-display='popupDisplay' ms-click="clickCallback">
+        <div class="popup" ms-css-display='popupDisplay' ms-click="clickCallback">
             我是弹出对话框#popup
         </div>
-        <button id="popupTrigger" ms-on-touchend="touchendCallback">#popupTrigger</button>
+        <button class="popupTrigger" ms-on-touchend="touchendCallback">#popupTrigger</button>
 
         <button ms-click='generatorDes'>track events</button>
         <button ms-click='cancelLogs'>cancel logs</button>

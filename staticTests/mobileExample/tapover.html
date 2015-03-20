@@ -20,12 +20,12 @@
                 margin-left: -80px;
                 margin-top: -40px;
             }
-            #popup{
+            .popup{
                 z-index: 99;
                 text-align: center;
                 background: rgb(232, 232, 238);
             }
-            #clickReceiverTextarea{
+            .clickReceiverTextarea{
                 padding: 0;
             }
             #codeArea,#logArea{
@@ -37,19 +37,19 @@
             }
             
             .ms-click-active {
-    background: yellow;
-}
+                background: yellow;
+            }
         </style>
     </head>
     <body ms-controller="test">
         <div id="logArea">
             {{description}}
         </div>
-        <div ms-click='clickCallback' id='parent'>
-            <div id="popup" class="center" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay" ms-on-tap='tapCall' ms-click='clickCallback' avoidFocus='true'>
+        <div ms-click='clickCallback' class='parent'>
+            <div class="popup" class="center" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay" ms-on-tap='tapCall' ms-click='clickCallback' avoidFocus='true'>
                 我是弹出对话框#popup， 点我 关闭后textarea将接收focus事件，从而触发虚拟键盘
             </div>
-            <textarea name="" id="clickReceiverTextarea" class="center" 
+            <textarea name="" class="clickReceiverTextarea" class="center" 
                 ms-focus="focusCallback" ms-click='clickCallback'></textarea>
         </div>
         <button ms-click='generatorDes'>track events</button>

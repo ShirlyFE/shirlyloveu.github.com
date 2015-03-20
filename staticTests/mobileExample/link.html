@@ -11,7 +11,7 @@
                 margin: 0;
                 padding: 0;
             }
-            #popup{
+            .popup{
                 position: absolute;
                 top: 50%;
                 left: 50%;
@@ -24,7 +24,7 @@
                 background: blue;
                 opacity: 0.3;
             }
-            #popupTrigger{
+            .popupTrigger{
                 position: absolute;
                 top:50%;
                 left:50%;
@@ -50,10 +50,10 @@
         <div id="logArea">
             {{description}}
         </div>
-        <div id="popup" ms-css-display='popupDisplay' ms-click="clickCallback">
+        <div class="popup" ms-css-display='popupDisplay' ms-click="clickCallback">
             我是弹出对话框#popup
         </div>
-        <div id="popupTrigger">
+        <div class="popupTrigger">
             <a href="./tapover.html">tapover.html</a>
             <a href="./tapover1.html">tapover1.html</a>
             <a href="./tapover2.html">tapover2.html</a>
