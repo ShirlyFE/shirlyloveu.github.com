@@ -4877,7 +4877,7 @@ new function() {
         longTapTimeout = null
     }
     function touchstart(event) {
-        var _isPointerType = isPointerEventType(e, 'down'),
+        var _isPointerType = isPointerEventType(event, 'down'),
             firstTouch = _isPointerType ? event : event.touches[0],
             element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
             now = Date.now(),
@@ -4904,7 +4904,7 @@ new function() {
         }, fastclick.clickDuration)
     }
     function touchmove(event) {
-        var _isPointerType = isPointerEventType(e, 'down'),
+        var _isPointerType = isPointerEventType(event, 'down'),
             e = getCoordinates(event)
         if (_isPointerType && !isPrimaryTouch(event)) return
           
@@ -4913,7 +4913,7 @@ new function() {
         touchProxy.my += Math.abs(touchProxy.y - e.y)
     }
     function touchend(event) { 
-        var _isPointerType = isPointerEventType(e, 'down')
+        var _isPointerType = isPointerEventType(event, 'down')
             element = touchProxy.element
 
         if (_isPointerType && !isPrimaryTouch(event)) return
