@@ -46,10 +46,10 @@
             {{description}}
         </div>
         <div ms-click='clickCallback' class='parent'>
-            <div class="popup" class="center" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay" ms-on-tap='tapCall' ms-click='clickCallback' avoidFocus='true'>
+            <div  class="center popup" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay" ms-on-tap='tapCall' ms-click='clickCallback' avoidFocus='true'>
                 我是弹出对话框#popup， 点我 关闭后textarea将接收focus事件，从而触发虚拟键盘
             </div>
-            <textarea name="" class="clickReceiverTextarea" class="center" 
+            <textarea name="" class="center clickReceiverTextarea" 
                 ms-focus="focusCallback" ms-click='clickCallback'></textarea>
         </div>
         <button ms-click='generatorDes'>track events</button>
