@@ -4852,12 +4852,13 @@ new function() {
         }
     }
     function onMouse(event) { // 由于在document上的touchend中添加了event.preventDefault()因此模拟的touch事件不会触发此mousedown事件，但会触发click事件，那么问题来了，为什么touchend的preventDefault可以阻止mousedown事件触发？如果用户绑定了touchend、touchstart事件就需要在此阻止其默认行为并阻止事件传播
-        // logs.push('event.fireByAvalon : '+event.fireByAvalon)
-        // logs.push('event.type : '+event.type)
+        logs.push('event.fireByAvalon : '+event.fireByAvalon)
+        logs.push('event.type : '+event.type)
         console.log('event.type : '+event.type)
         if (event.fireByAvalon) { //document touchend回调中的click事件会触发docuemnt的click事件，从而使得mousedown事件在click事件之后触发，因此为了保证textarea的键盘不因点击穿透而调出必须作此判断，不知道为什么在PC模拟器下touchend中的click事件不会触发document的click事件
             return true
         }
+        logs.push("touchProxy.element "+touchProxy.element)
         if (touchProxy.element) { // 如果不加判断则会阻止所有的默认行为，对于a链接和submit button不该阻止，所以这里需要做区分
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
@@ -4923,7 +4924,7 @@ new function() {
     }
     function touchend(event) { 
         console.log('touchend method : ' + event.type)
-        // logs.push('touchend method : ' + event.type)
+        logs.push('touchend method : ' + event.type)
 
         var element = touchProxy.element
         if (!element) {
