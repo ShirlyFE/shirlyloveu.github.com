@@ -1,4 +1,4 @@
-var mlogs = []
+var mlogs = [];
 
 /*==================================================
  Copyright (c) 2013-2015 司徒正美 and other contributors
