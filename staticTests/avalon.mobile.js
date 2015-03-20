@@ -4863,8 +4863,8 @@ new function() {
         }
     }
     function onMouse(event) { 
-        mlogs('mouseCallback event.type : ' + event.type)
-        mlogs('mouseCallback event.fireByAvalon : ' + event.fireByAvalon)
+        mlogs.push('mouseCallback event.type : ' + event.type)
+        mlogs.push('mouseCallback event.fireByAvalon : ' + event.fireByAvalon)
         if (event.fireByAvalon) { 
             return true
         }
@@ -4926,7 +4926,7 @@ new function() {
         if (_isPointerType && !isPrimaryTouch(event)) return
 
         if (!element) { // longtap|hold触发后touchProxy为{}
-            mlogs('touchend element为null\n')
+            mlogs.push('touchend element为null\n')
             return
         }
         cancelLongTap()
