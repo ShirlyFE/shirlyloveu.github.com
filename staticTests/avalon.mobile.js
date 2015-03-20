@@ -4861,8 +4861,8 @@ new function() {
         }
     }
     function onMouse(event) { 
-        alert('mouseCaoo call event.type' + event.type)
-        alert('mouseCaoo call event.fireByAvalon' + event.fireByAvalon)
+        alert('mouseCallback event.type : ' + event.type)
+        alert('mouseCallback event.fireByAvalon : ' + event.fireByAvalon)
         if (event.fireByAvalon) { 
             return true
         }
