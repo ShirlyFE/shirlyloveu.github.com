@@ -55,9 +55,9 @@
         <div id="swipedown" class='box' style="background: #ed9c28">
             向下划
         </div> -->
-        <div id="screen" style="background-color: #cccccc;width: 80%;height: 400px;" ms-on-swipeleft="swipeleft" ms-on-click='click'>
+        <div id="screen" style="background-color: #cccccc;width: 80%;height: 400px;">
 
-            <div style="background-color: red; width: 200px;height: 300px;" id='child' ms-on-click="clickChild"></div>
+            <div style="background-color: red; width: 200px;height: 300px;" id='child'></div>
             <input type='button' value='clearLog' id='clearlog'/>
         </div>
         <div id='log'></div>
@@ -77,11 +77,15 @@
                 log.innerHTML = logStr
             })
             $('#screen').on('tap', function() {
-                logStr += '点击: ' + this.id
+                logStr += 'tap: ' + this.id
+                log.innerHTML = logStr
+            })
+            $('#screen').on('doubleTap', function() {
+                logStr += 'doubleTap: ' + this.id
                 log.innerHTML = logStr
             })
             $('#child').on('tap', function() {
-                logStr += "点击: " + this.id
+                logStr += "tap: " + this.id
                 log.innerHTML = logStr
             })
             // $('#lightTap').on('tap', function(e) {
