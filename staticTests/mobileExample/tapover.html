@@ -41,18 +41,22 @@
         <div id="logArea">
             {{description}}
         </div>
-        <div id="popup" class="center" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay" ms-on-tap='tapCall' avoidFocus='true'>
-            我是弹出对话框#popup， 点我 关闭后textarea将接收focus事件，从而触发虚拟键盘
+        <div ms-click='clickCallback' id='parent'>
+            <div id="popup" class="center" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay" ms-on-tap='tapCall' ms-click='clickCallback' avoidFocus='true'>
+                我是弹出对话框#popup， 点我 关闭后textarea将接收focus事件，从而触发虚拟键盘
+            </div>
+            <textarea name="" id="clickReceiverTextarea" class="center" 
+                ms-focus="focusCallback" ms-click='clickCallback'></textarea>
         </div>
-        <textarea name="" id="clickReceiverTextarea" class="center" 
-            ms-focus="focusCallback"></textarea>
-
         <button ms-click='generatorDes'>track events</button>
         <button ms-click='cancelLogs'>cancel logs</button>
     </body>
     <script>
         var logs = []
         var VM = avalon.define('test', function(vm) {
+            vm.clickCallback = function() {
+                console.log('click callback, id: '+this.id)
+            }
             vm.focusCallback = function(e) {
                 logs.push('focus fired on ' + Date.now());
                 logs.push('focus fired on element ' + e.target.id);
