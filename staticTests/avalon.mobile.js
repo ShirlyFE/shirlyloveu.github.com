@@ -4926,9 +4926,9 @@ new function() {
         // logs.push('touchend method : ' + event.type)
 
         var element = touchProxy.element
-        // if (!element) {
-        //     return
-        // }
+        if (!element) {
+            return
+        }
         cancelLongTap()
         var e = getCoordinates(event)
         var totalX = Math.abs(touchProxy.x - e.x)
