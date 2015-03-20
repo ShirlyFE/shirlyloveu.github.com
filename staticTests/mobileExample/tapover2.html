@@ -51,8 +51,8 @@
         <div name="" class="clickReceiverTextarea center" 
             ms-click="focusCallback">hello , 我处于底层，能看到我么。呵呵</div>
 
-        <button ms-click='generatorDes'>track events</button>
-        <button ms-click='cancelLogs'>cancel logs</button>
+        <button ms-on-touchstart='generatorDes'>track events</button>
+        <button ms-on-touchstart='cancelLogs'>cancel logs</button>
     </body>
     <script>
         var logs = []
@@ -66,10 +66,10 @@
             vm.popupDisplay = "block"
             vm.description = ""
             vm.generatorDes = function() {
-                VM.description = logs.join('\n')
+                VM.description = mlogs.join('\n track \n')
             }
             vm.cancelLogs = function() {
-                logs = []
+                mlogs = []
                 VM.description = ''
             }
         })

@@ -1,3 +1,5 @@
+var mlogs = []
+
 /*==================================================
  Copyright (c) 2013-2015 司徒正美 and other contributors
  http://www.cnblogs.com/rubylouvre/
@@ -4861,8 +4863,8 @@ new function() {
         }
     }
     function onMouse(event) { 
-        alert('mouseCallback event.type : ' + event.type)
-        alert('mouseCallback event.fireByAvalon : ' + event.fireByAvalon)
+        mlogs('mouseCallback event.type : ' + event.type)
+        mlogs('mouseCallback event.fireByAvalon : ' + event.fireByAvalon)
         if (event.fireByAvalon) { 
             return true
         }
@@ -4879,6 +4881,7 @@ new function() {
         longTapTimeout = null
     }
     function touchstart(event) {
+        mlogs.push('document touchstart event \n')
         var _isPointerType = isPointerEventType(event, 'down'),
             firstTouch = _isPointerType ? event : event.touches[0],
             element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
@@ -4906,6 +4909,7 @@ new function() {
         }, fastclick.clickDuration)
     }
     function touchmove(event) {
+        mlogs.push('document touchmove event \n')
         var _isPointerType = isPointerEventType(event, 'down'),
             e = getCoordinates(event)
         if (_isPointerType && !isPrimaryTouch(event)) return
@@ -4915,13 +4919,14 @@ new function() {
         touchProxy.my += Math.abs(touchProxy.y - e.y)
     }
     function touchend(event) { 
+        mlogs.push('document touchend event \n')
         var _isPointerType = isPointerEventType(event, 'down')
             element = touchProxy.element
 
         if (_isPointerType && !isPrimaryTouch(event)) return
 
         if (!element) { // longtap|hold触发后touchProxy为{}
-            alert('touchend element为null')
+            mlogs('touchend element为null\n')
             return
         }
         cancelLongTap()
@@ -4969,7 +4974,6 @@ new function() {
                 }
             }
         }
-        avalon(element).removeClass(fastclick.activeClass)
     }
     document.addEventListener('mousedown', onMouse, true)
     document.addEventListener('click', onMouse, true)
@@ -4977,7 +4981,8 @@ new function() {
     document.addEventListener(touchNames[1], touchmove)
     document.addEventListener(touchNames[2], touchend)
     if (touchNames[3]) {
-        document.addEventListener(touchNames[3], function() {
+        document.addEventListener(touchNames[3], function(event) {
+            mlogs.push('document event type : '+event.type+'\n')
             if (longTapTimeout) clearTimeout(longTapTimeout)
             if (touchTimeout) clearTimeout(touchTimeout)
             longTapTimeout = touchTimeout = null
@@ -4986,6 +4991,7 @@ new function() {
     }
     me["clickHook"] = function(data) {
         function touchstart(event) {
+            mlogs.push('element touchstart event element : '+element+'\n')
             var $element = avalon(data.element)
             $element.addClass(fastclick.activeClass)
         }
@@ -5000,6 +5006,8 @@ new function() {
                     element.addEventListener(touchNames[0], touchstart)
                 } 
                 callback = function(event) {
+                    mlogs.push('callback event type : '+event.type + '\n')
+                    mlogs.push('callback element : '+element+'\n')
                     avalon(element).removeClass(fastclick.activeClass)
                     _callback.apply(this, arguments)
                 }

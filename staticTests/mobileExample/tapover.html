@@ -52,12 +52,13 @@
             <textarea name="" class="center clickReceiverTextarea" 
                 ms-focus="focusCallback" ms-click='clickCallback'></textarea>
         </div>
-        <button ms-click='generatorDes'>track events</button>
-        <button ms-click='cancelLogs'>cancel logs</button>
+        <button ms-on-touchstart='generatorDes'>track events</button>
+        <button ms-on-touchstart='cancelLogs'>cancel logs</button>
     </body>
     <script>
         var logs = []
         var VM = avalon.define('test', function(vm) {
+            
             vm.clickCallback = function(event) {
 
                 console.log('click callback, id: '+this.id)
@@ -77,10 +78,10 @@
             vm.popupDisplay = "block"
             vm.description = ""
             vm.generatorDes = function() {
-                VM.description = logs.join('\n')
+                VM.description = mlogs.join('\n track \n')
             }
             vm.cancelLogs = function() {
-                logs = []
+                mlogs = []
                 VM.description = ''
             }
         })

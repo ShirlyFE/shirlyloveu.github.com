@@ -64,8 +64,8 @@ popup.addEventListener('click', function(e){
         </div>
         <button class="popupTrigger" ms-on-touchend="touchendCallback">#popupTrigger</button>
 
-        <button ms-click='generatorDes'>track events</button>
-        <button ms-click='cancelLogs'>cancel logs</button>
+        <button ms-on-touchstart='generatorDes'>track events</button>
+        <button ms-on-touchstart='cancelLogs'>cancel logs</button>
     </body>
     <script>
         var logs = []
@@ -79,10 +79,10 @@ popup.addEventListener('click', function(e){
             vm.popupDisplay = "none"
             vm.description = ""
             vm.generatorDes = function() {
-                VM.description = logs.join('\n')
+                VM.description = mlogs.join('\n track \n')
             }
             vm.cancelLogs = function() {
-                logs = []
+                mlogs = []
                 VM.description = ''
             }
         })

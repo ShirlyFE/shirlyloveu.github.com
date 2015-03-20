@@ -22,6 +22,15 @@ var VM = avalon.define('tapTest', function(vm) {
 	vm.tap = function() {
 		alert('tap called')
 	}
+	vm.generatorDes = function() {
+        VM.description = mlogs.join('\n track \n')
+    }
+    vm.cancelLogs = function() {
+        mlogs = []
+        VM.description = ''
+    }
+    vm.description = ""
+
 })
 
 </script>
@@ -134,7 +143,11 @@ body {
 </head>
 <body onload="loaded()" ms-controller='tapTest'>
 <div id="header">iScroll</div>
-
+<button ms-on-touchstart='generatorDes'>track events</button>
+<button ms-on-touchstart='cancelLogs'>cancel logs</button>
+<div id="logArea">
+    {{description}}
+</div>
 <div id="wrapper">
 	<div id="scroller" ms-on-tap='tap'>
 		<ul>

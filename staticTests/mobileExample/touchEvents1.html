@@ -48,6 +48,15 @@
                         hold.innerHTML = ''
                         longtap.innerHTML = ''
                     }
+                    vm.generatorDes = function() {
+                        VM.description = mlogs.join('\n track \n')
+                    }
+                    vm.cancelLogs = function() {
+                        mlogs = []
+                        VM.description = ''
+                    }
+                    vm.description = ""
+
                     vm.array = avalon.range(0, 400)
 
                 })
@@ -59,7 +68,9 @@
 
     </head>
     <body ms-controller="touch">
-        <button ms-on-tap='clearLog'>清除log</button>
+        <div id="logArea">
+            {{description}}
+        </div>
         <h3>长按 hold</h3>
         <div ms-on-hold='hold' ms-on-tap='tap' ms-on-swiperight='swiperight' class='box' id='hold'>
             
@@ -68,6 +79,8 @@
         <div ms-on-longtap='longtap' id='longtap' ms-on-tap='tap' ms-on-swiperight='swiperight' class='box'>
             
         </div> 
+        <button ms-on-touchstart='generatorDes'>track events</button>
+        <button ms-on-touchstart='cancelLogs'>cancel logs</button>
         <div>
             【手指动作】thumb up:赞 pinch:捏/拧/掐 pluck:采摘/拔 rip:拆开/撕掉 scratch:抓/挠/刮/划 snap:打响指 flip:掷（硬币）click:点击 press:按/压 point to:指向 squeeze out:挤出/拧出 show the middle finger竖起中指 flick dust:弹掉灰尘 wipe:擦拭 strum:弹拨 grip:抓住 clench:握紧
         </div>
