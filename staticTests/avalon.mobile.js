@@ -4991,7 +4991,7 @@ new function() {
     }
     me["clickHook"] = function(data) {
         function touchstart(event) {
-            mlogs.push('element touchstart event element : '+element+'\n')
+            mlogs.push('element touchstart event element : '+data.element+'\n')
             var $element = avalon(data.element)
             $element.addClass(fastclick.activeClass)
         }
