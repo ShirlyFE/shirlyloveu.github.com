@@ -4861,8 +4861,11 @@ new function() {
         if (event.fireByAvalon) { //document touchend回调中的click事件会触发docuemnt的click事件，从而使得mousedown事件在click事件之后触发，因此为了保证textarea的键盘不因点击穿透而调出必须作此判断，不知道为什么在PC模拟器下touchend中的click事件不会触发document的click事件
             return true
         }
+        alert('event.type : ' + event.type)
+        alert('event.fireByAvalon : ' + event.fireByAvalon)
+
         // logs.push("touchProxy.element "+touchProxy.element)
-        if (touchProxy.element) { // 如果不加判断则会阻止所有的默认行为，对于a链接和submit button不该阻止，所以这里需要做区分
+        // if (touchProxy.element) { // 如果不加判断则会阻止所有的默认行为，对于a链接和submit button不该阻止，所以这里需要做区分
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
             } else {
@@ -4873,7 +4876,7 @@ new function() {
             if (event.type === 'click') {
                 touchProxy.element = null
             }
-        }
+        // }
     }
     function cancelLongTap() {
         if (longTapTimeout) clearTimeout(longTapTimeout)
