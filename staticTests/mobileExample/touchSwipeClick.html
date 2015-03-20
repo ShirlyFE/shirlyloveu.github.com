@@ -6,6 +6,11 @@
         .ms-click-active {
             background: yellow !important;
         }
+        button {
+            display: inline-block;
+            width: 300px;
+            height: 100px;
+        }
     </style>
     <script src="../avalon.mobile.js"></script>
 </head>
@@ -22,7 +27,7 @@
         avalon.config({
             loader: false
         });
-        avalon.define("touch", function (vm) {
+        var VM = avalon.define("touch", function (vm) {
             vm.swipeleft = function (e) {
                 alert("swipeleft callback！and id: "+this.id);
             }
@@ -36,7 +41,7 @@
                 VM.description = mlogs.join('\n track \n')
             }
             vm.description = ""
-            
+
             vm.cancelLogs = function() {
                 mlogs = []
                 VM.description = ''

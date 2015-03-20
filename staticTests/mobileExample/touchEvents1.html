@@ -24,14 +24,18 @@
             .ms-click-active {
                 background: yellow !important;
             }
-
+            button {
+                display: inline-block;
+                width: 300px;
+                height: 100px;
+            }
         </style>
         <script>
 
             avalon.ready(function() {
                 var hold = document.getElementById('hold')
                 var longtap = document.getElementById('longtap')
-                avalon.define("touch", function(vm) {
+                var VM = avalon.define("touch", function(vm) {
                     vm.tap = function(e) {
                         console.log('tap called : '+Date.now())
                         this.innerHTML += "轻触" + Date.now() + e.type
