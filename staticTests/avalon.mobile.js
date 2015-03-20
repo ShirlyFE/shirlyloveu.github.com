@@ -4939,7 +4939,6 @@ new function() {
             W3CFire(element, "swipe", details)
             W3CFire(element, "swipe" + direction, details)
             touchProxy = {}
-            touchProxy.element = element
         } else {
             //如果移动的距离太少，则认为是tap,click,hold,dblclick
             // 如果hold(longtap)事件触发了，则touchProxy.mx为undefined，则不会进入条件，从而避免tap事件的触发
@@ -4966,15 +4965,11 @@ new function() {
                     W3CFire(element, "doubletap")
                     avalon.fastclick.fireEvent(element, "dblclick", event)
                     touchProxy = {}
-                    touchProxy.element = element
                 } else {
                     touchTimeout = setTimeout(function() {
                         clearTimeout(touchTimeout)
                         touchTimeout = null
-                        if (touchProxy.element) {
-                            touchProxy = {}
-                            touchProxy.element = element
-                        }
+                        touchProxy = {}
                     }, 250)
                 }
             }
@@ -4998,26 +4993,34 @@ new function() {
     // function needFixClick(type) {
     //     return type === "click"
     // }
-    // me["clickHook"] = function(data) {
-    //     if (needFixClick(data.param) ? touchSupported : true) {
-    //         data.specialBind = function(element, callback) {
-    //             // 不将touchstart绑定在document上是为了获取绑定事件的element
-    //             if (!element.bindStart) { // 如果元素上绑定了多个事件不做处理的话会绑定多个touchstart监听器，显然不需要
-    //                 element.bindStart = true
-    //                 element.events = [data.param]
-    //                 element.addEventListener(touchNames[0], touchstart)
-    //             } else {
-    //                 avalon.Array.ensure(element.events, data.param)
-    //             }
-    //             data.msCallback = callback
-    //             avalon.bind(element, data.param, callback)
-    //         }
-    //         data.specialUnbind = function() {
-    //             element.removeEventListener(touchNames[0], touchstart)
-    //             avalon.unbind(data.element, data.param, data.msCallback)
-    //         }
-    //     }
-    // }
+    me["clickHook"] = function(data) {
+        function touchstart(event) {
+            var $element = avalon(data.element)
+            $element.addClass(fastclick.activeClass)
+        }
+        function needFixClick(type) {
+            return type === "click"
+        }
+        if (needFixClick(data.param) ? touchSupported : true) {
+            data.specialBind = function(element, callback) {
+                var _callback = callback
+                if (!element.bindStart) { // 如果元素上绑定了多个事件不做处理的话会绑定多个touchstart监听器，显然不需要
+                    element.bindStart = true
+                    element.addEventListener(touchNames[0], touchstart)
+                } 
+                callback = function(event) {
+                    avalon(element).removeClass(fastclick.activeClass)
+                    _callback.apply(this, arguments)
+                }
+                data.msCallback = callback
+                avalon.bind(element, data.param, callback)
+            }
+            data.specialUnbind = function() {
+                element.removeEventListener(touchNames[0], touchstart)
+                avalon.unbind(data.element, data.param, data.msCallback)
+            }
+        }
+    }
     // if (touchSupported) {
     //     me[touchNames[0] + "Hook"] = function(data) {
     //         if (needFixClick(data.param) ? touchSupported : true) {
