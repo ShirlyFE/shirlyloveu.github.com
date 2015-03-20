@@ -38,19 +38,22 @@
                 var VM = avalon.define("touch", function(vm) {
                     vm.tap = function(e) {
                         console.log('tap called : '+Date.now())
-                        this.innerHTML += "轻触" + Date.now() + e.type
+                        this.innerHTML += "tap | "
                     }
                     vm.hold = function(e) {
                         console.log('hold called : '+Date.now())
-                        this.innerHTML += "长按" + Date.now() + e.type
+                        this.innerHTML += "hold | "
                     }
                     vm.longtap = function(e) {
                         console.log('longtap called : '+Date.now())
-                        this.innerHTML += "长摁" + Date.now() + e.type
+                        this.innerHTML += "longtap | " 
                     }
                     vm.clearLog = function() {
                         hold.innerHTML = ''
                         longtap.innerHTML = ''
+                    }
+                    vm.swiperight = function() {
+                        this.innerHTML += 'swiperight | '
                     }
                     vm.generatorDes = function() {
                         VM.description = mlogs.join('\n track \n')
