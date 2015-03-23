@@ -22,7 +22,9 @@
             var element = document.getElementById(id)
             element.addEventListener(type, callback, phase)
         }
-        eventBind('child', 'click', function() {
+        eventBind('child', 'click', function(event) {
+            console.log('event : ')
+            console.log(event)
             logs.push('child click')
         }, false)
 
@@ -52,8 +54,19 @@
             logs.push('document touchstart')
         })
 
-        document.addEventListener('touchend', function() {
+        document.addEventListener('touchend', function(event) {
             logs.push('document touchend')
+            var clickEvent = document.createEvent("MouseEvents")
+            clickEvent.initMouseEvent('click', true, true, window, 1, event.screenX, event.screenY,
+                    event.clientX, event.clientY, false, false, false, false, 0, null)
+            Object.defineProperty(clickEvent, "fireByAvalon", {
+                value: true
+            })
+            
+            var e = event.touches[0] ? event.touches[0] : event,
+                element =  e.target
+            logs.push('document touchend target id : '+element.id)
+            element.dispatchEvent(clickEvent)
         })
 
         document.addEventListener('click', function() {
