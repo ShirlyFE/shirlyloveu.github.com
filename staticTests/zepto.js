@@ -1,4 +1,4 @@
-var logs = [];
+var mlogs = [];
 //     Zepto.js
 //     (c) 2010-2015 Thomas Fuchs
 //     Zepto.js may be freely distributed under the MIT license.
@@ -1682,6 +1682,8 @@ window.$ === undefined && (window.$ = Zepto)
         }
       })
       .on('touchstart MSPointerDown pointerdown', function(e){
+        mlogs.push('document touchstart event \n')
+        mlogs.push('event target : '+e.target.id)
         if((_isPointerType = isPointerEventType(e, 'down')) &&
           !isPrimaryTouch(e)) return
         firstTouch = _isPointerType ? e : e.touches[0]
@@ -1719,12 +1721,13 @@ window.$ === undefined && (window.$ = Zepto)
         deltaY += Math.abs(touch.y1 - touch.y2)
       })
       .on('touchend MSPointerUp pointerup', function(e){
+        mlogs.push('document touchend event \n')
+        mlogs.push('event target : '+e.target.id)
+        
         if((_isPointerType = isPointerEventType(e, 'up')) &&
           !isPrimaryTouch(e)) return
 
         cancelLongTap()
-        console.log('touch is : ')
-        console.log(touch)
         // swipe
         if ((touch.x2 && Math.abs(touch.x1 - touch.x2) > 30) ||
             (touch.y2 && Math.abs(touch.y1 - touch.y2) > 30))
@@ -1771,6 +1774,9 @@ window.$ === undefined && (window.$ = Zepto)
           }
           deltaX = deltaY = 0
 
+      }).on('click', function() {
+
+        mlogs.push('document click event')
       })
       // when the browser window loses focus,
       // for example when a modal dialog is shown,
@@ -1784,6 +1790,10 @@ window.$ === undefined && (window.$ = Zepto)
 
   ;['swipe', 'swipeLeft', 'swipeRight', 'swipeUp', 'swipeDown',
     'doubleTap', 'tap', 'singleTap', 'longTap'].forEach(function(eventName){
-    $.fn[eventName] = function(callback){ return this.on(eventName, callback) }
+    $.fn[eventName] = function(callback){  
+      return this.on(eventName, function() {
+        mlogs.push('callback  执行，element.id :'+this.id)
+       callback.apply(this, arguments) 
+      }) }
   })
 })(Zepto)
