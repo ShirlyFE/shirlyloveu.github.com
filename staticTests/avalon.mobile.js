@@ -4889,7 +4889,7 @@ new function() {
             delta = now - (touchProxy.last || now)
 
         if (_isPointerType && !isPrimaryTouch(event)) return
-
+        mlogs.push('document touchstart 执行')
         avalon.mix(touchProxy, getCoordinates(event))
         touchProxy.mx = 0
         touchProxy.my = 0
