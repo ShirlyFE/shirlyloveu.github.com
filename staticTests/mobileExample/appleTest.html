@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf8'/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>测试iphone 5的事件机制</title>
+</head>
+<body>
+    <div id='screen' style='border: 1px solid red; padding: 50px'>
+        <div id='child' style='border: 1px solid green; background: #ccc;padding: 20px; font-size: 30px'>
+            事件机制分析
+        </div>
+    </div>
+
+    <button id='btn1'>print logs</button>
+    <button id='btn2'>clear logs</button>
+    <div id='log'></div>
+
+    <script type="text/javascript">
+        var logs = [] 
+        function eventBind(id, type, callback, phase) {
+            var element = document.getElementById(id)
+            element.addEventListener(type, callback, phase)
+        }
+        eventBind('child', 'click', function() {
+            logs.push('child click')
+        }, false)
+
+        eventBind('btn1', 'click', function() {
+            document.getElementById('log').innerHTML = logs.join('→')
+        }, false)
+
+        eventBind('btn2', 'click', function() {
+            logs = []
+            document.getElementById('log').innerHTML = ''
+        }, false)
+
+
+        eventBind('child', 'touchstart', function() {
+            logs.push('child touchstart')
+        }, false)
+
+        eventBind('screen', 'click', function() {
+            logs.push('screen click')
+        }, false)
+
+        eventBind('screen', 'touchstart', function() {
+            logs.push('screen touchstart')
+        }, false)
+
+        document.addEventListener('touchstart', function() {
+            logs.push('document touchstart')
+        })
+
+        document.addEventListener('touchend', function() {
+            logs.push('document touchend')
+        })
+
+        document.addEventListener('click', function() {
+            logs.push('document click')            
+        }, true)
+
+    </script>
+</body>
+</html>
