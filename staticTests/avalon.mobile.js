@@ -4996,7 +4996,7 @@ new function() {
             mlogs.push('element touchstart event target : '+event.target.id)
             mlogs.push('element event.fireByAvalon : '+event.fireByAvalon)
             var $element = avalon(data.element)
-            $element.addClass(fastclick.activeClass)
+            // $element.addClass(fastclick.activeClass)
         }
         function needFixClick(type) {
             return type === "click"
