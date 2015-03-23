@@ -1508,8 +1508,19 @@ window.$ === undefined && (window.$ = Zepto)
       // handle focus(), blur() by calling them directly
       if (event.type in focus && typeof this[event.type] == "function") this[event.type]()
       // items in the collection might not be DOM elements
-      else if ('dispatchEvent' in this) this.dispatchEvent(event)
-      else $(this).triggerHandler(event, args)
+      else if ('dispatchEvent' in this) {
+        var clickEvent = document.createEvent("MouseEvents")
+            clickEvent.initMouseEvent('tap', true, true, window, 1, event.screenX, event.screenY,
+                    event.clientX, event.clientY, false, false, false, false, 0, null)
+            Object.defineProperty(clickEvent, "fireByAvalon", {
+                value: true
+            })
+        this.dispatchEvent(clickEvent)
+      }
+      else {
+        console.log('triggerHandler')
+        $(this).triggerHandler(event, args)
+      }
     })
   }
 
@@ -1723,7 +1734,7 @@ window.$ === undefined && (window.$ = Zepto)
       .on('touchend MSPointerUp pointerup', function(e){
         mlogs.push('document touchend event \n')
         mlogs.push('event target : '+e.target.id)
-        
+
         if((_isPointerType = isPointerEventType(e, 'up')) &&
           !isPrimaryTouch(e)) return
 
