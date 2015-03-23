@@ -4983,6 +4983,7 @@ new function() {
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], function(event) {
             mlogs.push('document event type : '+event.type+'\n')
+
             if (longTapTimeout) clearTimeout(longTapTimeout)
             if (touchTimeout) clearTimeout(touchTimeout)
             longTapTimeout = touchTimeout = null
@@ -4992,6 +4993,8 @@ new function() {
     me["clickHook"] = function(data) {
         function touchstart(event) {
             mlogs.push('element touchstart event element id: '+data.element.id+'\n')
+            mlogs.push('element touchstart event target : '+event.target.id)
+            mlogs.push('element event.fireByAvalon : '+event.fireByAvalon)
             var $element = avalon(data.element)
             $element.addClass(fastclick.activeClass)
         }
