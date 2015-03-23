@@ -38,7 +38,8 @@
                 alert("child click callback!");
             }
             vm.generatorDes = function() {
-                VM.description = mlogs.join('\n track \n')
+                mlogs.push('track events Call \n')
+                VM.description = mlogs.join('→')
             }
             vm.description = ""
 

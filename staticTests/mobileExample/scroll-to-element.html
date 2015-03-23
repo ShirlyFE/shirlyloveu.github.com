@@ -23,7 +23,8 @@ var VM = avalon.define('tapTest', function(vm) {
 		alert('tap called')
 	}
 	vm.generatorDes = function() {
-        VM.description = mlogs.join('\n track \n')
+        mlogs.push('track events Call \n')
+        VM.description = mlogs.join('→')
     }
     vm.cancelLogs = function() {
         mlogs = []
