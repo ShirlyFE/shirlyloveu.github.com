@@ -5039,7 +5039,7 @@ new function() {
                 value: true
             })
             element.dispatchEvent(clickEvent)
-            element.dispatchEvent(event)
+            // element.dispatchEvent(event)
         },
         focus: function(target) {
             if (this.canFocus(target)) {
