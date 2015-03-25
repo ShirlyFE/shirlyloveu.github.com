@@ -1,0 +1,23 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><avalon ms-skip="" class="avalonHide"><style id="avalonStyle">.avalonHide{ display: none!important }</style></avalon>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script src="./avalon.mobile.js"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <style type="text/css">
+            body{margin: 0;padding: 0}
+            div{width: 500px;height: 500px;background-color: #ccc}
+            div.ms-click-active{background-color: red}
+        </style>
+    </head>
+    <body avalonctrl="test">
+        <div class="">1427270965063</div>
+        <script>
+            avalon.define('test', function(vm) {
+                vm.$tap = function(e) {
+                    this.innerHTML = e.timeStamp;
+                };
+            });
+        </script>
+    </body></html>
