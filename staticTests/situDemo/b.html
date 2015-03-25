@@ -17,6 +17,7 @@
         <script>
             avalon.define('test', function(vm) {
                 vm.$tap = function(e) {
+                    avalon(this).addClass('ms-click-active')
                     this.innerHTML = e.timeStamp;
                 };
             });
