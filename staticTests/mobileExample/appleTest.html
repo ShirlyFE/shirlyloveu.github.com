@@ -22,7 +22,7 @@
             var element = document.getElementById(id)
             element.addEventListener(type, callback, phase)
         }
-        eventBind('child', 'click', function(event) {
+        eventBind('child', 'tap', function(event) {
             console.log('event : ')
             console.log(event)
             logs.push('child click')
@@ -42,7 +42,7 @@
             logs.push('child touchstart')
         }, false)
 
-        eventBind('screen', 'click', function() {
+        eventBind('screen', 'tap', function() {
             logs.push('screen click')
         }, false)
 
