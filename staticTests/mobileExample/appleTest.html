@@ -56,6 +56,7 @@
 
         document.addEventListener('touchend', function(event) {
             logs.push('document touchend')
+            event.preventDefault()
             var clickEvent = document.createEvent("MouseEvents")
             clickEvent.initMouseEvent('click', true, true, window, 1, event.screenX, event.screenY,
                     event.clientX, event.clientY, false, false, false, false, 0, null)
