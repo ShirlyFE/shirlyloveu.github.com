@@ -4897,6 +4897,7 @@ new function() {
         longTapTimeout = null
     }
     function touchstart(event) {
+        alert('touchstart event')
         var _isPointerType = isPointerEventType(event, 'down'),
             firstTouch = _isPointerType ? event : event.touches[0],
             element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
