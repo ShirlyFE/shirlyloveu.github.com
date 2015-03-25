@@ -1405,6 +1405,8 @@ window.$ === undefined && (window.$ = Zepto)
       }
 
   function compatible(event, source) {
+    debugger
+    console.log('compatible event')
     if (source || !event.isDefaultPrevented) {
       source || (source = event)
 
@@ -1503,19 +1505,22 @@ window.$ === undefined && (window.$ = Zepto)
 
   $.fn.trigger = function(event, args){
     event = (isString(event) || $.isPlainObject(event)) ? $.Event(event) : compatible(event)
+
     event._args = args
     return this.each(function(){
       // handle focus(), blur() by calling them directly
       if (event.type in focus && typeof this[event.type] == "function") this[event.type]()
       // items in the collection might not be DOM elements
       else if ('dispatchEvent' in this) {
-        var clickEvent = document.createEvent("MouseEvents")
-            clickEvent.initMouseEvent('tap', true, true, window, 1, event.screenX, event.screenY,
-                    event.clientX, event.clientY, false, false, false, false, 0, null)
-            Object.defineProperty(clickEvent, "fireByAvalon", {
-                value: true
-            })
-        this.dispatchEvent(clickEvent)
+        // var clickEvent = document.createEvent("MouseEvents")
+        //     clickEvent.initMouseEvent('tap', true, true, window, 1, event.screenX, event.screenY,
+        //             event.clientX, event.clientY, false, false, false, false, 0, null)
+        //     Object.defineProperty(clickEvent, "fireByAvalon", {
+        //         value: true
+        //     })
+        // this.dispatchEvent(clickEvent)
+        this.dispatchEvent(event)
+
       }
       else {
         console.log('triggerHandler')

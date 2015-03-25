@@ -4959,8 +4959,9 @@ new function() {
                     fastclick.focus(element)
                 }
                 event.preventDefault()
-                W3CFire(element, 'tap')
-                avalon.fastclick.fireEvent(element, "click", event)
+                mlogs.push("event.isDefaultPrevented : " +event.isDefaultPrevented)
+                // W3CFire(element, 'tap')
+                // avalon.fastclick.fireEvent(element, "click", event)
                 if (touchProxy.isDoubleTap) {
                     W3CFire(element, "doubletap")
                     avalon.fastclick.fireEvent(element, "dblclick", event)
@@ -5037,6 +5038,7 @@ new function() {
                 value: true
             })
             element.dispatchEvent(clickEvent)
+            element.dispatchEvent(event)
         },
         focus: function(target) {
             if (this.canFocus(target)) {
