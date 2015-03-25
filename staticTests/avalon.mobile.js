@@ -4831,7 +4831,7 @@ new function() {
     })()
     var touchSupported = !!(w3ctouch || IE11touch || IE9_10touch)
     //合成做成触屏事件所需要的各种原生事件
-    var touchNames = ["mousedown", "mousemove", "mouseup", ""]
+    // var touchNames = ["mousedown", "mousemove", "mouseup", ""]
     if (w3ctouch) {
         touchNames = ["touchstart", "touchmove", "touchend", "touchcancel"]
     } else if (IE11touch) {
@@ -4839,7 +4839,7 @@ new function() {
     } else if (IE9_10touch) {
         touchNames = ["MSPointerDown", "MSPointerMove", "MSPointerUp", "MSPointerCancel"]
     }
-
+    var touchNames = ["touchstart", "touchmove", "touchend", "touchcancel"]
     function isPrimaryTouch(event){
         return (event.pointerType == 'touch' || event.pointerType == event.MSPOINTER_TYPE_TOUCH) && event.isPrimary
     }
