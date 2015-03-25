@@ -2922,15 +2922,6 @@ function pipe(val, data, action, e) {
 }
 
 var TimerID, ribbon = []
-function W3CFire(el, name, detail) {
-    var event = DOC.createEvent("Events")
-    event.initEvent(name, true, true)
-    event.fireByAvalon = true//签名，标记事件是由avalon触发
-    //event.isTrusted = false 设置这个opera会报错
-    if (detail)
-        event.detail = detail
-    el.dispatchEvent(event)
-}
 
 
 avalon.tick = function (fn) {
@@ -4862,6 +4853,15 @@ new function() {
             y: e.clientY
         }
     }
+    function fireEvent(el, name, detail) {
+        var event = document.createEvent("Events")
+        event.initEvent(name, true, true)
+        event.fireByAvalon = true//签名，标记事件是由avalon触发
+        //event.isTrusted = false 设置这个opera会报错
+        if (detail)
+            event.detail = detail
+        el.dispatchEvent(event)
+    }
     function onMouse(event) { 
         console.log('mouseCallback event.type : ' + event.type)
         console.log('mouseCallback event.fireByAvalon : ' + event.fireByAvalon)
@@ -4903,8 +4903,8 @@ new function() {
         */
         longTapTimeout = setTimeout(function() {
             longTapTimeout = null
-            W3CFire(element, "hold")
-            W3CFire(element, "longtap")
+            fireEvent(element, "hold")
+            fireEvent(element, "longtap")
             touchProxy = {}
         }, fastclick.clickDuration)
         return true
@@ -4940,8 +4940,8 @@ new function() {
             var details = {
                 direction: direction
             }
-            W3CFire(element, "swipe", details)
-            W3CFire(element, "swipe" + direction, details)
+            fireEvent(element, "swipe", details)
+            fireEvent(element, "swipe" + direction, details)
             touchProxy = {}
         } else {
             if (fastclick.canClick(element) && touchProxy.mx < fastclick.dragDistance && touchProxy.my < fastclick.dragDistance) {
@@ -4961,10 +4961,10 @@ new function() {
                 }
                 // event.preventDefault()
                 console.log("event.defaultPrevented : " +event.defaultPrevented)
-                W3CFire(element, 'tap')
+                fireEvent(element, 'tap')
                 avalon.fastclick.fireEvent(element, "click", event)
                 if (touchProxy.isDoubleTap) {
-                    W3CFire(element, "doubletap")
+                    fireEvent(element, "doubletap")
                     avalon.fastclick.fireEvent(element, "dblclick", event)
                     touchProxy = {}
                 } else {
@@ -4998,7 +4998,7 @@ new function() {
             console.log('element touchstart event target : '+event.target.id)
             console.log('element event.fireByAvalon : '+event.fireByAvalon)
             var $element = avalon(data.element)
-            // $element.addClass(fastclick.activeClass)
+            $element.addClass(fastclick.activeClass)
         }
         function needFixClick(type) {
             return type === "click"
