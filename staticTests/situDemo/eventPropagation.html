@@ -10,17 +10,19 @@
     avalon.config({
         loader: false
     });
-    avalon.define("touch", function (vm) {
+    var VM = avalon.define("touch", function (vm) {
+        vm.des = ''
         vm.click = function (e) {
-            console.log("你好！");
+            VM.des = VM.des + "你好！";
         }
         vm.clickChild = function (e) {
-            console.log("你不好");
+            VM.des = VM.des + "你不好";
         }
     });
 
 </script>
 <body ms-controller="touch">
+<div>{{des}}</div>
 <div id="screen" style="background-color: #cccccc;width: 80%;height: 300px;" ms-on-swipeleft="click">
 
     <div style="background-color: red; width: 200px;height: 300px;" ms-on-click="clickChild"></div>
