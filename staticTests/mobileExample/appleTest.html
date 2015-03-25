@@ -25,7 +25,7 @@
         eventBind('child', 'click', function(event) {
             console.log('event : ')
             console.log(event)
-            logs.push('child click')
+            logs.push('child click, event.fireByAvalon :' + event.fireByAvalon)
         }, false)
 
         eventBind('btn1', 'click', function() {
@@ -42,8 +42,8 @@
             logs.push('child touchstart')
         }, false)
 
-        eventBind('screen', 'click', function() {
-            logs.push('screen click')
+        eventBind('screen', 'click', function(event) {
+            logs.push('screen click, event.fireByAvalon :' + event.fireByAvalon)
         }, false)
 
         eventBind('screen', 'touchstart', function() {
