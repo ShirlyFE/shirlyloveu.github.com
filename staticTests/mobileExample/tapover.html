@@ -50,13 +50,14 @@
         <div id="logArea">
             {{description}}
         </div>
-        <div ms-click='clickCallback' class='parent'>
-            <div  class="center popup" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay" ms-on-tap='tapCall' ms-click='clickCallback' avoidFocus='true'>
+        <div ms-click='clickCallback' class='parent' id='parent'>
+            <div  class="center popup" ms-on-touchend="touchendCallback" ms-css-display="popupDisplay" ms-on-tap='tapCall' ms-click='clickCallback' avoidFocus='true' id='popup'>
                 我是弹出对话框#popup， 点我 关闭后textarea将接收focus事件，从而触发虚拟键盘
             </div>
-            <textarea name="" class="center clickReceiverTextarea" 
-                ms-focus="focusCallback" ms-click='clickCallback'></textarea>
+            <textarea name="" id='textarea' class="center clickReceiverTextarea" 
+                ms-focus="focusCallback" ></textarea>
         </div>
+        <a href='touchEvents1.html'>this is a link !</a>
         <button ms-on-touchstart='generatorDes'>track events</button>
         <button ms-on-touchstart='cancelLogs'>cancel logs</button>
     </body>

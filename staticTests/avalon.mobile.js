@@ -4863,8 +4863,8 @@ new function() {
         }
     }
     function onMouse(event) { 
-        mlogs.push('mouseCallback event.type : ' + event.type)
-        mlogs.push('mouseCallback event.fireByAvalon : ' + event.fireByAvalon)
+        console.log('mouseCallback event.type : ' + event.type)
+        console.log('mouseCallback event.fireByAvalon : ' + event.fireByAvalon)
         if (event.fireByAvalon) { 
             return true
         }
@@ -4881,7 +4881,7 @@ new function() {
         longTapTimeout = null
     }
     function touchstart(event) {
-        mlogs.push('document touchstart event \n')
+        console.log('document touchstart event \n')
         var _isPointerType = isPointerEventType(event, 'down'),
             firstTouch = _isPointerType ? event : event.touches[0],
             element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
@@ -4889,7 +4889,7 @@ new function() {
             delta = now - (touchProxy.last || now)
 
         if (_isPointerType && !isPrimaryTouch(event)) return
-        mlogs.push('document touchstart 执行')
+        console.log('document touchstart 执行')
         avalon.mix(touchProxy, getCoordinates(event))
         touchProxy.mx = 0
         touchProxy.my = 0
@@ -4907,9 +4907,10 @@ new function() {
             W3CFire(element, "longtap")
             touchProxy = {}
         }, fastclick.clickDuration)
+        return true
     }
     function touchmove(event) {
-        mlogs.push('document touchmove event \n')
+        console.log('document touchmove event \n')
         var _isPointerType = isPointerEventType(event, 'down'),
             e = getCoordinates(event)
         if (_isPointerType && !isPrimaryTouch(event)) return
@@ -4919,14 +4920,14 @@ new function() {
         touchProxy.my += Math.abs(touchProxy.y - e.y)
     }
     function touchend(event) { 
-        mlogs.push('document touchend event \n')
+        console.log('document touchend event \n')
         var _isPointerType = isPointerEventType(event, 'down')
             element = touchProxy.element
 
         if (_isPointerType && !isPrimaryTouch(event)) return
 
         if (!element) { // longtap|hold触发后touchProxy为{}
-            mlogs.push('touchend element为null\n')
+            console.log('touchend element为null\n')
             return
         }
         cancelLongTap()
@@ -4958,10 +4959,10 @@ new function() {
                 } else {
                     fastclick.focus(element)
                 }
-                event.preventDefault()
-                mlogs.push("event.defaultPrevented : " +event.defaultPrevented)
+                // event.preventDefault()
+                console.log("event.defaultPrevented : " +event.defaultPrevented)
                 W3CFire(element, 'tap')
-                // avalon.fastclick.fireEvent(element, "click", event)
+                avalon.fastclick.fireEvent(element, "click", event)
                 if (touchProxy.isDoubleTap) {
                     W3CFire(element, "doubletap")
                     avalon.fastclick.fireEvent(element, "dblclick", event)
@@ -4983,7 +4984,7 @@ new function() {
     document.addEventListener(touchNames[2], touchend)
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], function(event) {
-            mlogs.push('document event type : '+event.type+'\n')
+            console.log('document event type : '+event.type+'\n')
 
             if (longTapTimeout) clearTimeout(longTapTimeout)
             if (touchTimeout) clearTimeout(touchTimeout)
@@ -4993,16 +4994,16 @@ new function() {
     }
     me["clickHook"] = function(data) {
         function touchstart(event) {
-            mlogs.push('element touchstart event element id: '+data.element.id+'\n')
-            mlogs.push('element touchstart event target : '+event.target.id)
-            mlogs.push('element event.fireByAvalon : '+event.fireByAvalon)
+            console.log('element touchstart event element id: '+data.element.id+'\n')
+            console.log('element touchstart event target : '+event.target.id)
+            console.log('element event.fireByAvalon : '+event.fireByAvalon)
             var $element = avalon(data.element)
             // $element.addClass(fastclick.activeClass)
         }
         function needFixClick(type) {
             return type === "click"
         }
-        if (needFixClick(data.param) ? touchSupported : true) {
+        // if (needFixClick(data.param) ? touchSupported : true) {
             data.specialBind = function(element, callback) {
                 var _callback = callback
                 if (!element.bindStart) { // 如果元素上绑定了多个事件不做处理的话会绑定多个touchstart监听器，显然不需要
@@ -5010,8 +5011,8 @@ new function() {
                     element.addEventListener(touchNames[0], touchstart)
                 } 
                 callback = function(event) {
-                    mlogs.push('callback event type : '+event.type + '\n')
-                    mlogs.push('callback element id: '+element.id+'\n')
+                    console.log('callback event type : '+event.type + '\n')
+                    console.log('callback element id: '+element.id+'\n')
                     avalon(element).removeClass(fastclick.activeClass)
                     _callback.apply(this, arguments)
                 }
@@ -5022,7 +5023,7 @@ new function() {
                 element.removeEventListener(touchNames[0], touchstart)
                 avalon.unbind(data.element, data.param, data.msCallback)
             }
-        }
+        // }
     }
     //fastclick只要是处理移动端点击存在300ms延迟的问题
     //这是苹果乱搞异致的，他们想在小屏幕设备上通过快速点击两次，将放大了的网页缩放至原始比例。
@@ -5031,7 +5032,7 @@ new function() {
         clickDuration: 750, //小于750ms是点击，长于它是长按或拖动
         dragDistance: 30, //最大移动的距离
         fireEvent: function(element, type, event) {
-            mlogs.push('fireEvent type : '+type)
+            console.log('fireEvent type : '+type)
             var clickEvent = document.createEvent("MouseEvents")
             clickEvent.initMouseEvent(type, true, true, window, 1, event.screenX, event.screenY,
                     event.clientX, event.clientY, false, false, false, false, 0, null)

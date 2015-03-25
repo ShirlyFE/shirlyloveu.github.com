@@ -45,7 +45,7 @@
                     vm.doubletap = function(e) {
                         console.log('doubletap called : '+Date.now())
                         var that = this
-                        this.innerHTML += "双触，清除log "
+                        this.innerHTML = "双触，清除log "
                     }
                     vm.dblclick = function(e) {
                         this.innerHTML += "双击 " + Date.now() + e.type
