@@ -4991,39 +4991,39 @@ new function() {
             touchProxy = {}
         })
     }
-    // me["clickHook"] = function(data) {
-    //     function touchstart(event) {
-    //         mlogs.push('element touchstart event element id: '+data.element.id+'\n')
-    //         mlogs.push('element touchstart event target : '+event.target.id)
-    //         mlogs.push('element event.fireByAvalon : '+event.fireByAvalon)
-    //         var $element = avalon(data.element)
-    //         // $element.addClass(fastclick.activeClass)
-    //     }
-    //     function needFixClick(type) {
-    //         return type === "click"
-    //     }
-    //     if (needFixClick(data.param) ? touchSupported : true) {
-    //         data.specialBind = function(element, callback) {
-    //             var _callback = callback
-    //             if (!element.bindStart) { // 如果元素上绑定了多个事件不做处理的话会绑定多个touchstart监听器，显然不需要
-    //                 element.bindStart = true
-    //                 element.addEventListener(touchNames[0], touchstart)
-    //             } 
-    //             callback = function(event) {
-    //                 mlogs.push('callback event type : '+event.type + '\n')
-    //                 mlogs.push('callback element id: '+element.id+'\n')
-    //                 avalon(element).removeClass(fastclick.activeClass)
-    //                 _callback.apply(this, arguments)
-    //             }
-    //             data.msCallback = callback
-    //             avalon.bind(element, data.param, callback)
-    //         }
-    //         data.specialUnbind = function() {
-    //             element.removeEventListener(touchNames[0], touchstart)
-    //             avalon.unbind(data.element, data.param, data.msCallback)
-    //         }
-    //     }
-    // }
+    me["clickHook"] = function(data) {
+        function touchstart(event) {
+            mlogs.push('element touchstart event element id: '+data.element.id+'\n')
+            mlogs.push('element touchstart event target : '+event.target.id)
+            mlogs.push('element event.fireByAvalon : '+event.fireByAvalon)
+            var $element = avalon(data.element)
+            // $element.addClass(fastclick.activeClass)
+        }
+        function needFixClick(type) {
+            return type === "click"
+        }
+        if (needFixClick(data.param) ? touchSupported : true) {
+            data.specialBind = function(element, callback) {
+                var _callback = callback
+                if (!element.bindStart) { // 如果元素上绑定了多个事件不做处理的话会绑定多个touchstart监听器，显然不需要
+                    element.bindStart = true
+                    element.addEventListener(touchNames[0], touchstart)
+                } 
+                callback = function(event) {
+                    mlogs.push('callback event type : '+event.type + '\n')
+                    mlogs.push('callback element id: '+element.id+'\n')
+                    avalon(element).removeClass(fastclick.activeClass)
+                    _callback.apply(this, arguments)
+                }
+                data.msCallback = callback
+                avalon.bind(element, data.param, callback)
+            }
+            data.specialUnbind = function() {
+                element.removeEventListener(touchNames[0], touchstart)
+                avalon.unbind(data.element, data.param, data.msCallback)
+            }
+        }
+    }
     //fastclick只要是处理移动端点击存在300ms延迟的问题
     //这是苹果乱搞异致的，他们想在小屏幕设备上通过快速点击两次，将放大了的网页缩放至原始比例。
     var fastclick = avalon.fastclick = {
