@@ -68,16 +68,16 @@
             //     element =  e.target
             // logs.push('document touchend target id : '+element.id)
             // element.dispatchEvent(clickEvent)
-            var event = DOC.createEvent("Events"),
+            var fireEvent = document.createEvent("Events"),
                 e = event.touches[0] ? event.touches[0] : event,
                 element =  e.target
-                
-                event.initEvent(name, true, true)
-                event.fireByAvalon = true//签名，标记事件是由avalon触发
+
+                fireEvent.initEvent('tap', true, true)
+                fireEvent.fireByAvalon = true//签名，标记事件是由avalon触发
                 //event.isTrusted = false 设置这个opera会报错
-                if (detail)
-                    event.detail = detail
-                element.dispatchEvent(event)
+                // if (detail)
+                //     fireEvent.detail = detail
+                element.dispatchEvent(fireEvent)
         })
 
         document.addEventListener('click', function() {
