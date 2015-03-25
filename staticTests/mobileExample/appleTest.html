@@ -57,17 +57,27 @@
         document.addEventListener('touchend', function(event) {
             logs.push('document touchend')
             event.preventDefault()
-            var clickEvent = document.createEvent("MouseEvents")
-            clickEvent.initMouseEvent('click', true, true, window, 1, event.screenX, event.screenY,
-                    event.clientX, event.clientY, false, false, false, false, 0, null)
-            Object.defineProperty(clickEvent, "fireByAvalon", {
-                value: true
-            })
+            // var clickEvent = document.createEvent("MouseEvents")
+            // clickEvent.initMouseEvent('click', true, true, window, 1, event.screenX, event.screenY,
+            //         event.clientX, event.clientY, false, false, false, false, 0, null)
+            // Object.defineProperty(clickEvent, "fireByAvalon", {
+            //     value: true
+            // })
             
-            var e = event.touches[0] ? event.touches[0] : event,
+            // var e = event.touches[0] ? event.touches[0] : event,
+            //     element =  e.target
+            // logs.push('document touchend target id : '+element.id)
+            // element.dispatchEvent(clickEvent)
+            var event = DOC.createEvent("Events"),
+                e = event.touches[0] ? event.touches[0] : event,
                 element =  e.target
-            logs.push('document touchend target id : '+element.id)
-            element.dispatchEvent(clickEvent)
+                
+                event.initEvent(name, true, true)
+                event.fireByAvalon = true//签名，标记事件是由avalon触发
+                //event.isTrusted = false 设置这个opera会报错
+                if (detail)
+                    event.detail = detail
+                element.dispatchEvent(event)
         })
 
         document.addEventListener('click', function() {
