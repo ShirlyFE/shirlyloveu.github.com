@@ -1,6 +1,8 @@
-<!DOCTYPE html>
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><avalon ms-skip="" class="avalonHide"><style id="avalonStyle">.avalonHide{ display: none!important }</style></avalon>
-        <meta charset="utf-8">
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
         <title>点击穿透测试</title>
         <meta name="viewport" content="width=device-width">
         <script src="./avalon.mobile.js"></script>
@@ -14,12 +16,12 @@
             #output{position: absolute;top: 100px;left:0;border: 1px solid #000;width:200px;min-height:100px;}
         </style>
     </head>
-    <body avalonctrl="test">
+    <body ms-controller="test">
         <div><a target="top" href="">新窗口打开</a></div>
 
-        <div id="divTapAbove"></div>
-        <div id="divClickUnder"></div>
-        <div id="output"></div>
+        <div id="divTapAbove" ms-on-tap="tap"></div>
+        <div id="divClickUnder" ms-on-click="click"></div>
+        <div id="output" ms-text="text"></div>
         <script>
             var vm = avalon.define({
                 $id: "test",
@@ -50,5 +52,5 @@
                     })
                 </script>-->
 
-    
-</body></html>
+    </body>
+</html>
