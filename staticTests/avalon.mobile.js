@@ -4960,7 +4960,7 @@ new function() {
                 }
                 event.preventDefault()
                 mlogs.push("event.defaultPrevented : " +event.defaultPrevented)
-                W3CFire(element, 'tap')
+                // W3CFire(element, 'tap')
                 avalon.fastclick.fireEvent(element, "click", event)
                 if (touchProxy.isDoubleTap) {
                     W3CFire(element, "doubletap")
@@ -5031,6 +5031,7 @@ new function() {
         clickDuration: 750, //小于750ms是点击，长于它是长按或拖动
         dragDistance: 30, //最大移动的距离
         fireEvent: function(element, type, event) {
+            logs.push('fireEvent type : '+type)
             var clickEvent = document.createEvent("MouseEvents")
             clickEvent.initMouseEvent(type, true, true, window, 1, event.screenX, event.screenY,
                     event.clientX, event.clientY, false, false, false, false, 0, null)
