@@ -4881,7 +4881,7 @@ new function() {
         longTapTimeout = null
     }
     function touchstart(event) {
-        console.log('document touchstart event \n')
+        mlogs.push('document touchstart event \n')
         var _isPointerType = isPointerEventType(event, 'down'),
             firstTouch = _isPointerType ? event : event.touches[0],
             element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
@@ -4889,7 +4889,7 @@ new function() {
             delta = now - (touchProxy.last || now)
 
         if (_isPointerType && !isPrimaryTouch(event)) return
-        console.log('document touchstart 执行')
+        mlogs.push('document touchstart 执行')
         avalon.mix(touchProxy, getCoordinates(event))
         touchProxy.mx = 0
         touchProxy.my = 0
@@ -4902,7 +4902,7 @@ new function() {
             当触发hold和longtap事件时会触发touchcancel事件，从而阻止touchend事件的触发，继而保证在同时绑定tap和hold(longtap)事件时只触发其中一个事件
         */
         longTapTimeout = setTimeout(function() {
-            alert('longTap event fire')
+            mlogs.push('longTap event fire')
             longTapTimeout = null
             fireEvent(element, "hold")
             fireEvent(element, "longtap")
@@ -4911,7 +4911,7 @@ new function() {
         return true
     }
     function touchmove(event) {
-        console.log('document touchmove event \n')
+        mlogs.push('document touchmove event \n')
         var _isPointerType = isPointerEventType(event, 'down'),
             e = getCoordinates(event)
         if (_isPointerType && !isPrimaryTouch(event)) return
@@ -4921,14 +4921,14 @@ new function() {
         touchProxy.my += Math.abs(touchProxy.y - e.y)
     }
     function touchend(event) { 
-        console.log('document touchend event \n')
+        mlogs.push('document touchend event \n')
         var _isPointerType = isPointerEventType(event, 'down')
             element = touchProxy.element
 
         if (_isPointerType && !isPrimaryTouch(event)) return
 
         if (!element) { // longtap|hold触发后touchProxy为{}
-            console.log('touchend element为null\n')
+            mlogs.push('touchend element为null\n')
             return
         }
         cancelLongTap()
@@ -4961,7 +4961,7 @@ new function() {
                     fastclick.focus(element)
                 }
                 event.preventDefault()
-                console.log("event.defaultPrevented : " +event.defaultPrevented)
+                mlogs.push("event.defaultPrevented : " +event.defaultPrevented)
                 fireEvent(element, 'tap')
                 avalon.fastclick.fireEvent(element, "click", event)
                 if (touchProxy.isDoubleTap) {
@@ -4985,8 +4985,8 @@ new function() {
     document.addEventListener(touchNames[2], touchend)
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], function(event) {
-            console.log('document event type : '+event.type+'\n')
-            alert('cancel event')
+            mlogs.push('document event type : '+event.type+'\n')
+            mlogs.push('cancel event')
             if (longTapTimeout) clearTimeout(longTapTimeout)
             if (touchTimeout) clearTimeout(touchTimeout)
             longTapTimeout = touchTimeout = null
@@ -5000,7 +5000,7 @@ new function() {
         clickDuration: 750, //小于750ms是点击，长于它是长按或拖动
         dragDistance: 30, //最大移动的距离
         fireEvent: function(element, type, event) {
-            console.log('fireEvent type : '+type)
+            mlogs.push('fireEvent type : '+type)
             var clickEvent = document.createEvent("MouseEvents")
             clickEvent.initMouseEvent(type, true, true, window, 1, event.screenX, event.screenY,
                     event.clientX, event.clientY, false, false, false, false, 0, null)

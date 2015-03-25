@@ -20,13 +20,15 @@
     <div id="logArea">
         {{description}}
     </div>
-    <div id="screen" style="background-color: #cccccc;width: 80%;height: 300px;" ms-on-swipeleft="swipeleft" ms-on-tap='click' >
+<!--     <div id="screen" style="background-color: #cccccc;width: 80%;height: 300px;" ms-on-swipeleft="swipeleft" ms-on-tap='click' >
         <div style="background-color: red; width: 300px;height: 300px;" ms-on-tap="clickChild" ms-on-swipeleft='swipeleft' id='child'></div>
-    </div>
-<!-- 
-    <div id="screen" style="background-color: #cccccc;width: 80%;height: 150px;" ms-on-click='click' >
-        <div style="background-color: red; width: 150px;height: 100px;" id='child'>删除click和swipeleft事件，看其反应</div>
     </div> -->
+
+    <div id='screen' ms-on-click='click' style='border: 1px solid red; padding: 50px'>
+        <div id='child' ms-click='click' style='border: 1px solid green; background: #ccc;padding: 20px; font-size: 30px'>
+            事件机制分析
+        </div>
+    </div>
     <button ms-on-touchstart='generatorDes'>track events</button>
     <button ms-on-touchstart='cancelLogs'>cancel logs</button>
     <script>
@@ -35,14 +37,12 @@
         });
         var VM = avalon.define("touch", function (vm) {
             vm.swipeleft = function (e) {
-                alert("swipeleft callback！and id: "+this.id);
+                mlogs.push("swipeleft callback！and id: "+this.id);
             }
             vm.click = function() {
-                alert('click callback!')
+                mlogs.push('click callback! and id : '+this.id)
             }
-            vm.clickChild = function (e) {
-                alert("child click callback!");
-            }
+            
             vm.generatorDes = function() {
                 mlogs.push('track events Call \n')
                 VM.description = mlogs.join('→')

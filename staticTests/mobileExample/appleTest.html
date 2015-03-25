@@ -22,17 +22,17 @@
             var element = document.getElementById(id)
             element.addEventListener(type, callback, phase)
         }
-        eventBind('child', 'tap', function(event) {
+        eventBind('child', 'click', function(event) {
             console.log('event : ')
             console.log(event)
             logs.push('child click')
         }, false)
 
-        eventBind('btn1', 'tap', function() {
+        eventBind('btn1', 'click', function() {
             document.getElementById('log').innerHTML = logs.join('→')
         }, false)
 
-        eventBind('btn2', 'tap', function() {
+        eventBind('btn2', 'click', function() {
             logs = []
             document.getElementById('log').innerHTML = ''
         }, false)
@@ -42,7 +42,7 @@
             logs.push('child touchstart')
         }, false)
 
-        eventBind('screen', 'tap', function() {
+        eventBind('screen', 'click', function() {
             logs.push('screen click')
         }, false)
 
@@ -56,10 +56,10 @@
 
         document.addEventListener('touchend', function(event) {
             logs.push('document touchend')
-            event.preventDefault()
+            // event.preventDefault()
             var e = event.touches[0] ? event.touches[0] : event,
                 element =  e.target
-                
+
             var clickEvent = document.createEvent("MouseEvents")
             clickEvent.initMouseEvent('click', true, true, window, 1, event.screenX, event.screenY,
                     event.clientX, event.clientY, false, false, false, false, 0, null)
