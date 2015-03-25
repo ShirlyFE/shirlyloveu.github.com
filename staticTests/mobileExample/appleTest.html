@@ -28,11 +28,11 @@
             logs.push('child click')
         }, false)
 
-        eventBind('btn1', 'click', function() {
+        eventBind('btn1', 'tap', function() {
             document.getElementById('log').innerHTML = logs.join('→')
         }, false)
 
-        eventBind('btn2', 'click', function() {
+        eventBind('btn2', 'tap', function() {
             logs = []
             document.getElementById('log').innerHTML = ''
         }, false)
