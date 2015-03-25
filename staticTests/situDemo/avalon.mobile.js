@@ -4892,12 +4892,10 @@ new function() {
         event.preventDefault()
     }
     function cancelLongTap() {
-        alert('cancelLongTap')
         if (longTapTimeout) clearTimeout(longTapTimeout)
         longTapTimeout = null
     }
     function touchstart(event) {
-        alert('touchstart event')
         var _isPointerType = isPointerEventType(event, 'down'),
             firstTouch = _isPointerType ? event : event.touches[0],
             element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
@@ -4919,7 +4917,6 @@ new function() {
         */
         avalon(element).addClass(fastclick.activeClass)
         longTapTimeout = setTimeout(function() {
-            alert('longTap fired')
             longTapTimeout = null
             fireEvent(element, "hold")
             fireEvent(element, "longtap")
@@ -5003,7 +5000,6 @@ new function() {
     document.addEventListener(touchNames[2], touchend)
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], function(event) {
-            alert('cancel event called')
             if (longTapTimeout) clearTimeout(longTapTimeout)
             if (touchTimeout) clearTimeout(touchTimeout)
             longTapTimeout = touchTimeout = null
