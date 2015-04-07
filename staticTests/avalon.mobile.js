@@ -4830,6 +4830,7 @@ new function() {
     } else if (IE9_10touch) {
         touchNames = ["MSPointerDown", "MSPointerMove", "MSPointerUp", "MSPointerCancel"]
     }
+    touchNames = ["touchstart", "touchmove", "touchend", "touchcancel"]
     function isPrimaryTouch(event){
         return (event.pointerType == 'touch' || event.pointerType == event.MSPOINTER_TYPE_TOUCH) && event.isPrimary
     }
@@ -4882,6 +4883,7 @@ new function() {
         longTapTimeout = null
     }
     function touchstart(event) {
+        console.log(touchNames[0] + 'events')
         mlogs.push('document touchstart event \n')
         var _isPointerType = isPointerEventType(event, 'down'),
             firstTouch = _isPointerType ? event : (event.touches && event.touches[0] || event),
@@ -4922,6 +4924,7 @@ new function() {
         touchProxy.my += Math.abs(touchProxy.y - e.y)
     }
     function touchend(event) { 
+        console.log(touchNames[2] + 'events')
         mlogs.push('document touchend event \n')
         var _isPointerType = isPointerEventType(event, 'down')
             element = touchProxy.element
