@@ -4884,7 +4884,7 @@ new function() {
     function touchstart(event) {
         mlogs.push('document touchstart event \n')
         var _isPointerType = isPointerEventType(event, 'down'),
-            firstTouch = _isPointerType ? event : event.touches[0],
+            firstTouch = _isPointerType ? event : (event.touches && event.touches[0] || event),
             element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
             now = Date.now(),
             delta = now - (touchProxy.last || now)
