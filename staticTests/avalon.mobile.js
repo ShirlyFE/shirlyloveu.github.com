@@ -4983,6 +4983,7 @@ new function() {
                         clearTimeout(touchTimeout)
                         touchTimeout = null
                         touchProxy = {}
+                        touchProxy.element = element
                     }, 250)
                 }
             }
