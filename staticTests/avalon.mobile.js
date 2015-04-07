@@ -4877,6 +4877,9 @@ new function() {
             }
             event.stopPropagation() 
             event.preventDefault()
+            if (event.type === 'click') {
+                touchProxy.element = null
+            }
         }
     }
     function cancelLongTap() {
@@ -4891,7 +4894,7 @@ new function() {
             element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
             now = Date.now(),
             delta = now - (touchProxy.last || now)
-
+        touchProxy.pc = 'no'
         if (_isPointerType && !isPrimaryTouch(event)) return
         mlogs.push('document touchstart 执行')
         avalon.mix(touchProxy, getCoordinates(event))
@@ -4915,7 +4918,7 @@ new function() {
         return true
     }
     function touchmove(event) {
-        mlogs.push('document touchmove event \n')
+        // mlogs.push('document touchmove event \n')
         var _isPointerType = isPointerEventType(event, 'down'),
             e = getCoordinates(event)
         if (_isPointerType && !isPrimaryTouch(event)) return
@@ -4949,6 +4952,7 @@ new function() {
             fireEvent(element, "swipe", details)
             fireEvent(element, "swipe" + direction, details)
             touchProxy = {}
+            touchProxy.element = element
         } else {
             if (fastclick.canClick(element) && touchProxy.mx < fastclick.dragDistance && touchProxy.my < fastclick.dragDistance) {
                 // 失去焦点的处理
@@ -4973,6 +4977,7 @@ new function() {
                     fireEvent(element, "doubletap")
                     avalon.fastclick.fireEvent(element, "dblclick", event)
                     touchProxy = {}
+                    touchProxy.element = element
                 } else {
                     touchTimeout = setTimeout(function() {
                         clearTimeout(touchTimeout)
