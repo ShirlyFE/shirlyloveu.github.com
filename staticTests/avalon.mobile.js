@@ -4863,8 +4863,9 @@ new function() {
         el.dispatchEvent(event)
     }
     function onMouse(event) { 
-        console.log('mouseCallback event.type : ' + event.type)
-        console.log('mouseCallback event.fireByAvalon : ' + event.fireByAvalon)
+        mlogs.push('mouseCallback event.type : ' + event.type)
+        mlogs.push('mouseCallback event.fireByAvalon : ' + event.fireByAvalon)
+        mlogs.push('touchProxy.element is : '+touchProxy.element)
         if (event.fireByAvalon) { 
             return true
         }
