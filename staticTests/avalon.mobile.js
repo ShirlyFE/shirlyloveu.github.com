@@ -4867,13 +4867,15 @@ new function() {
         if (event.fireByAvalon) { 
             return true
         }
-        if (event.stopImmediatePropagation) {
-            event.stopImmediatePropagation()
-        } else {
-            event.propagationStopped = true
+        if (touchProxy.element) { // 如果是pc端,不判断touchProxy.element的话此监听函数先触发的话之后所有的事件都不能正常触发
+            if (event.stopImmediatePropagation) {
+                event.stopImmediatePropagation()
+            } else {
+                event.propagationStopped = true
+            }
+            event.stopPropagation() 
+            event.preventDefault()
         }
-        event.stopPropagation() 
-        event.preventDefault()
     }
     function cancelLongTap() {
         if (longTapTimeout) clearTimeout(longTapTimeout)
