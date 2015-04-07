@@ -37,10 +37,10 @@
         });
         var VM = avalon.define("touch", function (vm) {
             vm.swipeleft = function (e) {
-                mlogs.push("swipeleft callback！and id: "+this.id);
+                alert("swipeleft callback！and id: "+this.id);
             }
             vm.click = function() {
-                mlogs.push('click callback! and id : '+this.id)
+                alert('click callback! and id : '+this.id)
             }
             
             vm.generatorDes = function() {
