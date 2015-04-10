@@ -4,17 +4,17 @@
     <title>事件传播</title>
 </head>
 <body ms-controller='test'>
-    <div class='outer' ms-on-swipeleft='$outerSwipeleft'>
-        <div class='inner' ms-on-swipeleft='$swipeleft' ms-on-tap='$tap'></div>
+    <div class='outer' ms-on-swipeleft='$outerSwipeleft' style='width: 300px; height: 300px; border: 1px solid red; background: yellow; padding: 20px;'>
+        <div class='inner' ms-on-swipeleft='$swipeleft' ms-on-tap='$tap' style='width: 300px; height: 300px; border: 1px solid green; background: red'>hello</div>
     </div>
     <script src='avalon.mobile.js'></script>
     <script>
         avalon.define('test',function(vm){
             vm.$swipeleft = function(e){
-                this.innerHTML = 'swipeleft';
+                this.innerHTML += 'swipeleft';
             };
             vm.$outerSwipeleft = function(){
-                this.querySelector(".inner").innerHTML = 'outerSwipeLeft';
+                this.querySelector(".inner").innerHTML += 'outerSwipeLeft';
             };
         });
     </script>
