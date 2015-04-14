@@ -4966,6 +4966,7 @@ new function() {// jshint ignore:line
     }
     function touchend(event) { 
         console.log('touchend event, event type : ' + event.type)
+        mlogs.push('touchend event, event type : ' + event.type)
         var _isPointerType = isPointerEventType(event, 'down')
             element = touchProxy.element
 
@@ -4978,6 +4979,8 @@ new function() {// jshint ignore:line
         var e = getCoordinates(event)
         var totalX = Math.abs(touchProxy.x - e.x)
         var totalY = Math.abs(touchProxy.y - e.y)
+        mlogs.push('tatalX : '+totalX)
+        mlogs.push('totalY : '+totalY)
         if (totalX > 30 || totalY > 30) {
             //如果用户滑动的距离有点大，就认为是swipe事件
             var direction = swipeDirection(touchProxy.x, e.x, touchProxy.y, e.y)
