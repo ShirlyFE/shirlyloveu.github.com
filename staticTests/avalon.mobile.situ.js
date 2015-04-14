@@ -4955,7 +4955,7 @@ new function() {// jshint ignore:line
         return true
     }
     function touchmove(event) {
-        mlogs.push('touchmove event, event type : ' + event.type)
+        // mlogs.push('touchmove event, event type : ' + event.type)
         var _isPointerType = isPointerEventType(event, 'down'),
             e = getCoordinates(event)
         if (_isPointerType && !isPrimaryTouch(event)) return
