@@ -79,6 +79,10 @@
                         mlogs = []
                         return false
                     }
+                    vm.touchend = function(event) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
                 })
                 avalon.scan()
             })
@@ -86,7 +90,7 @@
 
     </head>
     <body ms-controller="touch">
-        <button ms-on-touchstart='touchstart'>print logs</button>
+        <button ms-on-touchstart='touchstart' ms-on-touchend='touchend'>print logs</button>
         <!-- <div ms-on-touchstart='tap' class='box' style='height: auto; min-height: 200px;'>
             轻触
         </div>

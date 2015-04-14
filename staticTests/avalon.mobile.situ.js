@@ -4926,6 +4926,7 @@ new function() {// jshint ignore:line
         longTapTimeout = null
     }
     function touchstart(event) {
+        console.log('touchstart event, event type : ' + event.type)
         mlogs.push('touchstart event, event type : ' + event.type)
         var _isPointerType = isPointerEventType(event, 'down'),
             firstTouch = _isPointerType ? event : (event.touches && event.touches[0] || event),
@@ -4965,6 +4966,7 @@ new function() {// jshint ignore:line
         touchProxy.my += Math.abs(touchProxy.y - e.y)
     }
     function touchend(event) { 
+        console.log('event.target : '+event.target)
         console.log('touchend event, event type : ' + event.type)
         mlogs.push('touchend event, event type : ' + event.type)
         var _isPointerType = isPointerEventType(event, 'down')
