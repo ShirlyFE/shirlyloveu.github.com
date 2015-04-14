@@ -1,3 +1,4 @@
+var mlogs = [];
 /*==================================================
  Copyright (c) 2013-2015 司徒正美 and other contributors
  http://www.cnblogs.com/rubylouvre/
@@ -4902,6 +4903,7 @@ new function() {// jshint ignore:line
         el.dispatchEvent(event)
     }
     function onMouse(event) { 
+        console.log('onMouse callback , event.type : '+event.type)
         if (event.fireByAvalon) { 
             return true
         }
@@ -4919,10 +4921,12 @@ new function() {// jshint ignore:line
         }
     }
     function cancelLongTap() {
+        console.log('cancel callback')
         if (longTapTimeout) clearTimeout(longTapTimeout)
         longTapTimeout = null
     }
     function touchstart(event) {
+        console.log('touchstart event, event type : ' + event.type)
         var _isPointerType = isPointerEventType(event, 'down'),
             firstTouch = _isPointerType ? event : (event.touches && event.touches[0] || event),
             element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
@@ -4951,6 +4955,7 @@ new function() {// jshint ignore:line
         return true
     }
     function touchmove(event) {
+        console.log('touchmove event, event type : ' + event.type)
         var _isPointerType = isPointerEventType(event, 'down'),
             e = getCoordinates(event)
         if (_isPointerType && !isPrimaryTouch(event)) return
@@ -4960,6 +4965,7 @@ new function() {// jshint ignore:line
         touchProxy.my += Math.abs(touchProxy.y - e.y)
     }
     function touchend(event) { 
+        console.log('touchend event, event type : ' + event.type)
         var _isPointerType = isPointerEventType(event, 'down')
             element = touchProxy.element
 
@@ -5028,6 +5034,7 @@ new function() {// jshint ignore:line
     document.addEventListener(touchNames[2], touchend)
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], function(event) {
+            console.log('document call callback, and event.type : ' + event.type)
             if (longTapTimeout) clearTimeout(longTapTimeout)
             if (touchTimeout) clearTimeout(touchTimeout)
             longTapTimeout = touchTimeout = null
@@ -5041,6 +5048,7 @@ new function() {// jshint ignore:line
         clickDuration: 750, //小于750ms是点击，长于它是长按或拖动
         dragDistance: 30, //最大移动的距离
         fireEvent: function(element, type, event) {
+            console.log('fireEvent and the type : '+type)
             var clickEvent = document.createEvent("MouseEvents")
             clickEvent.initMouseEvent(type, true, true, window, 1, event.screenX, event.screenY,
                     event.clientX, event.clientY, false, false, false, false, 0, null)

@@ -21,9 +21,9 @@
                 -moz-user-select:none;
                 -webkit-user-select: none;
             }
-            .ms-click-active {
+/*            .ms-click-active {
                 background: yellow !important;
-            }
+            }*/
             button {
                 display: inline-block;
                 width: 300px;
@@ -36,11 +36,9 @@
 
                 var VM = avalon.define("touch", function(vm) {
                     vm.tap = function(e) {
-                        e.preventDefault()
-                        e.stopPropagation()
                         console.log('tap called : '+Date.now())
                         this.innerHTML = "logs: \n" + mlogs.join('→')
-                        return false
+                        // return false
                     }
                     vm.click = function(e) {
                         this.innerHTML += "点击" + Date.now() + e.type
