@@ -72,7 +72,9 @@
                         this.innerHTML += "向下划↓ " + Date.now() + e.type
                     }
                     vm.array = avalon.range(0, 400)
-                    vm.touchstart = function() {
+                    vm.touchstart = function(event) {
+                        event.preventDefault()
+                        event.stopPropagation()
                         document.getElementById('logs').innerHTML = mlogs.join('→')
                         mlogs = []
                         return false

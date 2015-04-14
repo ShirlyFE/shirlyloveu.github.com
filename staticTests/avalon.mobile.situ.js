@@ -4926,7 +4926,7 @@ new function() {// jshint ignore:line
         longTapTimeout = null
     }
     function touchstart(event) {
-        console.log('touchstart event, event type : ' + event.type)
+        mlogs.push('touchstart event, event type : ' + event.type)
         var _isPointerType = isPointerEventType(event, 'down'),
             firstTouch = _isPointerType ? event : (event.touches && event.touches[0] || event),
             element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
@@ -4955,7 +4955,7 @@ new function() {// jshint ignore:line
         return true
     }
     function touchmove(event) {
-        console.log('touchmove event, event type : ' + event.type)
+        mlogs.push('touchmove event, event type : ' + event.type)
         var _isPointerType = isPointerEventType(event, 'down'),
             e = getCoordinates(event)
         if (_isPointerType && !isPrimaryTouch(event)) return
