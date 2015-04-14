@@ -75,6 +75,7 @@
                     vm.touchstart = function() {
                         document.getElementById('logs').innerHTML = mlogs.join('→')
                         mlogs = []
+                        return false
                     }
                 })
                 avalon.scan()
