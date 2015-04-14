@@ -4979,6 +4979,10 @@ new function() {// jshint ignore:line
         var e = getCoordinates(event)
         var totalX = Math.abs(touchProxy.x - e.x)
         var totalY = Math.abs(touchProxy.y - e.y)
+        mlogs.push('touchProxy.x :'+touchProxy.x)
+        mlogs.push('touchProxy.y : '+touchProxy.y)
+        mlogs.push('e.x : '+e.x)
+        mlogs.push('e.y : '+e.y)
         mlogs.push('tatalX : '+totalX)
         mlogs.push('totalY : '+totalY)
         if (totalX > 30 || totalY > 30) {

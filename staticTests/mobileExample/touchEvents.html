@@ -74,6 +74,7 @@
                     vm.array = avalon.range(0, 400)
                     vm.touchstart = function() {
                         document.getElementById('logs').innerHTML = mlogs.join('→')
+                        mlogs = []
                     }
                 })
                 avalon.scan()
