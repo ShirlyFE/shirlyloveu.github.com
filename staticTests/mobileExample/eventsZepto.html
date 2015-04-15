@@ -93,14 +93,20 @@
             //     log.innerHTML = logStr
             // })
 
-            $('#btn1').on('click', function() {
+            $('#btn1').on('touchstart', function(event) {
+                event.preventDefault()
+                event.proPagation()
                 mlogs.push('track events Call \n')
                 log.innerHTML = mlogs.join('→')
+                return false
             })
 
-            $('#btn2').on('click',  function() {
+            $('#btn2').on('click',  function(event) {
+                event.preventDefault()
+                event.proPagation()
                 mlogs = []
                 log.innerHTML = ''
+                return false
             })
             // $('#lightTap').on('tap', function(e) {
             //     this.innerHTML = "轻触" + Date.now() + e.type
