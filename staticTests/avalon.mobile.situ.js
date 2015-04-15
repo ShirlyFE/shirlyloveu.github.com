@@ -4904,6 +4904,7 @@ new function() {// jshint ignore:line
     }
     function onMouse(event) { 
         console.log('onMouse callback , event.type : '+event.type)
+        mlogs.push('onMouse callback , event.type : '+event.type)
         if (event.fireByAvalon) { 
             return true
         }
@@ -4928,6 +4929,7 @@ new function() {// jshint ignore:line
     function touchstart(event) {
         console.log('touchstart event, event type : ' + event.type)
         mlogs.push('touchstart event, event type : ' + event.type)
+        mlogs.push('touchstart event, target : ' + event.target.id + ' （'+(+ Date.now())+'）')
         var _isPointerType = isPointerEventType(event, 'down'),
             firstTouch = _isPointerType ? event : (event.touches && event.touches[0] || event),
             element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
@@ -4956,7 +4958,7 @@ new function() {// jshint ignore:line
         return true
     }
     function touchmove(event) {
-        // mlogs.push('touchmove event, event type : ' + event.type)
+        mlogs.push('touchmove event, event type : ' + event.type)
         var _isPointerType = isPointerEventType(event, 'down'),
             e = getCoordinates(event)
         if (_isPointerType && !isPrimaryTouch(event)) return
@@ -5044,6 +5046,7 @@ new function() {// jshint ignore:line
     if (touchNames[3]) {
         document.addEventListener(touchNames[3], function(event) {
             console.log('document call callback, and event.type : ' + event.type)
+            mlogs.push('document call callback, and event.type : ' + event.type)
             if (longTapTimeout) clearTimeout(longTapTimeout)
             if (touchTimeout) clearTimeout(touchTimeout)
             longTapTimeout = touchTimeout = null

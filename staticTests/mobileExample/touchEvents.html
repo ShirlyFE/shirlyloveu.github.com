@@ -90,7 +90,7 @@
 
     </head>
     <body ms-controller="touch">
-        <button ms-on-touchstart='touchstart' ms-on-touchend='touchend'>print logs</button>
+        <button ms-on-touchstart='touchstart' id='btn' ms-on-touchend='touchend'>print logs</button>
         <!-- <div ms-on-touchstart='tap' class='box' style='height: auto; min-height: 200px;'>
             轻触
         </div>
@@ -112,7 +112,7 @@
         <div ms-on-longtap='longtap' ms-on-tap='tap' ms-on-swiperight='swiperight' class='box' style="background: purple">
             longtap tap swiperight
         </div>  -->
-        <div ms-on-swipeleft='swipeleft' class='box' style="background: #39b3d7">
+        <div ms-on-swipeleft='swipeleft' class='box' id='swipeleft' style="background: #39b3d7">
             向左划
         </div>
         <!-- <h3>可以通过向右滑动清除上面hold和longtap的log信息</h3>
