@@ -43,10 +43,10 @@
         <div id="longTap" class='box' style="background: purple">
             长摁
         </div>  -->
-<!--         <div id="swipeleft" class='box' style="background: #39b3d7">
+        <div id="swipeleft" class='box' style="background: #39b3d7">
             向左划
         </div>
-        <div id="swiperight" class='box' style="background: yellow">
+       <!--  <div id="swiperight" class='box' style="background: yellow">
             向右划
         </div>
         <div class='box' id="swipeup" style="background: #5cb85c">
@@ -55,10 +55,10 @@
         <div id="swipedown" class='box' style="background: #ed9c28">
             向下划
         </div> -->
-        <div id="screen" style="background-color: #cccccc;width: 80%;height: 200px;">
+<!--         <div id="screen" style="background-color: #cccccc;width: 80%;height: 200px;">
 
             <div style="background-color: red; width: 200px;height: 150px;" id='child'></div>
-        </div>
+        </div> -->
 
 
         <button id='btn1'>track events</button>
@@ -71,37 +71,37 @@
         </div>
         <div style="height:400px"></div>
         <script>
-            var log = $('#log')[0]
-            var logStr = ''
-            $('#clearlog').on('tap', function() {
-                logStr = ''
-            })
-            $('#screen').on('swipeLeft', function() {
-                logStr += 'swipeleft : '+this.id
-                log.innerHTML = logStr
-            })
-            $('#screen').on('tap', function() {
-                logStr += 'tap: ' + this.id
-                log.innerHTML = logStr
-            })
-            $('#screen').on('doubleTap', function() {
-                logStr += 'doubleTap: ' + this.id
-                log.innerHTML = logStr
-            })
-            $('#child').on('tap', function() {
-                logStr += "tap: " + this.id
-                log.innerHTML = logStr
-            })
+            // var log = $('#log')[0]
+            // var logStr = ''
+            // $('#clearlog').on('tap', function() {
+            //     logStr = ''
+            // })
+            // $('#screen').on('swipeLeft', function() {
+            //     logStr += 'swipeleft : '+this.id
+            //     log.innerHTML = logStr
+            // })
+            // $('#screen').on('tap', function() {
+            //     logStr += 'tap: ' + this.id
+            //     log.innerHTML = logStr
+            // })
+            // $('#screen').on('doubleTap', function() {
+            //     logStr += 'doubleTap: ' + this.id
+            //     log.innerHTML = logStr
+            // })
+            // $('#child').on('tap', function() {
+            //     logStr += "tap: " + this.id
+            //     log.innerHTML = logStr
+            // })
 
-            $('#btn1').on('click', function() {
-                mlogs.push('track events Call \n')
-                log.innerHTML = mlogs.join('→')
-            })
+            // $('#btn1').on('click', function() {
+            //     mlogs.push('track events Call \n')
+            //     log.innerHTML = mlogs.join('→')
+            // })
 
-            $('#btn2').on('click',  function() {
-                mlogs = []
-                log.innerHTML = ''
-            })
+            // $('#btn2').on('click',  function() {
+            //     mlogs = []
+            //     log.innerHTML = ''
+            // })
             // $('#lightTap').on('tap', function(e) {
             //     this.innerHTML = "轻触" + Date.now() + e.type
             // })
@@ -122,19 +122,19 @@
             //     console.log('doubleTap is : '+Date.now())
             //     this.innerHTML = "双触 " + Date.now() + e.type
             // })
-            $('#longTap').on('longTap', function(e) {
-                this.innerHTML += "长摁" + Date.now() + e.type
-            })
-            $('#longTap').on('tap', function(e) {
-                this.innerHTML += "轻触" + Date.now() + e.type
-            })
-
-            $('#longTap').on('doubleTap', function(e) {
-                this.innerHTML += "双触" + Date.now() + e.type
-            })
-            // $('#swipeleft').on('swipeLeft', function(e) {
-            //     this.innerHTML = "向左划← " + Date.now() + e.type
+            // $('#longTap').on('longTap', function(e) {
+            //     this.innerHTML += "长摁" + Date.now() + e.type
             // })
+            // $('#longTap').on('tap', function(e) {
+            //     this.innerHTML += "轻触" + Date.now() + e.type
+            // })
+
+            // $('#longTap').on('doubleTap', function(e) {
+            //     this.innerHTML += "双触" + Date.now() + e.type
+            // })
+            $('#swipeleft').on('swipeLeft', function(e) {
+                this.innerHTML = "向左划← " + Date.now() + e.type
+            })
             // $('#swiperight').on('swipeRight', function(e) {
             //     this.innerHTML = "向右划→ " + Date.now() + e.type
             // })
