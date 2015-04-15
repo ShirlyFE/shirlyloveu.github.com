@@ -4961,6 +4961,10 @@ new function() {// jshint ignore:line
         mlogs.push('touchmove event, event type : ' + event.type)
         var _isPointerType = isPointerEventType(event, 'down'),
             e = getCoordinates(event)
+        if (navigator.userAgent.match(/Android/i) &&
+          Math.abs(touchProxy.x - e.x) > 10) {
+            event.preventDefault()
+        }
         if (_isPointerType && !isPrimaryTouch(event)) return
           
         cancelLongTap()
