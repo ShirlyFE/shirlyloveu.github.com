@@ -95,7 +95,7 @@
 
             $('#btn1').on('touchstart', function(event) {
                 event.preventDefault()
-                event.proPagation()
+                event.stopPropagation()
                 mlogs.push('track events Call \n')
                 log.innerHTML = mlogs.join('→')
                 return false
