@@ -1405,7 +1405,6 @@ window.$ === undefined && (window.$ = Zepto)
       }
 
   function compatible(event, source) {
-    debugger
     console.log('compatible event')
     if (source || !event.isDefaultPrevented) {
       source || (source = event)
