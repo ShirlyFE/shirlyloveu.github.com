@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head >
+    <meta charset="UTF-8">
+    <title>avalon.mobile.js在移动端影响select使用的bug测试项目</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv=”X-UA-Compatible” content=”IE=Edge,chrome=1″>
+    <!--移动优先-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+
+</head>
+<body>
+<h2>avalon.mobile.js在移动端影响select使用</h2>
+测试select如下：
+<br/><br/>
+<div>
+
+    <select>
+        <option value="aaa">aaaa</option>
+        <option value="bbb">bbb</option>
+        <option value="ccc">ccc</option>
+    </select>
+</div>
+<br/>
+使用chrome 调试工具开启移动设备调试模式时，肾3到肾6全部不可使用。<br/>
+其他的，貌似三星和索尼的可以~<br/>
+<br/>
+貌似如果移动设备弹出option的方式是使用html原生的方式弹出的下拉形式的，就能够使用，<br/>
+但是如果是一些奇葩的与web表现形式不同的弹出option的方式的，就不能使用了。<br/>
+<br/>
+用手机打开这个页面的话，反正微信的肯定不行。<br/>
+大体就是这样~
+</body>
+<script src="avalon.mobile.js"></script>
+</html>

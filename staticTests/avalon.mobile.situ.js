@@ -4871,6 +4871,8 @@ new function() {// jshint ignore:line
     } else if (IE9_10touch) {
         touchNames = ["MSPointerDown", "MSPointerMove", "MSPointerUp", "MSPointerCancel"]
     }
+    console.log('touchNames : ')
+    console.log(touchNames)
     function isPrimaryTouch(event){
         return (event.pointerType === 'touch' || event.pointerType === event.MSPOINTER_TYPE_TOUCH) && event.isPrimary
     }
@@ -4908,6 +4910,8 @@ new function() {// jshint ignore:line
         if (event.fireByAvalon) { 
             return true
         }
+        console.log('touchProxy : ')
+        console.log(touchProxy)
         if (touchProxy.element) { // 如果是pc端,不判断touchProxy.element的话此监听函数先触发的话之后所有的事件都不能正常触发
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
