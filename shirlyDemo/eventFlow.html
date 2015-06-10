@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>js事件流</title>
+    <meta charset='utf8'/>
+</head>
+<body>
+    <div id='p1'>
+        <div id='p2'>
+            <div id='p3'>
+                <div id='p4'>
+                    测试事件流
+                    <p id='log'></p>
+                </div>
+            </div>    
+        </div>
+    </div>
+    <button id='btn'>查看log</button>
+    <script type="text/javascript">
+        var str = ''
+        function bindEvents(id, phase, callback) {
+            var element = document.getElementById(id)
+            element.addEventListener('click', function() {
+                if (callback) {
+                    callback()
+                    return 
+                }
+                str += this.id
+            }, phase)            
+        }
+        var log = document.getElementById('log')
+        bindEvents('p1', true)
+        bindEvents('p2', true)
+        bindEvents('p3', false)
+        bindEvents('p4', false)
+        bindEvents('btn', false, function() {
+            log.innerHTML = str
+        })
+        var event = document.createEvent("Events")
+        event.initEvent('click', true, true)
+        log.dispatchEvent(event)
+    </script>
+</body>
+</html>
+
+
+<!-- 
+event.initEvent(eventType,canBubble,cancelable)
+方法说明：
+    该方法将初始化 Document.createEvent() 方法创建的合成 Event 对象的 type 属性、bubbles 属性和 cancelable 属性。只有在新创建的 Event 对象被 Document 对象或 Element 对象的 dispatchEvent() 方法分派之前，才能调用 Event.initEvent() 方法。
+
+参数说明：
+    eventType: 事件类型
+    canBubble: 事件是否冒泡
+    cancelable: 是否可以用preventDefault()方法取消事件
+
+event对象属性：
+    altKey：检查alt键的状态; 语法：event.altKey; 可能的值：alt键按下为TRUE ，否则为 FALSE 。只读。
+
+    button: 检查按下的鼠标键; 语法：event.button; 可能的值：
+        0 没按键 
+        1 按左键 
+        2 按右键 
+        3 按左右键 
+        4 按中间键 
+        5 按左键和中间键 
+        6 按右键和中间键 
+        7 按所有的键
+        这个属性仅用于onmousedown, onmouseup, 和 onmousemove 事件。对其他事件，不管鼠标状态如何，都返回 0（比如onclick）。
+    cancelBubble: 检测事件是否冒泡； 是一个可读写的布尔值
+语法：
+event.cancelBubble[ = cancelBubble]
+
+可能的值：
+这是一个可读写的布尔值:
+
+TRUE 不被上层原素的事件控制。 
+FALSE 允许被上层元素的事件控制。这是默认值。
+
+ctrlKey
+描述：检查ctrl键的状态。
+
+语法：event.ctrlKey
+
+可能的值：
+当ctrl键按下时，值为 TRUE ，否则为 FALSE 。只读
+
+fromElement
+描述：检测 onmouseover 和 onmouseout 事件发生时，鼠标所离开的元素。 参考：18.toElement
+
+语法：event.fromElement
+
+注释：
+这是个只读属性。
+
+offsetX
+描述：检查相对于触发事件的对象，鼠标位置的水平坐标
+
+语法：event.offsetX
+
+
+10.offsetY
+描述：检查相对于触发事件的对象，鼠标位置的垂直坐标
+
+语法：event.offsetY
+
+propertyName
+描述：设置或返回元素的变化了的属性的名称。
+
+语法：event.propertyName [ = sProperty ]
+
+可能的值：
+sProperty 是一个字符串，指定或返回触发事件的元素在事件中变化了的属性的名称。 
+这个属性是可读写的。无默认值。
+
+注释：
+你可以通过使用 onpropertychange 事件，得到 propertyName 的值。
+
+例子：
+下面的例子通过使用 onpropertychange 事件，弹出一个对话框，显示 propertyName 的值。
+
+<HEAD>
+<SCRIPT>
+function changeProp()
+{
+    btnProp.value = "This is the new VALUE";
+}
+
+function changeCSSProp()
+{
+    btnStyleProp.style.backgroundColor = "aqua";
+}
+</SCRIPT>
+</HEAD>
+<BODY>
+<P>The event object property propertyName is 
+used here to return which property has been 
+altered.</P>
+
+<INPUT TYPE=button ID=btnProp onclick="changeProp()"
+VALUE="Click to change the VALUE property of this button"
+onpropertychange='alert(event.propertyName+" property has changed value")'>
+<INPUT TYPE=button ID=btnStyleProp
+onclick="changeCSSProp()"
+VALUE="Click to change the CSS backgroundColor property of this button"
+onpropertychange='alert(event.propertyName+" property has changed value")'>
+</BODY>
+
+
+12.returnValue
+描述：设置或检查从事件中返回的值
+
+语法：event.returnValue[ = Boolean]
+
+可能的值： 
+true 事件中的值被返回 
+false 源对象上事件的默认操作被取消
+
+
+13.screenX
+描述：检测鼠标相对于用户屏幕的水平位置
+
+语法：event.screenX
+
+注释：
+这是个只读属性。这意味着，你只能通过它来得到鼠标的当前位置，却不能用它来更改鼠标的位置。
+
+
+14.screenY
+描述：检测鼠标相对于用户屏幕的垂直位置
+
+语法：event.screenY
+
+注释：
+这是个只读属性。这意味着，你只能通过它来得到鼠标的当前位置，却不能用它来更改鼠标的位置。
+
+
+15.shiftKey
+描述：检查shift键的状态。
+
+语法：event.shiftKey
+
+可能的值：
+当shift键按下时，值为 TRUE ，否则为 FALSE 。只读。
+
+
+16.srcElement
+描述：返回触发事件的元素。只读。例子见本文开头。
+
+语法：event.srcElement
+
+
+17.srcFilter
+描述：返回触发 onfilterchange 事件的滤镜。只读。
+
+语法：event.srcFilter
+
+
+18.toElement
+描述：检测 onmouseover 和 onmouseout 事件发生时，鼠标所进入的元素。
+
+语法：event.toElement
+
+注释：
+这是个只读属性。
+
+例子：下面的代码演示了当鼠标移到按钮上时，弹出一个对话框，显示“mouse arrived”
+
+<SCRIPT>
+function testMouse(oObject) {
+    if(oObject.contains(event.toElement))
+
+    {
+        alert("mouse arrived");
+    }
+}
+</SCRIPT>
+:
+<BUTTON ID=oButton onmouseover="testMouse(this)">Mouse Over This.</BUTTON>
+
+
+19.type
+描述：返回事件名。
+
+语法：event.type
+
+注释：
+返回没有“on”作为前缀的事件名，比如，onclick事件返回的type是click
+只读。
+
+
+20. x
+描述：返回鼠标相对于css属性中有position属性的上级元素的x轴坐标。如果没有css属性中有position属性的上级元素，默认以BODY元素作为参考对象。
+
+语法：event.x
+
+注释：
+如果事件触发后，鼠标移出窗口外，则返回的值为 -1
+这是个只读属性。这意味着，你只能通过它来得到鼠标的当前位置，却不能用它来更改鼠标的位置。
+
+
+21. y
+描述：返回鼠标相对于css属性中有position属性的上级元素的y轴坐标。如果没有css属性中有position属性的上级元素，默认以BODY元素作为参考对象。
+
+语法：event.y
+
+注释：
+如果事件触发后，鼠标移出窗口外，则返回的值为 -1
+这是个只读属性。这意味着，你只能通过它来得到鼠标的当前位置，却不能用它来更改鼠标的位置。
+
+eventPhase
+调用事件处理程序的阶段：1 捕获；2 处于阶段；3 冒泡阶段（需要打断点查看）
+
+stopPropagation
+取消事件捕获/冒泡，bubbles为true才能使用
+
+DOM 2级定义了两个方法，用于指定和删除事件处理程序的操作：addEventListener()和removeEventListener()，他们都接受三个参数：
+
+1.事件名。比如上面的click
+2.作为事件处理程序的函数。
+3.布尔值（true表示捕获阶段调用事件处理程序，false表示冒泡阶段）
+
+使用attachEvent()方法的情况下，事件处理程序会在全局作用域中运行，所以，此时this等于window
+
+
+ -->

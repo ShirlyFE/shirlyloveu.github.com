@@ -4,32 +4,53 @@
     <meta charset="UTF-8">
     <title>avalon.mobile.js在移动端影响select使用的bug测试项目</title>
     <meta name="renderer" content="webkit">
-    <meta http-equiv=”X-UA-Compatible” content=”IE=Edge,chrome=1″>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <!--移动优先-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-
+    <style type="text/css">
+        #tap {
+            border: 1px solid red;
+            width: 300px;
+            height: 300px;
+            background: #eee;
+        }
+    </style>
 </head>
-<body>
-<h2>avalon.mobile.js在移动端影响select使用</h2>
-测试select如下：
-<br/><br/>
-<div>
-
-    <select>
-        <option value="aaa">aaaa</option>
-        <option value="bbb">bbb</option>
-        <option value="ccc">ccc</option>
-    </select>
+<body ms-controller='test'>
+<h2>同时绑定tap doubletap 和 hold时的处理办法</h2>
+<div id='tap' ms-on-hold="hold()" 
+     ms-on-doubletap="doubletap()" 
+     ms-on-tap="tap(num)" 
+     ms-on-swiperight="swiperight()" 
+     ms-on-swipeleft="swipeleft()">
+    doubletap 和 tap 或者 hold试试，会发现tap触发多次    
 </div>
-<br/>
-使用chrome 调试工具开启移动设备调试模式时，肾3到肾6全部不可使用。<br/>
-其他的，貌似三星和索尼的可以~<br/>
-<br/>
-貌似如果移动设备弹出option的方式是使用html原生的方式弹出的下拉形式的，就能够使用，<br/>
-但是如果是一些奇葩的与web表现形式不同的弹出option的方式的，就不能使用了。<br/>
-<br/>
-用手机打开这个页面的话，反正微信的肯定不行。<br/>
-大体就是这样~
+
 </body>
 <script src="avalon.mobile.js"></script>
+<script type="text/javascript">
+    avalon.define('test', function(vm) {
+        vm.num = 2
+        vm.hold = function(event) {
+            console.log(event.type + ' : '+new Date())
+            console.log(event)
+        }
+        vm.doubletap = function(event) {
+            console.log(event.type + ' : '+new Date())
+            console.log(event)
+        }
+        vm.tap = function(num) {
+            console.log('tap : '+new Date())
+            console.log(arguments)
+        }
+        vm.swipeleft = function(event) {
+            console.log(event.type + ' : '+new Date())
+            console.log(event)
+        }
+        vm.swiperight = function(event) {
+            console.log(event.type + ' : '+new Date())
+            console.log(event)
+        }
+    })
+</script>
 </html>

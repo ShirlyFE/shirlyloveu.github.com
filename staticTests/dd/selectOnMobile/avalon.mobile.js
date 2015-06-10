@@ -4888,6 +4888,9 @@
         } else if (IE9_10touch) {
             touchNames = ["MSPointerDown", "MSPointerMove", "MSPointerUp", "MSPointerCancel"]
         }
+        console.log('touchNames : ')
+        console.log(touchNames)
+
         function isPrimaryTouch(event){
             return (event.pointerType === 'touch' || event.pointerType === event.MSPOINTER_TYPE_TOUCH) && event.isPrimary
         }
@@ -4920,10 +4923,14 @@
             el.dispatchEvent(event)
         }
         function onMouse(event) {
+            console.log('onMouse method event.type is : '+event.type)
+            console.log('event.fireByAvalon : '+event.fireByAvalon)
+            console.log('touchProxy.element : ')
+            console.log(touchProxy.element)
             if (event.fireByAvalon) {
                 return true
             }
-            if (touchProxy.element) { // 如果是pc端,不判断touchProxy.element的话此监听函数先触发的话之后所有的事件都不能正常触发
+            if (touchProxy.element && event.target.tagName.toLowerCase()!=='select') { // 如果是pc端,不判断touchProxy.element的话此监听函数先触发的话之后所有的事件都不能正常触发
                 if (event.stopImmediatePropagation) {
                     event.stopImmediatePropagation()
                 } else {
@@ -4941,6 +4948,7 @@
             longTapTimeout = null
         }
         function touchstart(event) {
+            console.log('touchstart method')
             var _isPointerType = isPointerEventType(event, 'down'),
                 firstTouch = _isPointerType ? event : (event.touches && event.touches[0] || event),
                 element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
@@ -4969,6 +4977,7 @@
             return true
         }
         function touchmove(event) {
+            console.log('touchmove method')
             var _isPointerType = isPointerEventType(event, 'down'),
                 e = getCoordinates(event)
             /*
@@ -4985,6 +4994,7 @@
             touchProxy.my += Math.abs(touchProxy.y - e.y)
         }
         function touchend(event) {
+            console.log('touchend method')
             var _isPointerType = isPointerEventType(event, 'down')
             element = touchProxy.element
 
@@ -5024,7 +5034,9 @@
                     } else {
                         fastclick.focus(element)
                     }
-                    event.preventDefault()
+                    if (event.target.tagName.toLowerCase() !== 'select') {
+                        event.preventDefault()
+                    }
                     fireEvent(element, 'tap')
                     avalon.fastclick.fireEvent(element, "click", event)
                     avalon(element).removeClass(fastclick.activeClass)
@@ -5053,6 +5065,7 @@
         document.addEventListener(touchNames[2], touchend)
         if (touchNames[3]) {
             document.addEventListener(touchNames[3], function(event) {
+                console.log(touchNames[3] + 'method, event.type : '+event.type)
                 if (longTapTimeout) clearTimeout(longTapTimeout)
                 if (touchTimeout) clearTimeout(touchTimeout)
                 longTapTimeout = touchTimeout = null
@@ -5121,7 +5134,6 @@
                 }
             }
         };
-
 
         ["swipe", "swipeleft", "swiperight", "swipeup", "swipedown", "doubletap", "tap", "dblclick", "longtap", "hold"].forEach(function(method) {
             me[method + "Hook"] = me["clickHook"]

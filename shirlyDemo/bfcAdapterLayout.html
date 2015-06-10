@@ -1,0 +1,47 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>BFC自适应布局优势演示</title>
+<style>
+html {
+    overflow: hidden;
+}
+body {
+    width: 400px;
+    margin: 0;
+}
+.float-left {
+    float: left;
+    width: 128px; height: 96px;
+    margin-right: 20px;
+    -webkit-animation: size 1s infinite alternate;
+    animation: size 1s infinite alternate;
+}
+.follow-content {
+    overflow: hidden;
+    background-color: #beceeb;
+}
+@-webkit-keyframes size {
+    to {
+        width: 256px;
+        height: 192px;
+    }
+}
+@keyframes size {
+    to {
+        width: 256px;
+        height: 192px;
+    }
+}
+</style>
+</head>
+
+<body>
+<img src="./images/xiyou_night.jpg" class="float-left">
+<div class="follow-content">
+通过overflow触发follow-content元素的BFC，使其不被浮动元素覆盖，从而实现自适应的两栏布局，当然你也可以很轻松的实现三栏布局
+</div>
+</body>
+</html>
