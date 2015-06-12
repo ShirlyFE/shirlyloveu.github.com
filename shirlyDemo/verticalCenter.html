@@ -1,0 +1,215 @@
+<html lang="en">  
+<head>  
+<meta charset="utf-8" />  
+<meta content="IE=8" http-equiv="X-UA-Compatible"/>  
+<title>CSS垂直居中</title>  
+<style type="text/css">  
+    h4 {
+        background: #ccc;
+        padding: 10px;
+        border-bottom: 1px solid #000;
+        box-shadow: 0 2px #999;
+    }
+    li {
+        list-style: none;
+    }
+    .clear {
+        overflow: hidden;
+        zoom: 1;
+    }
+    a {
+        text-decoration: none;
+        padding: 5px;
+        display: block;
+    }
+    code, blockquote {
+        background: #eee;
+        padding: 10px;
+        display: block;
+    }
+    .multiple {
+        display:table-cell; width:550px; height:1.14em; padding:0 0.1em; border:4px solid #beceeb; color:#069; font-size:10em; vertical-align:middle;
+    }
+    .multiple span {
+        display:inline-block; font-size:18px; vertical-align:middle;
+    }
+
+    .align_box_3 li{width:1em; height:1em; padding:0.1em; margin:0 0.1em 0 0; font-size:128px; float:left; border:1px solid #beceeb;}
+    .align_box_3 li img{display:block; width:100%; height:100%; background-repeat:no-repeat; background-position:center;}
+
+    .align_box_4 li{float:left; margin-right:13px;}
+    .align_box_4 li div{display:table-cell; width:144px; height:144px; border:1px solid #beceeb; font-size:118px; text-align:center; vertical-align:middle;}
+    .align_box_4 li div img{width: 100px; vertical-align:middle;}
+
+    .align_box_6 li{height:128px; width:150px; padding:13px 0; float:left; margin-right:10px; border:1px solid #beceeb; text-align:center; font-size:0;}
+    .align_box_6 li .alpha_img{height:100%; width:1px; vertical-align:middle;}
+    .align_box_6 li .show_img{vertical-align:middle;width:100px;}
+
+    .fakeEle li{float:left; width:150px; height:150px; text-align:center; line-height:150px; *font-size:125px; border:1px solid #beceeb;margin-right:10px;}
+    .fakeEle li:after{content:' '; vertical-align:middle;}
+    .fakeEle li img{vertical-align:middle; width: 100px;}
+
+
+    .container{  
+        /*IE8与标准游览器垂直对齐*/
+        display: table-cell;
+        vertical-align:middle; 
+        width:150px;/*装饰*/
+        height:150px;  
+        border: 1px solid #CCC;  
+        margin-right: 10px;
+    }  
+    .container img {  
+        display:block;/*让其具备盒子模型*/
+        margin:0 auto;  
+        width: 100px;
+        text-align:center;
+        margin-top:expression((500 - this.height )/2);/*让IE567垂直对齐 */
+    }  
+    .fl {
+        float: left;
+        margin-right: 10px;
+    }
+</style>  
+</head>  
+<body>  
+<h4>单行文字垂直居中: line-height and height</h4>
+<div class='box'>
+    <div class='single' style='height:3em;line-height:3em'>
+        单行文字居中显示测试, css样式: height:3em;line-height:3em
+    </div>
+</div>
+
+<h4>多行文字垂直居中: line-height and height</h4>
+<div class='box multiple'>
+    <span>
+        <p>多行文字居中显示测试, 测试居中对齐</p>
+        <p>第二行文字，you 可以再添加一行文字做测试</p>
+    </span>
+</div>
+
+<h5>此方案正常显示需要注意几点：</h5>
+<ol>
+    <li>
+        外部div不能使用浮动
+    </li>
+    <li>
+        外部div高度和文字大小比例1.14为宜
+    </li>
+    <li>
+        内部标签的vertical-align:middle可以省略，但是外部div高度和文字大小比例要修改,高度与字体比1.5左右为宜
+    </li>
+    <li>
+        用span标签将多行文字包起来
+    </li>
+</ol>
+<h4>大小不固定图片垂直居中：背景定位法</h4>
+利用background-position:center实现图片居中显示
+<div class='box'>
+    <ul class="align_box_3 fix clear">
+        <li>
+            <img src="./images/pixel.gif" style="background-image:url(./images/coffee.png);" />
+        </li>
+        <li>
+            <img src="./images/pixel.gif" style="background-image:url(./images/xiyou_night.jpg);" />
+        </li>
+        <li>
+            <img src="./images/pixel.gif" style="background-image:url(./images/header-2.jpg);" />
+        </li>
+    </ul>
+</div>
+
+<h4>display:table-cell和文字大小控制图片垂直居中</h4>
+<div class='box'>
+    <ul class="align_box_4 fix clear">
+        <li>
+            <div><img src="./images/coffee.png" /></div>
+        </li>
+        <li>
+            <div><img src="./images/xiyou_night.jpg" /></div>
+        </li>
+        <li>
+            <div><img src="./images/header-2.jpg" /></div>
+        </li>
+    </ul>
+</div>
+
+<dl>
+    <dt>说明：</dt>
+    <dd>通过文字大小控制IE下图片垂直居中</dd>
+    <dd>高度/文字大小比1.14</dd>
+</dl>
+
+<h4>空白图片实现垂直居中</h4>
+<div class='box'>
+    <ul class="align_box_6 fix clear">
+        <li>
+            <img class="show_img" src="images/xiyou_night.jpg" />
+            <img class="alpha_img" src="./image/pixel.gif" />
+        </li>
+        <li>
+            <img class="show_img" src="images/header-2.jpg" />
+            <img class="alpha_img" src="./image/pixel.gif" />
+        </li>
+        <li>
+            <img class="show_img" src="images/coffee.png" />
+            <img class="alpha_img" src="./image/pixel.gif" />
+        </li>
+    </ul>
+</div>
+<h5>也可以使用span或者i等标签,减少1px图片的http请求</h5>
+<code>
+    span{width:0;display:inline-block;height:100%;vertical-align:middel;}
+</code>
+<div class='box'>
+    <ul class="align_box_6 fix clear">
+        <li>
+            <img class="show_img" src="images/xiyou_night.jpg" />
+            <span style='width:0;display:inline-block;height:100%;vertical-align:middle;'></span>
+        </li>
+        <li>
+            <img class="show_img" src="images/header-2.jpg" />
+            <span style='width:0;display:inline-block;height:100%;vertical-align:middle;'></span>
+        </li>
+        <li>
+            <img class="show_img" src="images/coffee.png" />
+            <span style='width:0;display:inline-block;height:100%;vertical-align:middle;'></span>
+        </li>
+    </ul>
+</div>
+<h5>通过伪元素达到同样的目的</h5>
+<div class='box'>
+    <ul class="fakeEle clear">
+        <li>
+            <img src="images/xiyou_night.jpg" />
+        </li>
+        <li>
+            <img class="show_img" src="images/coffee.png" />
+        </li>
+        <li>
+            <img class="show_img" src="images/header-2.jpg" />
+        </li>
+    </ul>
+</div>
+<h4>垂直居中（CSS表达式）</h4>  
+<div class='box clear' style='padding-left: 40px;margin-bottom:50px;'>
+    <div class='fl'>
+        <div class="container">  
+            <img src="./images/coffee.png" />  
+        </div>  
+    </div>
+    <div class='fl'>
+        <div class="container">  
+            <img src="./images/coffee.png" />  
+        </div> 
+    </div>
+    <div class='fl'>
+        <div class="container">  
+            <img src="./images/coffee.png" />  
+        </div> 
+    </div>
+</div>
+<h4>资料</h4>
+<a href="http://www.zhangxinxu.com/wordpress/2009/08/%E5%A4%A7%E5%B0%8F%E4%B8%8D%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%9B%BE%E7%89%87%E3%80%81%E5%A4%9A%E8%A1%8C%E6%96%87%E5%AD%97%E7%9A%84%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/">垂直居中解决方案</a>
+</body>  
+</html> 
