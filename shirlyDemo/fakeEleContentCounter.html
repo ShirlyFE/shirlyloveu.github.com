@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style type="text/css">
+    body {
+        counter-reset: section coffee;
+
+    }
+    .attr::after {
+        content: "(" attr(href) ")";
+    }
+    .url::before {
+        content: url(./images/coffee.jpg);
+    }
+    .box h1 {
+        counter-reset: subsection;
+    }
+
+    .box h1:before {
+        counter-increment: section;
+        content: "Section " counter(section) ". ";
+    }
+
+    .box h2:before {
+        counter-increment: subsection;
+        content: counter(section) "." counter(subsection) " ";
+    }
+    </style>
+</head>
+<body>
+<h2> attr()  --- 调用当前元素的属性</h2>
+<div class='box'>
+    <a class='attr' href='www.baidu.com'></a>
+</div>
+
+<h2>url() / uri() – 用于引用媒体文件</h2>
+<div class='box url'>
+    
+</div>
+ 
+<h2>counter() –  调用计数器，可以不使用列表元素实现序号功能
+计数器需要和counter-increment和counter
+-reset属性配合使用</h2>
+
+Syntax:
+counter-increment: none | id | initial | inherit
+
+<div class='box'>
+    <h1>HTML tutorials</h1>
+    <h2>HTML Tutorial</h2>
+    <h2>XHTML Tutorial</h2>
+    <h2>CSS Tutorial</h2>
+
+    <h1>Scripting tutorials</h1>
+    <h2>JavaScript</h2>
+    <h2>VBScript</h2>
+
+    <h1>XML tutorials</h1>
+    <h2>XML</h2>
+    <h2>XSL</h2>
+</div>
+
+
+http://www.w3.org/TR/CSS21/generate.html
+<style type="text/css">
+    input:checked {
+        counter-increment: coffee;
+    }
+    .total::after {
+        content: counter(coffee);
+    }
+
+</style>
+<h2>css动态获得选中元素个数实例</h2>
+<ol>
+    <li>
+        <input type='checkbox' id='coffee1'/>
+        <label for='coffee1'>espresso</label>
+    </li>
+    <li>
+        <input type='checkbox' id='coffee2'/>
+        <label for='coffee2'>long black</label>
+    </li>
+    <li>
+        <input type='checkbox' id='coffee3'/>
+        <label for='coffee3'>macchiato</label>
+    </li>
+    <li>
+        <input type='checkbox' id='coffee4'/>
+        <label for='coffee4'>cappuccino</label>
+    </li>
+    <li>
+        <input type='checkbox' id='coffee5'/>
+        <label for='coffee5'>caffe latte </label>
+    </li>
+    <li>
+        <input type='checkbox' id='coffee6'/>
+        <label for='coffee6'>flat white</label>
+    </li>
+    <li>
+        <input type='checkbox' id='coffee7'/>
+        <label for='coffee7'>mocha</label>
+    </li>
+    <li>
+        <input type='checkbox' id='coffee8'/>
+        <label for='coffee8'>Con Panna</label>
+    </li>
+    <li>
+        <input type='checkbox' id='coffee9'/>
+        <label for='coffee9'>CafeAmericano</label>
+    </li>
+</ol>
+<!-- 
+意大利咖啡 ：Italian Coffee  
+                                    意大利浓咖啡 ：Espresso  
+                                    意大利泡沫咖啡 ：Cappuccino  
+                                    拿铁咖啡 ：CafeLatte(Coffee Latte)  
+                                    美式咖啡 ：CafeAmericano  
+                                    法式滴滤咖啡 ：French Coffee  
+                                    冰法式滴滤 ：Iced French Coffee  
+                                    低因咖啡 ：Decaffeinated Coffee  
+                                    曼巴咖啡 ：Special Coffee (Mandeling and Brazilian Coffee)  
+                                    速溶咖啡 ：Instant Coffee  
+                                    现磨咖啡 ：Fresh Ground Coffee  
+                                    冰咖啡 ：Iced Coffee  
+                                    浓缩冰咖啡 ：Iced Espresso  
+                                    冰薄荷咖啡 ：Iced Mint Coffee  
+                                    冰卡布奇诺 ：Iced Cappuccino  
+                                    果味卡布奇诺 ：Fruit Cappuccino  
+                                     薰衣草卡布奇诺 ：Lavender Cappuccino  
+                                    香草卡布奇诺 ：Vanilla Cappuccino  
+                                    榛子卡布奇诺 ：Hazelnut Cappuccino  
+                                    冰拿铁咖啡 ：Iced CafeLatte   
+                                    浓缩咖啡康保蓝 ：Espresso Con Panna  
+                                    浓缩咖啡玛奇朵 ：Espresso Macchiato  
+                                    冰美式咖啡 ：Iced CafeAmericano  
+                                    菠萝冰美式 ：Iced Pineapple Americano  
+                                    芒果冰美式咖啡 ：Iced Mango Americano  
+                                    蜜桃冰美式咖啡 ：Iced Peach Americano  
+                                    香蕉冰美式 ：Iced Banana Americano  
+                                    冰摩卡 ：Iced Mochaccino  
+                                    冰水果咖啡 ：Iced Fruit Coffee  
+                                    法国香草咖啡 ：French Vanilla Coffee  
+                                    漂浮冰咖啡 ：Iced Coffee Float  
+                                    巧克力冰咖啡 ：Iced Chocolate Coffee  
+                                    巧克力咖啡 ：Chocolate Coffee  
+                                    塔拉珠高山咖啡 ：Tarrazu Coffee  
+                                    碳烧咖啡 ：Charcoal Coffee  
+                                    特雷里奥咖啡 ：Tres Rios Coffee  
+                                    维也纳咖啡 ：Vienna Coffee  
+                                    杏香咖啡 ：Saronno Coffee  
+                                    夏威夷可娜咖啡 ：Hawaiian Kona Coffee  
+                                    玫瑰夫人咖啡 ：Rose Lady Coffee  
+                                    墨西哥冰咖啡 ：Iced Mexican Coffee  
+                                    瑞士冰咖啡 ：Iced Swiss Coffee  
+                                    巴西咖啡 ：Brazil Coffee   
+                                    皇家咖啡 ：Royal Coffee  
+                                    君度咖啡 ：Cointreau Coffee  
+                                    爱尔咖啡 ：Irish Coffee  
+                                    生姜咖啡 ：Ginger Juice Coffee  
+                                    贵妇人咖啡 ：Dame Coffee  
+                                    椰香咖啡 ：Coconut Coffee 
+ -->
+<p>你总共选择了<span class='total'></span>杯coffee</p>
+
+</body>
+</html>
+<!-- http://www.starbucks.com/coffee/how-to-brew/coffee-press -->
