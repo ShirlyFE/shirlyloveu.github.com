@@ -11,7 +11,7 @@
         padding: 5px;
         display: block;
     }
-    code {
+    code, blockquote {
         background: #eee;
         padding: 10px;
         display: block;
@@ -48,6 +48,13 @@
     }
     .total::after {
         content: counter(coffee);
+    }
+
+    blockquote:before {
+        content: open-quote;
+    }
+    blockquote:after {
+        content: close-quote;
     }
 </style>
 </head>
@@ -161,11 +168,24 @@
     </li>
 </ol>
 <p>你总共选择了<span class='total'></span>杯coffee</p>
+
+<h4>为多语言内容插入正确引号</h4>
+<p>
+不同的语言使用不同的引号字符。比如英文的引号就是""，而中文引号就是“”。使用content可以使得不同的语言使用对应的一些字符  
+</p>
+<div class='box'>
+    <blockquote>I love those random memories that make me smile, no matter what is going on in my life right now.</blockquote>
+</div>
+
 <h4>资料</h4>
 
 <div>
     <a href='http://www.w3.org/TR/CSS21/generate.html'>content w3 standard</a>
 </div>
+<div>
+    <a href='https://dev.opera.com/articles/automatic-numbering-with-css-counters/'>Automatic Numbering With CSS Counters</a>
+</div>
+
 <div>
 <a href="http://www.starbucks.com/coffee/how-to-brew/coffee-press">love coffee, love life</a>
 </div>
