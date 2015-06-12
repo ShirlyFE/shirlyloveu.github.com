@@ -2,7 +2,12 @@
 <html>
 <head>
 <meta charset="utf-8"/>
+<title>css3的伪元素的content应用</title> 
 <style type="text/css">
+    div, body, h4 {
+        margin: 0;
+        padding: 0;
+    }
     body {
         counter-reset: section coffee;
     }
@@ -19,8 +24,19 @@
     h4 {
         background: #ccc;
         padding: 10px;
+        margin-bottom: 20px;
         border-bottom: 1px solid #000;
         box-shadow: 0 2px #999;
+    }
+    .main {
+        padding: 0 20px 20px;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        width: 920px;
+        margin: 0 auto;
+    }
+    .box {
+        margin-bottom: 20px;
     }
     li {
         list-style: none;
@@ -59,136 +75,137 @@
 </style>
 </head>
 <body>
-<h4> attr():  调用当前元素的属性</h4>
-<div class='box'>
-    <a class='attr' title='my github' href='https://github.com/shirlyLoveU'></a>
+<div class='main'>
+    <h4> attr():  调用当前元素的属性</h4>
+    <div class='box'>
+        <a class='attr' title='my github' href='https://github.com/shirlyLoveU'></a>
+    </div>
+
+    <h4>url(): 引用媒体文件</h4>
+    <div class='box url'></div>
+     
+    <h4>counter(): 调用计数器，计数器需要和counter-increment和counter
+    -reset属性配合使用</h4>
+
+    <h5>Syntax:</h5>
+    <code>
+        counter-increment: none | id | initial | inherit
+    </code>
+    <div class='box'>
+        <p>HTML tutorials</p>
+        <ul>
+            <li>HTML Tutorial</li>
+            <li>XHTML Tutorial</li>
+            <li>CSS Tutorial</li>
+        </ul>
+        <p>Scripting tutorials</p>
+        <ul>
+            <li>JavaScript</li>
+            <li>VBScript</li>
+        </ul>
+        <p>XML tutorials</p>
+        <ul>
+            <li>XML</li>
+            <li>XSL</li>
+        </ul>
+    </div>
+    <h4>css动态获得选中元素个数实例</h4>
+    <ol>
+        <li>
+            <input type='checkbox' id='coffee1'/>
+            <label for='coffee1'>意大利咖啡 ：Italian Coffee </label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee2'/>
+            <label for='coffee2'>意大利浓咖啡 ：Espresso</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee3'/>
+            <label for='coffee3'>意大利泡沫咖啡 ：Cappuccino</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee4'/>
+            <label for='coffee4'>拿铁咖啡 ：CafeLatte(Coffee Latte)</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee5'/>
+            <label for='coffee5'>美式咖啡 ：CafeAmericano </label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee6'/>
+            <label for='coffee6'>法式滴滤咖啡 ：French Coffee</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee7'/>
+            <label for='coffee7'>冰法式滴滤 ：Iced French Coffee </label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee8'/>
+            <label for='coffee8'>低因咖啡 ：Decaffeinated Coffee</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee9'/>
+            <label for='coffee9'>曼巴咖啡 ：Special Coffee (Mandeling and Brazilian Coffee)</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee10'/>
+            <label for='coffee10'>维也纳咖啡 ：Vienna Coffee</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee11'/>
+            <label for='coffee11'>椰香咖啡 ：Coconut Coffee</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee12'/>
+            <label for='coffee12'>法国香草咖啡 ：French Vanilla Coffee</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee13'/>
+            <label for='coffee13'>碳烧咖啡 ：Charcoal Coffee</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee14'/>
+            <label for='coffee14'>玫瑰夫人咖啡 ：Rose Lady Coffee</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee15'/>
+            <label for='coffee15'>夏威夷可娜咖啡 ：Hawaiian Kona Coffee</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee16'/>
+            <label for='coffee16'>冰摩卡 ：Iced Mochaccino</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee17'/>
+            <label for='coffee17'>皇家咖啡 ：Royal Coffee</label>
+        </li>
+        <li>
+            <input type='checkbox' id='coffee18'/>
+            <label for='coffee18'>塔拉珠高山咖啡 ：Tarrazu Coffee</label>
+        </li>
+    </ol>
+    <p>你总共选择了<span class='total'></span>杯coffee</p>
+
+    <h4>为多语言内容插入正确引号</h4>
+    <p>
+    不同的语言使用不同的引号字符。比如英文的引号就是""，而中文引号就是“”。使用content可以使得不同的语言使用对应的一些字符  
+    </p>
+    <div class='box'>
+        <blockquote>I love those random memories that make me smile, no matter what is going on in my life right now.</blockquote>
+    </div>
+
+    <h4>资料</h4>
+
+    <div>
+        <a href='http://www.w3.org/TR/CSS21/generate.html'>content w3 standard</a>
+    </div>
+    <div>
+        <a href='https://dev.opera.com/articles/automatic-numbering-with-css-counters/'>Automatic Numbering With CSS Counters</a>
+    </div>
+
+    <div>
+    <a href="http://www.starbucks.com/coffee/how-to-brew/coffee-press">love coffee, love life</a>
+    </div>
 </div>
-
-<h4>url(): 引用媒体文件</h4>
-<div class='box url'></div>
- 
-<h4>counter(): 调用计数器，计数器需要和counter-increment和counter
--reset属性配合使用</h4>
-
-<h5>Syntax:</h5>
-<code>
-    counter-increment: none | id | initial | inherit
-</code>
-<div class='box'>
-    <p>HTML tutorials</p>
-    <ul>
-        <li>HTML Tutorial</li>
-        <li>XHTML Tutorial</li>
-        <li>CSS Tutorial</li>
-    </ul>
-    <p>Scripting tutorials</p>
-    <ul>
-        <li>JavaScript</li>
-        <li>VBScript</li>
-    </ul>
-    <p>XML tutorials</p>
-    <ul>
-        <li>XML</li>
-        <li>XSL</li>
-    </ul>
-</div>
-<h4>css动态获得选中元素个数实例</h4>
-<ol>
-    <li>
-        <input type='checkbox' id='coffee1'/>
-        <label for='coffee1'>意大利咖啡 ：Italian Coffee </label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee2'/>
-        <label for='coffee2'>意大利浓咖啡 ：Espresso</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee3'/>
-        <label for='coffee3'>意大利泡沫咖啡 ：Cappuccino</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee4'/>
-        <label for='coffee4'>拿铁咖啡 ：CafeLatte(Coffee Latte)</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee5'/>
-        <label for='coffee5'>美式咖啡 ：CafeAmericano </label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee6'/>
-        <label for='coffee6'>法式滴滤咖啡 ：French Coffee</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee7'/>
-        <label for='coffee7'>冰法式滴滤 ：Iced French Coffee </label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee8'/>
-        <label for='coffee8'>低因咖啡 ：Decaffeinated Coffee</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee9'/>
-        <label for='coffee9'>曼巴咖啡 ：Special Coffee (Mandeling and Brazilian Coffee)</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee10'/>
-        <label for='coffee10'>维也纳咖啡 ：Vienna Coffee</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee11'/>
-        <label for='coffee11'>椰香咖啡 ：Coconut Coffee</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee12'/>
-        <label for='coffee12'>法国香草咖啡 ：French Vanilla Coffee</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee13'/>
-        <label for='coffee13'>碳烧咖啡 ：Charcoal Coffee</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee14'/>
-        <label for='coffee14'>玫瑰夫人咖啡 ：Rose Lady Coffee</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee15'/>
-        <label for='coffee15'>夏威夷可娜咖啡 ：Hawaiian Kona Coffee</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee16'/>
-        <label for='coffee16'>冰摩卡 ：Iced Mochaccino</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee17'/>
-        <label for='coffee17'>皇家咖啡 ：Royal Coffee</label>
-    </li>
-    <li>
-        <input type='checkbox' id='coffee18'/>
-        <label for='coffee18'>塔拉珠高山咖啡 ：Tarrazu Coffee</label>
-    </li>
-</ol>
-<p>你总共选择了<span class='total'></span>杯coffee</p>
-
-<h4>为多语言内容插入正确引号</h4>
-<p>
-不同的语言使用不同的引号字符。比如英文的引号就是""，而中文引号就是“”。使用content可以使得不同的语言使用对应的一些字符  
-</p>
-<div class='box'>
-    <blockquote>I love those random memories that make me smile, no matter what is going on in my life right now.</blockquote>
-</div>
-
-<h4>资料</h4>
-
-<div>
-    <a href='http://www.w3.org/TR/CSS21/generate.html'>content w3 standard</a>
-</div>
-<div>
-    <a href='https://dev.opera.com/articles/automatic-numbering-with-css-counters/'>Automatic Numbering With CSS Counters</a>
-</div>
-
-<div>
-<a href="http://www.starbucks.com/coffee/how-to-brew/coffee-press">love coffee, love life</a>
-</div>
-
 </body>
 </html>
