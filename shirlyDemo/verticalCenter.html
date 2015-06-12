@@ -35,7 +35,7 @@
     }
 
     .align_box_3 li{width:1em; height:1em; padding:0.1em; margin:0 0.1em 0 0; font-size:128px; float:left; border:1px solid #beceeb;}
-    .align_box_3 li img{display:block; width:100%; height:100%; background-repeat:no-repeat; background-position:center;}
+    .align_box_3 li div{display:block; width:100%; height:100%; background-repeat:no-repeat; background-position:center;}
 
     .align_box_4 li{float:left; margin-right:13px;}
     .align_box_4 li div{display:table-cell; width:144px; height:144px; border:1px solid #beceeb; font-size:118px; text-align:center; vertical-align:middle;}
@@ -91,16 +91,16 @@
 <h5>此方案正常显示需要注意几点：</h5>
 <ol>
     <li>
-        外部div不能使用浮动
+        1. 外部div不能使用浮动
     </li>
     <li>
-        外部div高度和文字大小比例1.14为宜
+        2. 外部div高度和文字大小比例1.14为宜
     </li>
     <li>
-        内部标签的vertical-align:middle可以省略，但是外部div高度和文字大小比例要修改,高度与字体比1.5左右为宜
+        3. 内部标签的vertical-align:middle可以省略，但是外部div高度和文字大小比例要修改,高度与字体比1.5左右为宜
     </li>
     <li>
-        用span标签将多行文字包起来
+        4. 用span标签将多行文字包起来
     </li>
 </ol>
 <h4>大小不固定图片垂直居中：背景定位法</h4>
@@ -108,13 +108,13 @@
 <div class='box'>
     <ul class="align_box_3 fix clear">
         <li>
-            <img src="./images/pixel.gif" style="background-image:url(./images/coffee.png);" />
+            <div style="background-image:url(./images/coffee.png);"></div>
         </li>
         <li>
-            <img src="./images/pixel.gif" style="background-image:url(./images/xiyou_night.jpg);" />
+            <div style="background-image:url(./images/xiyou_night.jpg);"></div>
         </li>
         <li>
-            <img src="./images/pixel.gif" style="background-image:url(./images/header-2.jpg);" />
+            <div style="background-image:url(./images/header-2.jpg);"></div>
         </li>
     </ul>
 </div>
