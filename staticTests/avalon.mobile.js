@@ -5109,7 +5109,8 @@ new function() {// jshint ignore:line
         alert("event.type : "+event.type)
         alert("touchProxy.element : " + touchProxy.element)
         var tagName = event.target.tagName.toLowerCase()
-        if (touchProxy.element && tagName !=='select') { // 如果是pc端,不判断touchProxy.element的话此监听函数先触发的话之后所有的事件都不能正常触发
+        // pc端mouse事件没有延迟，在捕获阶段直接阻止默认行为和冒泡的话，其他的事件都会阻止；而移动端先触发touch事件再触发touchstart事件
+        if (touchProxy.m && tagName !=='select') { // 如果是pc端,不判断touchProxy.m的话此监听函数先触发的话之后所有的事件都不能正常触发
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
             } else {
@@ -5144,6 +5145,7 @@ new function() {// jshint ignore:line
         if (delta > 0 && delta <= 250) {
             touchProxy.isDoubleTap = true
         }
+        touchProxy.m = true
         touchProxy.x = firstTouch.pageX
         touchProxy.y = firstTouch.pageY
         touchProxy.mx = 0
@@ -5216,6 +5218,7 @@ new function() {// jshint ignore:line
                     fireEvent(element, "doubletap")
                     fireMouseEvent(element, "dblclick", event)
                     touchProxy = {}
+                    touchProxy.m = true
                     avalon(element).removeClass(activeClass)
                 } else {
                     touchTimeout = setTimeout(function() {
@@ -5223,6 +5226,7 @@ new function() {// jshint ignore:line
                         touchTimeout = null
                         if (touchProxy.element) fireEvent(touchProxy.element, "singletap")
                         touchProxy = {};
+                        touchProxy.m = true
                         avalon(element).removeClass(activeClass)
                     }, 250)
                 }
