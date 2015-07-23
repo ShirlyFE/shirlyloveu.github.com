@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="minimal-ui,width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
-        <script src="../avalon.mobile.js"></script>
+       
         <title>点击穿透示例</title>
         <style>
             body,html{
@@ -20,7 +20,7 @@
         </style>
     </head>
     <body ms-controller='test'>
-        <div id="event"
+<!--         <div id="event"
              ms-on-tap='tap'
              ms-on-swipe='swipe'
              ms-on-swipeleft='swipeLeft'
@@ -33,9 +33,20 @@
              ms-on-singletap='singletap'
              ms-on-click='click'>
         	avalon event test
+        </div> -->
+        <div id="event"
+             ms-on-swipeleft='swipeLeft'
+             ms-on-swiperight='swipeRight'
+             ms-on-swipeup='swipeUp'
+             ms-on-swipedown='swipeDown'>
+            avalon event test
         </div>
         <div>{{clickINfo}}</div>
     </body>
+    <script type="text/javascript">
+    var logs = []
+    </script>
+    <script src="../avalon.mobile.js"></script>
     <script>
     var oldTime, newTime;
 
@@ -51,15 +62,23 @@
         }
         vm.swipeLeft = function(event) {
             this.innerHTML = event.type
+            VM.clickINfo = logs.join();
+            logs = []
         }
         vm.swipeRight = function(event) {
             this.innerHTML = event.type
+            VM.clickINfo = logs.join();
+            logs = []
         }
         vm.swipeUp = function(event) {
             this.innerHTML = event.type
+            VM.clickINfo = logs.join();
+            logs = []
         }
         vm.swipeDown = function(event) {
             this.innerHTML = event.type
+            VM.clickINfo = logs.join();
+            logs = []
         }
         vm.doubleTap = function(event) {
             this.innerHTML = event.type

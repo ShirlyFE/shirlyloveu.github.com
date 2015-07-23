@@ -5089,7 +5089,13 @@ new function() {// jshint ignore:line
     }
 
     function onMouse(event) { 
-        if (touchProxy.element !== event.target) {
+        var target = event.target,
+            element = touchProxy.element
+
+        if (element !== target) {
+            if (target.tagName.toLowerCase() === 'input' && element.tagName.toLowerCase() === "label") {
+                return false
+            }
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
             } else {
@@ -5104,9 +5110,9 @@ new function() {// jshint ignore:line
         longTapTimeout = null
     }
     function touchstart(event) {
-        var _isPointerType = isPointerEventType(event, 'down'),
+        var _isPointerType = isPointerEventType(event, "down"),
             firstTouch = _isPointerType ? event : event.touches[0],
-            element = 'tagName' in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
+            element = "tagName" in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
             now = Date.now(),
             delta = now - (touchProxy.last || now)
 
@@ -5150,6 +5156,7 @@ new function() {// jshint ignore:line
             event.preventDefault()
         }
         cancelLongTap()
+        
         touchProxy.x1 = x // touchend事件没有pageX、pageY始终为0，且没有clientX和clientY事件
         touchProxy.y1 = y
         touchProxy.mx += Math.abs(touchProxy.x - x)
@@ -5164,7 +5171,7 @@ new function() {// jshint ignore:line
         if (!element) return // longtap|hold触发后touchProxy为{}
 
         cancelLongTap()
-
+        logs.push('touchProxy.x1 : '+touchProxy.x1+'; touchProxy.x : '+touchProxy.x+'; touchProxy.y1 : '+touchProxy.y1+'; touchProxy.y : '+touchProxy.y)
         if ((touchProxy.x1 && Math.abs(touchProxy.x1 - touchProxy.x) > dragDistance) || (touchProxy.y1 && Math.abs(touchProxy.y1 - touchProxy.y) > dragDistance)) {
             //如果用户滑动的距离有点大，就认为是swipe事件
             var direction = swipeDirection(touchProxy.x, touchProxy.x1, touchProxy.y, touchProxy.y1)
