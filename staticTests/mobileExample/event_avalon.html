@@ -37,7 +37,7 @@
         <div>{{clickINfo}}</div>
     </body>
     <script>
-    avalon.define('test', function(vm) {
+    var VM= avalon.define('test', function(vm) {
         vm.clickINfo = ''
         vm.tap = function(event) {
             this.innerHTML = event.type
