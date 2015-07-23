@@ -5106,6 +5106,8 @@ new function() {// jshint ignore:line
         if (event.fireByAvalon) { 
             return true
         }
+        alert("event.type : "+event.type)
+        alert("touchProxy.element : " + touchProxy.element)
         var tagName = event.target.tagName.toLowerCase()
         if (touchProxy.element && tagName !=='select') { // 如果是pc端,不判断touchProxy.element的话此监听函数先触发的话之后所有的事件都不能正常触发
             if (event.stopImmediatePropagation) {
