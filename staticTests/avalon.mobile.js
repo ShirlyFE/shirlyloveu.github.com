@@ -5107,26 +5107,36 @@ new function() {// jshint ignore:line
             return true
         }
         alert("event.type : "+event.type)
-        alert("touchProxy.m : " + touchProxy.m)
-        var tagName = event.target.tagName.toLowerCase()
-        // pc端mouse事件没有延迟，在捕获阶段直接阻止默认行为和冒泡的话，其他的事件都会阻止；而移动端先触发touch事件再触发touchstart事件
-        if (touchProxy.m && tagName !=='select') { // 如果是pc端,不判断touchProxy.m的话此监听函数先触发的话之后所有的事件都不能正常触发
+        alert("touchProxy.element : " + touchProxy.element)
+        alert("touchProxy.element === event.target : "+(touchProxy.element === event.target))
+        // var tagName = event.target.tagName.toLowerCase()
+        // // pc端mouse事件没有延迟，在捕获阶段直接阻止默认行为和冒泡的话，其他的事件都会阻止；而移动端先触发touch事件再触发touchstart事件
+        // if (touchProxy.m && tagName !=='select') { // 如果是pc端,不判断touchProxy.m的话此监听函数先触发的话之后所有的事件都不能正常触发
+        //     if (event.stopImmediatePropagation) {
+        //         event.stopImmediatePropagation()
+        //     } else {
+        //         event.propagationStopped = true
+        //     }
+        //     event.stopPropagation() 
+        //     if (event.type === 'click') { // mousedown会触发input的focus从而调出键盘，click会触发a链接的跳转
+        //         touchProxy.m = false
+        //         if (tagName === 'input') { // 当点击label的时候浏览器会默认触发input的click事件，从而控制ipnut的状态，如果不做判断全部阻止的话这种默认行为就会失效
+        //             return false
+        //         }
+        //     } 
+        //     if (event.type === 'mousedown' && tagName === 'textarea') {
+        //         alert('textarea')
+        //         return false
+        //     }
+        //     event.preventDefault()
+        // }
+        if (touchProxy.element !== event.target) {
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
             } else {
                 event.propagationStopped = true
             }
             event.stopPropagation() 
-            if (event.type === 'click') { // mousedown会触发input的focus从而调出键盘，click会触发a链接的跳转
-                touchProxy.m = false
-                if (tagName === 'input') { // 当点击label的时候浏览器会默认触发input的click事件，从而控制ipnut的状态，如果不做判断全部阻止的话这种默认行为就会失效
-                    return false
-                }
-            } 
-            if (event.type === 'mousedown' && tagName === 'textarea') {
-                alert('textarea')
-                return false
-            }
             event.preventDefault()
         }
     }
@@ -5149,7 +5159,6 @@ new function() {// jshint ignore:line
         if (delta > 0 && delta <= 250) {
             touchProxy.isDoubleTap = true
         }
-        touchProxy.m = true
         touchProxy.x = firstTouch.pageX
         touchProxy.y = firstTouch.pageY
         touchProxy.mx = 0
@@ -5222,7 +5231,7 @@ new function() {// jshint ignore:line
                     fireEvent(element, "doubletap")
                     fireMouseEvent(element, "dblclick", event)
                     touchProxy = {}
-                    touchProxy.m = true
+                    touchProxy.element = element
                     avalon(element).removeClass(activeClass)
                 } else {
                     touchTimeout = setTimeout(function() {
@@ -5230,7 +5239,7 @@ new function() {// jshint ignore:line
                         touchTimeout = null
                         if (touchProxy.element) fireEvent(touchProxy.element, "singletap")
                         touchProxy = {};
-                        touchProxy.m = true
+                        touchProxy.element = element
                         avalon(element).removeClass(activeClass)
                     }, 250)
                 }
