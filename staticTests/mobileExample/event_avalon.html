@@ -38,10 +38,10 @@
     <script>
     avalon.define('test', function(vm) {
         vm.tap = function(event) {
-            this.innerHTML = event.
+            this.innerHTML = event.type
         }
         vm.swipe = function(event) {
-            this.innerHTML = event.tap
+            this.innerHTML = event.type
         }
         vm.swipeLeft = function(event) {
             this.innerHTML = event.type
@@ -66,6 +66,7 @@
         }
         vm.click = function(event) {
             this.innerHTML = event.type
+            alert(event.type)
         }
         vm.hold = function(event) {
             this.innerHTML = event.type
