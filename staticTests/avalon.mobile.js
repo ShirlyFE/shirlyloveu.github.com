@@ -5107,7 +5107,7 @@ new function() {// jshint ignore:line
             return true
         }
         alert("event.type : "+event.type)
-        alert("touchProxy.element : " + touchProxy.element)
+        alert("touchProxy.m : " + touchProxy.m)
         var tagName = event.target.tagName.toLowerCase()
         // pc端mouse事件没有延迟，在捕获阶段直接阻止默认行为和冒泡的话，其他的事件都会阻止；而移动端先触发touch事件再触发touchstart事件
         if (touchProxy.m && tagName !=='select') { // 如果是pc端,不判断touchProxy.m的话此监听函数先触发的话之后所有的事件都不能正常触发
