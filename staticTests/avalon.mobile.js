@@ -5101,8 +5101,8 @@ new function() {// jshint ignore:line
     }
 
     function onMouse(event) { 
-        // alert(event.type)
-        // console.log(touchProxy)
+        alert(event.type)
+        alert(event.fireByAvalon)
         if (event.fireByAvalon) { 
             return true
         }
