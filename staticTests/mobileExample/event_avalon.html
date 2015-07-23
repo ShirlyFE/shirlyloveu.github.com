@@ -34,9 +34,11 @@
              ms-on-click='click'>
         	avalon event test
         </div>
+        <div>{{clickINfo}}</div>
     </body>
     <script>
     avalon.define('test', function(vm) {
+        vm.clickINfo = ''
         vm.tap = function(event) {
             this.innerHTML = event.type
         }
@@ -66,7 +68,7 @@
         }
         vm.click = function(event) {
             this.innerHTML = event.type
-            alert(event.type)
+            VM.clickINfo += 'event.fireByAvalon: '+event.fireByAvalon+"; "
         }
         vm.hold = function(event) {
             this.innerHTML = event.type

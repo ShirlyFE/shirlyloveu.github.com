@@ -5101,8 +5101,6 @@ new function() {// jshint ignore:line
     }
 
     function onMouse(event) { 
-        alert(event.type)
-        alert(event.fireByAvalon)
         if (event.fireByAvalon) { 
             return true
         }
@@ -5127,6 +5125,8 @@ new function() {// jshint ignore:line
         //     }
         //     event.preventDefault()
         // }
+        alert('onMouse method event type : '+ event.type)
+        alert(event.fireByAvalon)
         if (touchProxy.element !== event.target) {
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
