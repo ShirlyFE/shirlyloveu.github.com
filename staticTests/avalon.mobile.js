@@ -5110,6 +5110,7 @@ new function() {// jshint ignore:line
         longTapTimeout = null
     }
     function touchstart(event) {
+
         var _isPointerType = isPointerEventType(event, "down"),
             firstTouch = _isPointerType ? event : event.touches[0],
             element = "tagName" in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
@@ -5124,6 +5125,7 @@ new function() {// jshint ignore:line
         if (delta > 0 && delta <= 250) {
             touchProxy.isDoubleTap = true
         }
+        logs.push('start event x: '+firstTouch.pageX+"; move event y: "+firstTouch.pageY)
         touchProxy.x = firstTouch.pageX
         touchProxy.y = firstTouch.pageY
         touchProxy.mx = 0
@@ -5142,11 +5144,12 @@ new function() {// jshint ignore:line
         return true
     }
     function touchmove(event) {
+
         var _isPointerType = isPointerEventType(event, 'down'),
             firstTouch = _isPointerType ? event : event.touches[0],
             x = firstTouch.pageX,
             y = firstTouch.pageY
-
+        logs.push('move event x: '+x+"; move event y: "+y)
         if (_isPointerType && !isPrimaryTouch(event)) return
         /*
             android下某些浏览器触发了touchmove事件的话touchend事件不触发，禁用touchmove可以解决此bug
