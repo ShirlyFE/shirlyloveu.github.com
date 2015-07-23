@@ -5054,7 +5054,6 @@ new function() {// jshint ignore:line
     var longTapTimeout = null
     var dragDistance = 30
     var clickDuration = 750 //小于750ms是点击，长于它是长按或拖动
-    var activeClass = "ms-click-active"
     var me = bindingHandlers.on
 
     if (IEtouch) {
@@ -5088,45 +5087,8 @@ new function() {// jshint ignore:line
             
         el.dispatchEvent(event)
     }
-        
-    function fireMouseEvent (el, type, event) {
-        var clickEvent = document.createEvent("MouseEvents")
-
-        clickEvent.initMouseEvent(type, true, true, window, 1, event.screenX, event.screenY,
-                event.pageX, event.pageY, false, false, false, false, 0, null)
-        Object.defineProperty(clickEvent, "fireByAvalon", {
-            value: true
-        })
-        el.dispatchEvent(clickEvent)
-    }
 
     function onMouse(event) { 
-        if (event.fireByAvalon) { 
-            return true
-        }
-        // var tagName = event.target.tagName.toLowerCase()
-        // // pc端mouse事件没有延迟，在捕获阶段直接阻止默认行为和冒泡的话，其他的事件都会阻止；而移动端先触发touch事件再触发touchstart事件
-        // if (touchProxy.m && tagName !=='select') { // 如果是pc端,不判断touchProxy.m的话此监听函数先触发的话之后所有的事件都不能正常触发
-        //     if (event.stopImmediatePropagation) {
-        //         event.stopImmediatePropagation()
-        //     } else {
-        //         event.propagationStopped = true
-        //     }
-        //     event.stopPropagation() 
-        //     if (event.type === 'click') { // mousedown会触发input的focus从而调出键盘，click会触发a链接的跳转
-        //         touchProxy.m = false
-        //         if (tagName === 'input') { // 当点击label的时候浏览器会默认触发input的click事件，从而控制ipnut的状态，如果不做判断全部阻止的话这种默认行为就会失效
-        //             return false
-        //         }
-        //     } 
-        //     if (event.type === 'mousedown' && tagName === 'textarea') {
-        //         alert('textarea')
-        //         return false
-        //     }
-        //     event.preventDefault()
-        // }
-        alert('onMouse method event type : '+ event.type)
-        alert(event.fireByAvalon)
         if (touchProxy.element !== event.target) {
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
@@ -5165,13 +5127,11 @@ new function() {// jshint ignore:line
         /*
             当触发hold和longtap事件时会触发touchcancel事件，从而阻止touchend事件的触发，继而保证在同时绑定tap和hold(longtap)事件时只触发其中一个事件
         */
-        avalon(element).addClass(activeClass)
         longTapTimeout = setTimeout(function() {
             longTapTimeout = null
             fireEvent(element, "hold")
             fireEvent(element, "longtap")
             touchProxy = {}
-            avalon(element).removeClass(activeClass)
         }, clickDuration)
         return true
     }
@@ -5213,23 +5173,14 @@ new function() {// jshint ignore:line
             }
             fireEvent(element, "swipe", details)
             fireEvent(element, "swipe" + direction, details)
-            avalon(element).removeClass(activeClass)
             touchProxy = {}
         } else {
             if (touchProxy.mx < dragDistance && touchProxy.my < dragDistance) {
-                if (event.target.tagName.toLowerCase() !== 'select') { //select无法通过click或者focus事件触发其下拉框的显示，只能让其通过原生的方式触发
-                    event.preventDefault()
-                }
                 fireEvent(element, 'tap')
-                fireMouseEvent(element, "click", event)
-                avalon(element).removeClass(activeClass)
-
                 if (touchProxy.isDoubleTap) {
                     fireEvent(element, "doubletap")
-                    fireMouseEvent(element, "dblclick", event)
                     touchProxy = {}
                     touchProxy.element = element
-                    avalon(element).removeClass(activeClass)
                 } else {
                     touchTimeout = setTimeout(function() {
                         clearTimeout(touchTimeout)
@@ -5237,7 +5188,6 @@ new function() {// jshint ignore:line
                         if (touchProxy.element) fireEvent(touchProxy.element, "singletap")
                         touchProxy = {};
                         touchProxy.element = element
-                        avalon(element).removeClass(activeClass)
                     }, 250)
                 }
             } else {

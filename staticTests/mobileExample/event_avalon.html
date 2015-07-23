@@ -37,10 +37,14 @@
         <div>{{clickINfo}}</div>
     </body>
     <script>
+    var oldTime, newTime;
+
     var VM= avalon.define('test', function(vm) {
         vm.clickINfo = ''
         vm.tap = function(event) {
             this.innerHTML = event.type
+            oldTime = Date.now()
+            VM.clickINfo = ''
         }
         vm.swipe = function(event) {
             this.innerHTML = event.type
@@ -68,7 +72,8 @@
         }
         vm.click = function(event) {
             this.innerHTML = event.type
-            VM.clickINfo += 'event.fireByAvalon: '+event.fireByAvalon+"; "
+            newTime = Date.now()
+            VM.clickINfo += "tap 和 click事件相差"+(newTime - oldTime)+'ms'
         }
         vm.hold = function(event) {
             this.innerHTML = event.type
