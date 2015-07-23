@@ -5118,11 +5118,15 @@ new function() {// jshint ignore:line
             }
             event.stopPropagation() 
             if (event.type === 'click') { // mousedown会触发input的focus从而调出键盘，click会触发a链接的跳转
-                touchProxy.element = null
+                touchProxy.m = false
                 if (tagName === 'input') { // 当点击label的时候浏览器会默认触发input的click事件，从而控制ipnut的状态，如果不做判断全部阻止的话这种默认行为就会失效
                     return false
                 }
             } 
+            if (event.type === 'mousedown' && tagName === 'textarea') {
+                alert('textarea')
+                return false
+            }
             event.preventDefault()
         }
     }
