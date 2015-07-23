@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf8'/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>测试swipe和click事件是否都会触发</title>
+    <style type="text/css">
+        .ms-click-active {
+            background: yellow !important;
+        }
+        button {
+            display: inline-block;
+            width: 80px;
+            height: 40px;
+        }
+    </style>
+    <script src="../zepto.js"></script>
+</head>
+<body>
+    <div id='screen' style='border: 1px solid red; padding: 50px'>
+        <div id='child' style='border: 1px solid green; background: #ccc;padding: 20px; font-size: 30px'>
+            事件机制分析
+        </div>
+    </div>
+    <script>
+        $('#screen').on('tap', function() {
+            alert("tap callback！and id: "+this.id);
+        })
+        $('#child').on('tap', function() {
+            alert("tap callback！and id: "+this.id);
+        })
+        $('#screen').on('swipeLeft', function() {
+            alert("swipeleft callback！and id: "+this.id);
+        })
+        $('#child').on('swipeLeft', function() {
+            alert("swipeleft callback！and id: "+this.id);
+        })
+
+    </script>
+</body>
+</html>

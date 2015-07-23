@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="minimal-ui,width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+        <script src="../avalon.mobile.js"></script>
+        <title>点击穿透示例</title>
+        <style>
+            body,html{
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #event {
+            	background: blue;
+            	color: #fff;
+            	width: 300px;
+                height: 300px;
+            }
+        </style>
+    </head>
+    <body ms-controller='test'>
+        <div id="event"
+             ms-on-tap='tap'
+             ms-on-swipe='swipe'
+             ms-on-swipeleft='swipeLeft'
+             ms-on-swiperight='swipeRight'
+             ms-on-swipeup='swipeUp'
+             ms-on-swipedown='swipeDown'
+             ms-on-doubletap='doubleTap'
+             ms-on-longtap='longTap'
+             ms-on-hold='hold'
+             ms-on-singletap='singletap'
+             ms-on-click='click'>
+        	zepto event test
+        </div>
+    </body>
+    <script>
+    avalon.define('test', function(vm) {
+        vm.tap = function(event) {
+            console.log(event.type)
+        }
+        vm.swipe = function(event) {
+            console.log(event.type)
+        }
+        vm.swipeLeft = function(event) {
+            console.log(event.type)
+        }
+        vm.swipeRight = function(event) {
+            console.log(event.type)
+        }
+        vm.swipeUp = function(event) {
+            console.log(event.type)
+        }
+        vm.swipeDown = function(event) {
+            console.log(event.type)
+        }
+        vm.doubleTap = function(event) {
+            console.log(event.type)
+        }
+        vm.singleTap = function(event) {
+            console.log(event.type)
+        }
+        vm.longTap = function(event) {
+            console.log(event.type)
+        }
+        vm.click = function(event) {
+            console.log(event.type)
+        }
+        vm.hold = function(event) {
+            console.log(event.type)
+        }
+        vm.singletap = function(event) {
+            console.log(event.type)
+        }
+    })
+        
+
+    </script>
+</html>

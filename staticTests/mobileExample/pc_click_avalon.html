@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>tap demo</title>    
+    <style>
+        html, body { padding: 0; margin: 0; }
+        div.box {
+            width: 15em;
+            height: 15em;
+            line-height: 15em;
+            text-align: center;
+            background-color: #108040;
+        }
+    </style>
+</head>
+<body ms-controller='test'>
+<div class='box tap' ms-click='tapCall'>测试click事件</div>
+<script src="../avalon.mobile.js"></script>
+<script>
+var bg = true
+avalon.define({
+    $id: 'test',
+    tapCall: function(event) {
+        this.style.background = bg ? 'red':'blue'
+        bg = !bg
+    }
+})
+
+</script>
+
+</body>
+</html>
