@@ -5163,7 +5163,6 @@ new function() {// jshint ignore:line
         touchProxy.my += Math.abs(touchProxy.y - y)
     }
     function touchend(event) { 
-        console.log('touchend method')
         var _isPointerType = isPointerEventType(event, 'down'),
             element = touchProxy.element
 

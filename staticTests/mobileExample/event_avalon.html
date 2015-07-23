@@ -49,9 +49,10 @@
     <script src="../avalon.mobile.js"></script>
     <script>
     var oldTime, newTime;
-
+    
     var VM= avalon.define('test', function(vm) {
         vm.clickINfo = ''
+
         vm.tap = function(event) {
             this.innerHTML = event.type
             oldTime = Date.now()
@@ -62,23 +63,23 @@
         }
         vm.swipeLeft = function(event) {
             this.innerHTML = event.type
-            VM.clickINfo = logs.join();
-            logs = []
+            // VM.clickINfo = logs.join();
+            // logs = []
         }
         vm.swipeRight = function(event) {
             this.innerHTML = event.type
-            VM.clickINfo = logs.join();
-            logs = []
+            // VM.clickINfo = logs.join();
+            // logs = []
         }
         vm.swipeUp = function(event) {
             this.innerHTML = event.type
-            VM.clickINfo = logs.join();
-            logs = []
+            // VM.clickINfo = logs.join();
+            // logs = []
         }
         vm.swipeDown = function(event) {
             this.innerHTML = event.type
-            VM.clickINfo = logs.join();
-            logs = []
+            // VM.clickINfo = logs.join();
+            // logs = []
         }
         vm.doubleTap = function(event) {
             this.innerHTML = event.type
@@ -101,7 +102,10 @@
             this.innerHTML = event.type
         }
     })
-        
+       document.addEventListener('touchend', function() {
+        VM.clickINfo = logs.join();
+        logs = []
+    }) 
 
     </script>
 </html>
