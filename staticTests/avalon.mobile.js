@@ -5,7 +5,7 @@
  http://weibo.com/jslouvre/
  
  Released under the MIT license
- avalon.mobile.js 1.45 built in 2015.7.21
+ avalon.mobile.js 1.45 built in 2015.7.24
  support IE10+ and other browsers
  ==================================================*/
 (function(global, factory) {
@@ -2958,12 +2958,12 @@ bindingExecutors["class"] = function(val, elem, data) {
 
 // bindingHandlers.data 定义在if.js
 bindingExecutors.data = function(val, elem, data) {
-	var key = "data-" + data.param
-	if (val && typeof val === "object") {
-		elem[key] = val
-	} else {
-		elem.setAttribute(key, String(val))
-	}
+    var key = "data-" + data.param
+    if (val && typeof val === "object") {
+        elem[key] = val
+    } else {
+        elem.setAttribute(key, String(val))
+    }
 }
 //双工绑定
 var duplexBinding = bindingHandlers.duplex = function(data, vmodels) {
@@ -3902,14 +3902,14 @@ function proxyRecycler(proxy, proxyPool) {
 //ms-skip绑定已经在scanTag 方法中实现
 // bindingHandlers.text 定义在if.js
 bindingExecutors.text = function(val, elem) {
-	val = val == null ? "" : val //不在页面上显示undefined null
-	if (elem.nodeType === 3) { //绑定在文本节点上
-		try { //IE对游离于DOM树外的节点赋值会报错
-			elem.data = val
-		} catch (e) {}
-	} else { //绑定在特性节点上
-		elem.textContent = val
-	}
+    val = val == null ? "" : val //不在页面上显示undefined null
+    if (elem.nodeType === 3) { //绑定在文本节点上
+        try { //IE对游离于DOM树外的节点赋值会报错
+            elem.data = val
+        } catch (e) {}
+    } else { //绑定在特性节点上
+        elem.textContent = val
+    }
 }
 function parseDisplay(nodeName, val) {
     //用于取得此类标签的默认display值
@@ -4028,10 +4028,10 @@ var rnoalphanumeric = /([^\#-~| |!])/g;
 
 function numberFormat(number, decimals, point, thousands) {
     //form http://phpjs.org/functions/number_format/
-    //number	必需，要格式化的数字
-    //decimals	可选，规定多少个小数位。
-    //point	可选，规定用作小数点的字符串（默认为 . ）。
-    //thousands	可选，规定用作千位分隔符的字符串（默认为 , ），如果设置了该参数，那么所有其他参数都是必需的。
+    //number    必需，要格式化的数字
+    //decimals  可选，规定多少个小数位。
+    //point 可选，规定用作小数点的字符串（默认为 . ）。
+    //thousands 可选，规定用作千位分隔符的字符串（默认为 , ），如果设置了该参数，那么所有其他参数都是必需的。
     number = (number + '')
             .replace(/[^0-9+\-Ee.]/g, '')
     var n = !isFinite(+number) ? 0 : +number,
@@ -4088,7 +4088,7 @@ var filters = avalon.filters = {
     //https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
     //    <a href="javasc&NewLine;ript&colon;alert('XSS')">chrome</a> 
     //    <a href="data:text/html;base64, PGltZyBzcmM9eCBvbmVycm9yPWFsZXJ0KDEpPg==">chrome</a>
-    //    <a href="jav	ascript:alert('XSS');">IE67chrome</a>
+    //    <a href="jav  ascript:alert('XSS');">IE67chrome</a>
     //    <a href="jav&#x09;ascript:alert('XSS');">IE67chrome</a>
     //    <a href="jav&#x0A;ascript:alert('XSS');">IE67chrome</a>
     sanitize: function(str) {
@@ -5078,13 +5078,10 @@ new function() {// jshint ignore:line
 
     function fireEvent(el, name, detail) {
         var event = document.createEvent("Events")
-        // object.initEvent (eventName, bubbles, cancelable); 是否可以冒泡，是否可以用preventDefault方法取消事件
         event.initEvent(name, true, true)
-        event.fireByAvalon = true//签名，标记事件是由avalon触发
         if (detail) {
             event.detail = detail
         }
-            
         el.dispatchEvent(event)
     }
 
@@ -5110,7 +5107,6 @@ new function() {// jshint ignore:line
         longTapTimeout = null
     }
     function touchstart(event) {
-
         var _isPointerType = isPointerEventType(event, "down"),
             firstTouch = _isPointerType ? event : event.touches[0],
             element = "tagName" in firstTouch.target ? firstTouch.target: firstTouch.target.parentNode,
@@ -5125,16 +5121,13 @@ new function() {// jshint ignore:line
         if (delta > 0 && delta <= 250) {
             touchProxy.isDoubleTap = true
         }
-        logs.push('start event x: '+firstTouch.pageX+"; move event y: "+firstTouch.pageY)
         touchProxy.x = firstTouch.pageX
         touchProxy.y = firstTouch.pageY
         touchProxy.mx = 0
         touchProxy.my = 0
         touchProxy.last = now
         touchProxy.element = element
-        /*
-            当触发hold和longtap事件时会触发touchcancel事件，从而阻止touchend事件的触发，继而保证在同时绑定tap和hold(longtap)事件时只触发其中一个事件
-        */
+
         longTapTimeout = setTimeout(function() {
             longTapTimeout = null
             fireEvent(element, "hold")
@@ -5149,7 +5142,6 @@ new function() {// jshint ignore:line
             firstTouch = _isPointerType ? event : event.touches[0],
             x = firstTouch.pageX,
             y = firstTouch.pageY
-        logs.push('move event x: '+x+"; move event y: "+y)
         if (_isPointerType && !isPrimaryTouch(event)) return
         /*
             android下某些浏览器触发了touchmove事件的话touchend事件不触发，禁用touchmove可以解决此bug
@@ -5173,7 +5165,6 @@ new function() {// jshint ignore:line
         if (!element) return // longtap|hold触发后touchProxy为{}
 
         cancelLongTap()
-        logs.push('touchProxy.x1 : '+touchProxy.x1+'; touchProxy.x : '+touchProxy.x+'; touchProxy.y1 : '+touchProxy.y1+'; touchProxy.y : '+touchProxy.y)
         if ((touchProxy.x1 && Math.abs(touchProxy.x1 - touchProxy.x) > dragDistance) || (touchProxy.y1 && Math.abs(touchProxy.y1 - touchProxy.y) > dragDistance)) {
             //如果用户滑动的距离有点大，就认为是swipe事件
             var direction = swipeDirection(touchProxy.x, touchProxy.x1, touchProxy.y, touchProxy.y1)
