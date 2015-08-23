@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script src="./avalon.mobile.js"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <script>
+
+            avalon.ready(function() {
+
+                avalon.define("touch", function(vm) {
+                    vm.submit = function(e) {
+                        alert('submit 表单')
+                    }
+                })
+                avalon.scan()
+            })
+
+
+        </script>
+
+    </head>
+    <body ms-controller="touch">
+        <form ms-on-submit='submit'>
+            <input type='text' value='测试submit'/>
+        </form>
+        
+        <div style="height:400px"></div>
+    </body>
+</html>
