@@ -13,7 +13,8 @@
 
                 avalon.define("touch", function(vm) {
                     vm.submit = function(e) {
-                        alert('submit 表单')
+                        alert('测试submit 表单提交')
+                        e.preventDefault()
                     }
                 })
                 avalon.scan()
