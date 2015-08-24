@@ -5090,6 +5090,7 @@ new function() {// jshint ignore:line
             element = touchProxy.element
         logs.push(element)
         logs.push(target)
+        logs.push('event.type : '+event.type)
         if (element && element !== target) {
             if (target.tagName.toLowerCase() === 'input' && element.tagName.toLowerCase() === "label") {
                 return false
