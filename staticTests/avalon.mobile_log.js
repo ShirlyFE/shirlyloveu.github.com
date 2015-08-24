@@ -5047,7 +5047,9 @@ new function() {// jshint ignore:line
     var touchProxy = {}
     var IEtouch = navigator.pointerEnabled
     var IEMStouch = navigator.msPointerEnabled
-    var isAndroid = navigator.userAgent.indexOf("Android") > 0
+    var ua = navigator.userAgent
+    var isAndroid = ua.indexOf("Android") > 0
+    var isGoingtoFixTouchEndEvent = isAndroid && ua.match(/Firefox|Opera/gi)
     //合成做成触屏事件所需要的各种原生事件
     var touchNames = ["touchstart", "touchmove", "touchend", "touchcancel"]
     var touchTimeout = null
@@ -5093,7 +5095,11 @@ new function() {// jshint ignore:line
             element = touchProxy.element
 
         if (element !== target) {
-            if (target.tagName.toLowerCase() === 'input' && element.tagName.toLowerCase() === "label") {
+            var type = target.type || '',
+                targetTag = target.tagName.toLowerCase(),
+                elementTag = element.tagName.toLowerCase()
+            // 通过手机的“前往”提交表单时不可禁止默认行为；通过label focus input时也不可以阻止默认行为
+            if ((targetTag === 'input' &&  elementTag === "label") || type === 'submit') {
                 return false
             }
             if (event.stopImmediatePropagation) {
@@ -5157,7 +5163,7 @@ new function() {// jshint ignore:line
             android下某些浏览器触发了touchmove事件的话touchend事件不触发，禁用touchmove可以解决此bug
             解决方案：http://stackoverflow.com/questions/14486804/understanding-touch-events
         */
-        if (isAndroid && Math.abs(touchProxy.x - x) > 10) {
+        if (isGoingtoFixTouchEndEvent && Math.abs(touchProxy.x - x) > 10) {
             event.preventDefault()
         }
         cancelLongTap()
