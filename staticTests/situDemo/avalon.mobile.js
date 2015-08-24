@@ -5092,9 +5092,13 @@ new function() {// jshint ignore:line
         logs.push(target)
         logs.push('event.type : '+event.type)
         if (element && element !== target) {
-            if (target.tagName.toLowerCase() === 'input' && element.tagName.toLowerCase() === "label") {
+            // if (target.tagName.toLowerCase() === 'input' && element.tagName.toLowerCase() === "label") {
+            //     return false
+            // }
+            if (target.tagName.toLowerCase() === 'input') {
                 return false
             }
+
             if (event.stopImmediatePropagation) {
                 event.stopImmediatePropagation()
             } else {
