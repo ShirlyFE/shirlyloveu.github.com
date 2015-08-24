@@ -5088,9 +5088,9 @@ new function() {// jshint ignore:line
     function onMouse(event) { 
         var target = event.target,
             element = touchProxy.element
-        logs.push(element)
-        logs.push(target)
-        logs.push('event.type : '+event.type)
+        // logs.push(element)
+        // logs.push(target)
+        // logs.push('event.type : '+event.type)
         if (element && element !== target) {
             var type = target.type || ''
             if ((type === 'input' && element.tagName.toLowerCase() === "label") || type === 'submit') {
