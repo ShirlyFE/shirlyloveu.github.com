@@ -5088,7 +5088,8 @@ new function() {// jshint ignore:line
     function onMouse(event) { 
         var target = event.target,
             element = touchProxy.element
-
+        logs.push(element)
+        logs.push(target)
         if (element && element !== target) {
             if (target.tagName.toLowerCase() === 'input' && element.tagName.toLowerCase() === "label") {
                 return false

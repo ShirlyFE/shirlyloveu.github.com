@@ -4,6 +4,9 @@
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
+        <script type="text/javascript">
+        var logs = []
+        </script>
         <script src="./avalon.mobile.js"></script>
 
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -15,6 +18,10 @@
                     vm.submit = function(e) {
                         alert('测试submit 表单提交')
                         e.preventDefault()
+                    }
+                    vm.des = ''
+                    vm.showLogs = function() {
+                        vm.des = logs.join('--->')
                     }
                 })
                 avalon.scan()
@@ -28,10 +35,11 @@
         <form ms-on-submit='submit' action="" method="post">
             <input type='text' value='测试submit'/>
             <p>18210819413</p>
+            <button type='button' ms-click='showLogs()'>show logs</button>
             <button type='submit'>提交</button>
         </form>
         
-        <div style="height:400px"></div>
+        <div style="height:400px">{{des}}</div>
     </body>
 </html>
 
