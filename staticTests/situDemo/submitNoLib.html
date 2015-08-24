@@ -18,27 +18,27 @@
             document.getElementById('form').addEventListener('submit', function(event) {
                 alert('测试 submit 在无avalon情况下前往是否会触发')
             })
-            var input = document.getElementById('text')
-            document.addEventListener('touchstart', function(event) {
-                if (event.target !== input) {
-                    alert('点击事件类型： '+event.type)
-                }
-            })
-            document.addEventListener('touchend', function(event) {
-                if (event.target !== input) {
-                    alert('点击事件类型： '+event.type)
-                }
-            })
-            document.addEventListener('click', function(event) {
-                if (event.target !== input) {
-                    alert('点击事件类型： '+event.type)
-                }
-            })
-            document.addEventListener('mousedown', function(event) {
-                if (event.target !== input) {
-                    alert('点击事件类型： '+event.type)
-                }
-            })
+            // var input = document.getElementById('text')
+            // document.addEventListener('touchstart', function(event) {
+            //     if (event.target !== input) {
+            //         alert('点击事件类型： '+event.type)
+            //     }
+            // })
+            // document.addEventListener('touchend', function(event) {
+            //     if (event.target !== input) {
+            //         alert('点击事件类型： '+event.type)
+            //     }
+            // })
+            // document.addEventListener('click', function(event) {
+            //     if (event.target !== input) {
+            //         alert('点击事件类型： '+event.type)
+            //     }
+            // })
+            // document.addEventListener('mousedown', function(event) {
+            //     if (event.target !== input) {
+            //         alert('点击事件类型： '+event.type)
+            //     }
+            // })
         </script>
     </body>
 </html>
