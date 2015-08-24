@@ -5097,6 +5097,7 @@ new function() {// jshint ignore:line
                 elementTag = element.tagName.toLowerCase()
             // 通过手机的“前往”提交表单时不可禁止默认行为；通过label focus input时也不可以阻止默认行为
             if ((targetTag === 'input' &&  elementTag === "label") || type === 'submit') {
+                alert('不组织')
                 return false
             }
             if (event.stopImmediatePropagation) {
