@@ -5092,8 +5092,11 @@ new function() {// jshint ignore:line
         // logs.push(target)
         // logs.push('event.type : '+event.type)
         if (element && element !== target) {
-            var type = target.type || ''
-            if ((type === 'input' && element.tagName.toLowerCase() === "label") || type === 'submit') {
+            var type = target.type || '',
+                targetTag = target.tagName.toLowerCase(),
+                elementTag = element.tagName.toLowerCase()
+            // 通过手机的“前往”提交表单时不可禁止默认行为；通过label focus input时也不可以阻止默认行为
+            if ((targetTag === 'input' &&  elementTag === "label") || type === 'submit') {
                 return false
             }
             if (event.stopImmediatePropagation) {
