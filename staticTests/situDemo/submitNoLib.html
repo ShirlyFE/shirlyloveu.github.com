@@ -8,7 +8,7 @@
     </head>
     <body ms-controller="touch">
         <form id='form' action="" method="post">
-            <input type='text' value='测试submit'/>
+            <input type='text' value='测试submit' id='text'/>
             <p>18210819413</p>
             <button type='submit'>提交</button>
         </form>
@@ -18,17 +18,26 @@
             document.getElementById('form').addEventListener('submit', function(event) {
                 alert('测试 submit 在无avalon情况下前往是否会触发')
             })
+            var input = document.getElementById('text')
             document.addEventListener('touchstart', function(event) {
-                alert('点击事件类型： '+event.type)
+                if (event.target !== input) {
+                    alert('点击事件类型： '+event.type)
+                }
             })
             document.addEventListener('touchend', function(event) {
-                alert('点击事件类型： '+event.type)
+                if (event.target !== input) {
+                    alert('点击事件类型： '+event.type)
+                }
             })
             document.addEventListener('click', function(event) {
-                alert('点击事件类型： '+event.type)
+                if (event.target !== input) {
+                    alert('点击事件类型： '+event.type)
+                }
             })
             document.addEventListener('mousedown', function(event) {
-                alert('点击事件类型： '+event.type)
+                if (event.target !== input) {
+                    alert('点击事件类型： '+event.type)
+                }
             })
         </script>
     </body>
