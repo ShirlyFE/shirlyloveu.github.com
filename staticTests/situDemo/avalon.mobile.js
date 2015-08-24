@@ -5095,7 +5095,7 @@ new function() {// jshint ignore:line
             // if (target.tagName.toLowerCase() === 'input' && element.tagName.toLowerCase() === "label") {
             //     return false
             // }
-            if (target.tagName.toLowerCase() === 'input') {
+            if (target.type === 'submit') {
                 return false
             }
 
