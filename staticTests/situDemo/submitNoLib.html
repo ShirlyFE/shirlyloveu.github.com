@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    </head>
+    <body ms-controller="touch">
+        <form id='form' action="" method="post">
+            <input type='text' value='测试submit'/>
+            <p>18210819413</p>
+            <button type='submit'>提交</button>
+        </form>
+        
+        <div style="height:400px"></div>
+        <script type="text/javascript">
+            document.getElementById('form').addEventListener('submit', function() {
+                alert('测试 submit 在无avalon情况下前往是否会触发')
+            })
+        </script>
+    </body>
+</html>
+
